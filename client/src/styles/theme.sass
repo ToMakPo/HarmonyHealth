@@ -1,0 +1,26 @@
+// Theme variables for SASS
+$color-gold: #C9A060
+$color-offwhite: #F8F6F2
+$color-charcoal: #232323
+$color-text-dark: #232323
+$color-text-light: #F8F6F2
+
+// Light theme
+$theme-light-bg: $color-offwhite
+$theme-light-text: $color-text-dark
+$theme-light-accent: $color-gold
+
+// Dark theme
+$theme-dark-bg: $color-charcoal
+$theme-dark-text: $color-text-light
+$theme-dark-accent: $color-gold
+
+// Font
+$font-primary: 'Montserrat', 'Helvetica Neue', Arial, sans-serif
+
+// Mixin for theme
+@mixin theme($bg, $text, $accent) 
+	background-color: $bg
+	color: $text
+	a, button
+	color: $accent

@@ -1,0 +1,65 @@
+.hero-image
+  display: block
+  max-width: 100%
+  height: auto
+  margin: 0 auto 2rem auto
+  border-radius: 1.5rem
+@use 'sass:color';
+@use './theme.sass' as theme
+
+.main-layout
+	min-height: 100vh
+	display: flex
+	flex-direction: column
+
+
+.header
+	padding: 2rem 0
+	text-align: center
+
+	// Logo and title sizing
+	.harmony-logo
+		height: 32px
+		margin-bottom: 0.25rem
+
+	.harmony-title
+		height: 18px
+		margin-bottom: 0.25rem
+
+
+.main-content
+	flex: 1
+
+.hero-section, .services-section, .testimonials-section, .contact-section
+	padding: 2rem
+	text-align: center
+
+
+
+.cta-button
+	margin-top: 1rem
+	background: theme.$color-gold
+	color: theme.$color-offwhite
+	border: none
+	padding: 0.75rem 2rem
+	font-size: 1.1rem
+	border-radius: 2rem
+	cursor: pointer
+	transition: background 0.2s
+	&:hover
+		background: color.adjust(theme.$color-gold, $lightness: -10%)
+
+
+.services-list
+	list-style: none
+	padding: 0
+	li
+		margin: 0.5rem 0
+		font-weight: 500
+
+
+.footer
+	padding: 1rem
+	text-align: center
+	background: theme.$color-gold
+	color: theme.$color-offwhite

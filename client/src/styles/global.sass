@@ -1,0 +1,16 @@
+@use './theme.sass' as theme
+
+body
+	font-family: theme.$font-primary
+	margin: 0
+	padding: 0
+	min-height: 100vh
+	transition: background-color 0.3s, color 0.3s
+
+
+.light-theme
+	@include theme.theme(theme.$theme-light-bg, theme.$theme-light-text, theme.$theme-light-accent)
+
+
+.dark-theme
+	@include theme.theme(theme.$theme-dark-bg, theme.$theme-dark-text, theme.$theme-dark-accent)
