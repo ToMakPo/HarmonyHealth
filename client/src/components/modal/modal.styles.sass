@@ -1,0 +1,30 @@
+.modal-component
+	background-color: var(--bg-color-popup)
+	border-radius: 0.5rem
+	border: 2px solid hsl(from currentColor h s 50%)
+
+	&::backdrop
+		background-color: rgba(0, 0, 0, 0.8)
+
+	& > div
+		display: flex
+		flex-direction: column
+		gap: 1rem
+		position: relative
+
+	.icon.close
+		position: absolute
+		top: -10px
+		right: -10px
+
+		&:is(:hover, :focus-visible)
+			color: var(--fg-color-error)
+			font-size: 3.5rem
+	
+	form
+		display: flex
+		flex-direction: column
+		gap: 1rem
+		max-width: 90vw
+		max-height: 90vh
+		overflow-y: auto
