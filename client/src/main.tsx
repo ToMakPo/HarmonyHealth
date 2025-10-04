@@ -1,10 +1,66 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import React, { useCallback, useEffect } from 'react'
+import * as ReactDOM from 'react-dom/client'
 import './styles.sass'
 import HomePage from './pages/home/home.page'
+import Employee from './models/Employee'
+import Customer, { type ICustomer } from './models/Customer'
+import { getServerUrl } from './lib/utils'
+import type { ApiResponse } from './lib/apiResponse'
+import type { IEmployee } from './models/Employee'
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <HomePage />
-  </StrictMode>
-)
+interface IGlobalContext {
+  activeUser: Customer | Employee | null
+  setActiveUser: React.Dispatch<React.SetStateAction<Customer | Employee | null>>
+  fetchUser: () => Promise<Customer | Employee | null>
+}
+
+export const GlobalContext = React.createContext<IGlobalContext | null>(null)
+export const useGlobal = () => React.useContext(GlobalContext)!
+
+const App = () => {
+  const [activeUser, setActiveUser] = React.useState<Customer | Employee | null>(null)
+  const [loading, setLoading] = React.useState(true)
+  
+  const fetchUser = useCallback(async () => {
+    const response: ApiResponse = await fetch(getServerUrl() + '/api/auth/session', {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.json()).catch(() => ({ success: false, message: 'Network error' }))
+
+    if (!response.passed) {
+      setActiveUser(null)
+      return null
+    }
+
+    const user = response.focus === 'employee' ? new Employee(response.data as IEmployee) : new Customer(response.data as ICustomer)
+    setActiveUser(user)
+
+    return user
+  }, [])
+
+  const globalContextValues = {
+    activeUser,
+    setActiveUser,
+    fetchUser
+  }
+
+  useEffect(() => {
+    async function setupApp() {
+      await fetchUser()
+      setLoading(false)
+    }
+    setupApp()
+  }, [fetchUser])
+
+  return loading ? null : <>
+    <GlobalContext.Provider value={globalContextValues}>
+      <HomePage />
+    </GlobalContext.Provider>
+  </>
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
+root.render(<App />)
