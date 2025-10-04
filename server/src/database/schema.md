@@ -16,8 +16,14 @@
 - notes
 - imagePath
 - showOnSite
+- status
 
-## user
+## employeePreference
+- [employeeId](#employee)
+- option
+- value
+
+## customer
 - id
 - username
 - passHash
@@ -31,6 +37,12 @@
 - dob
 - notes
 - imagePath
+- status
+
+## customerPreference
+- [customerId](#customer)
+- option
+- value
 
 ## serviceGroup
 - id
@@ -55,7 +67,7 @@
 
 ## appointment
 - id
-- [userId](#user)
+- [customerId](#customer)
 - [serviceId](#service)
 - [employeeId](#employee)
 - datetime
