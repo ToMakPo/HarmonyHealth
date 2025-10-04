@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import * as ReactDOM from 'react-dom/client'
 import './styles.sass'
 import HomePage from './pages/home/home.page'
@@ -7,15 +7,7 @@ import Customer, { type ICustomer } from './models/Customer'
 import { getServerUrl } from './lib/utils'
 import type { ApiResponse } from './lib/apiResponse'
 import type { IEmployee } from './models/Employee'
-
-interface IGlobalContext {
-  activeUser: Customer | Employee | null
-  setActiveUser: React.Dispatch<React.SetStateAction<Customer | Employee | null>>
-  fetchUser: () => Promise<Customer | Employee | null>
-}
-
-export const GlobalContext = React.createContext<IGlobalContext | null>(null)
-export const useGlobal = () => React.useContext(GlobalContext)!
+import GlobalContext, { type IGlobalContext } from './context'
 
 const App = () => {
   const [activeUser, setActiveUser] = React.useState<Customer | Employee | null>(null)
@@ -41,16 +33,16 @@ const App = () => {
     return user
   }, [])
 
-  const globalContextValues = {
+  const globalContextValues = useMemo<IGlobalContext>(() => ({
     activeUser,
     setActiveUser,
     fetchUser
-  }
+  }), [activeUser, setActiveUser, fetchUser])
 
   useEffect(() => {
     async function setupApp() {
-      await fetchUser()
-      setLoading(false)
+      setLoading(true)
+      fetchUser().then(() => setLoading(false))
     }
     setupApp()
   }, [fetchUser])
@@ -64,3 +56,5 @@ const App = () => {
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(<App />)
+
+export default App

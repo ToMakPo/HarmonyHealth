@@ -3,7 +3,7 @@ import Modal, { type ModalRef } from "../../components/modal/modal.component"
 import Customer from "../../models/Customer"
 import Employee from "../../models/Employee"
 import { getServerUrl } from "../../lib/utils"
-import { useGlobal } from "../../main"
+import { useGlobal } from "../../context"
 
 export interface LoginModalProps {
 	target: 'customer' | 'employee'
