@@ -21,25 +21,25 @@ Create a `.env` file in the server root directory with the following variables:
 ### Environment Setup
 
 1. **Copy the example environment file:**
-   ```bash
-   cp .env.example .env
-   ```
+	```bash
+	cp .env.example .env
+	```
 
 2. **Update the values in `.env`:**
-   ```env
-   PORT=5500
-   CORS_ORIGINS=["http://localhost:3000", "https://your-frontend-domain.com"]
-   
-   MONGODB_URI=mongodb://localhost:27017/harmony
-   
-   # JWT Configuration
-   JWT_EXPIRATION=2h
-   JWT_REMEMBER_ME=30d
-   JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
-   
-   # Development
-   APP_DEBUG=false
-   ```
+	```env
+	PORT=5500
+	CORS_ORIGINS=["http://localhost:3000", "https://your-frontend-domain.com"]
+	
+	MONGODB_URI=mongodb://localhost:27017/harmony
+	
+	# JWT Configuration
+	JWT_EXPIRATION=2h
+	JWT_REMEMBER_ME=30d
+	JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
+	
+	# Development
+	APP_DEBUG=false
+	```
 
 ### Environment Variable Details
 
@@ -70,7 +70,7 @@ Create a `.env` file in the server root directory with the following variables:
 - **Format:** Uses [ms](https://github.com/vercel/ms) format (e.g., `2h`, `30m`, `7d`)
 
 #### `JWT_REMEMBER_ME`
-- **Type:** String (time format)  
+- **Type:** String (time format)
 - **Description:** How long JWT tokens are valid when "remember me" is checked.
 - **Format:** Uses [ms](https://github.com/vercel/ms) format (e.g., `30d`, `90d`)
 
@@ -92,30 +92,30 @@ Create a `.env` file in the server root directory with the following variables:
 ## Getting Started
 
 1. **Install dependencies:**
-   ```bash
-   npm install
-   ```
+	```bash
+	npm install
+	```
 
 2. **Set up environment variables:**
-   ```bash
-   cp .env.example .env
-   # Edit .env with your values
-   ```
+	```bash
+	cp .env.example .env
+	# Edit .env with your values
+	```
 
 3. **Start development server:**
-   ```bash
-   npm run dev
-   ```
+	```bash
+	npm run dev
+	```
 
 4. **Build for production:**
-   ```bash
-   npm run build
-   ```
+	```bash
+	npm run build
+	```
 
 5. **Start production server:**
-   ```bash
-   npm start
-   ```
+	```bash
+	npm start
+	```
 
 ## Development
 

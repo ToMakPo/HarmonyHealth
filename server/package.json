@@ -1,40 +1,40 @@
 {
-  "name": "server",
-  "version": "1.0.0",
-  "main": "server.js",
-  "scripts": {
-    "start": "node dist/server.js",
-    "dev": "nodemon",
-    "build": "tsc",
-    "dev:watch": "tsc --watch"
-  },
-  "author": "Makai Post",
-  "license": "ISC",
-  "description": "Backend server for Harmony Health website.",
-  "devDependencies": {
-    "@tsconfig/node20": "^20.1.4",
-    "@tsconfig/node22": "^22.0.0",
-    "@types/cookie-parser": "^1.4.8",
-    "@types/cors": "^2.8.17",
-    "@types/dotenv": "^6.1.1",
-    "@types/express": "^5.0.0",
-    "@types/jsonwebtoken": "^9.0.10",
-    "@types/morgan": "^1.9.10",
-    "@types/node": "^22.13.10",
-    "nodemon": "^3.1.9",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.8.2"
-  },
-  "dependencies": {
-    "@types/bcrypt": "^5.0.2",
-    "@types/mongoose": "^5.11.96",
-    "bcrypt": "^5.1.1",
-    "cookie-parser": "^1.4.7",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.12.1",
-    "morgan": "^1.10.0"
-  }
+	"name": "server",
+	"version": "1.0.0",
+	"main": "server.js",
+	"scripts": {
+		"start": "node dist/server.js",
+		"dev": "nodemon",
+		"build": "tsc",
+		"dev:watch": "tsc --watch"
+	},
+	"author": "Makai Post",
+	"license": "ISC",
+	"description": "Backend server for Harmony Health website.",
+	"devDependencies": {
+		"@tsconfig/node20": "^20.1.4",
+		"@tsconfig/node22": "^22.0.0",
+		"@types/cookie-parser": "^1.4.8",
+		"@types/cors": "^2.8.17",
+		"@types/dotenv": "^6.1.1",
+		"@types/express": "^5.0.0",
+		"@types/jsonwebtoken": "^9.0.10",
+		"@types/morgan": "^1.9.10",
+		"@types/node": "^22.13.10",
+		"nodemon": "^3.1.9",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.8.2"
+	},
+	"dependencies": {
+		"@types/bcrypt": "^5.0.2",
+		"@types/mongoose": "^5.11.96",
+		"bcrypt": "^5.1.1",
+		"cookie-parser": "^1.4.7",
+		"cors": "^2.8.5",
+		"dotenv": "^16.4.7",
+		"express": "^4.21.2",
+		"jsonwebtoken": "^9.0.2",
+		"mongoose": "^8.12.1",
+		"morgan": "^1.10.0"
+	}
 }
