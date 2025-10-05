@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
 })
 
 router.get('/session', (req, res) => {
-	res.json(apiResponse(1, 'API_AUTH_SESSION', true, 'User session retrieved successfully', { userId: 123 }))
+	res.json(apiResponse(400, 'API_AUTH_SESSION', false, 'Not implemented'))
 })
 
 export default router

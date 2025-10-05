@@ -17,9 +17,7 @@ const App = () => {
 		const response: ApiResponse = await fetch(getServerUrl() + '/api/auth/session', {
 			method: 'GET',
 			credentials: 'include',
-			headers: {
-				'Content-Type': 'application/json'
-			}
+			headers: { 'Content-Type': 'application/json' }
 		}).then(res => res.json()).catch(() => apiResponse(400, 'API_AUTH_SESSION', false, 'Network error'))
 
 		if (!response.passed) {

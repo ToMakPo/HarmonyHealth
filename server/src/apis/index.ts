@@ -11,6 +11,7 @@ import serviceGroupApi from './api.service-group'
 import serviceProviderApi from './api.service-provider'
 import appointmentApi from './api.appointment'
 import appointmentNoteApi from './api.appointment-note'
+import authApi from './api.auth'
 
 router.use('/employee', employeeApi)
 router.use('/employee/preference', employeePreferenceApi)
@@ -21,5 +22,6 @@ router.use('/service/group', serviceGroupApi)
 router.use('/service/provider', serviceProviderApi)
 router.use('/appointment', appointmentApi)
 router.use('/appointment/note', appointmentNoteApi)
+router.use('/auth', authApi)
 
 export default router
