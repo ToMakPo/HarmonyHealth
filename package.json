@@ -4,7 +4,7 @@
 	"description": "Website for Harmony Health.",
 	"scripts": {
 		"start": "concurrently \"npm run start:server\" \"npm run start:client\"",
-		"start:server": "cd server && npm start",
+		"start:server": "cd server && npm run build && npm start",
 		"start:client": "cd client && npm start",
 		"dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
 		"dev:server": "cd server && npm run dev",
