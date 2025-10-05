@@ -25,6 +25,9 @@ app.get('/', (req, res) => {
 	res.send('Harmony Health server is running')
 })
 
+import apiRoutes from './apis'
+app.use('/api', apiRoutes)
+
 // Start server
 app.listen(PORT, () => {
 	console.log(`✔️  Server running: ${serverUrl}`)
