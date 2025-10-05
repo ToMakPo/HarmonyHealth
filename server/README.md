@@ -1,6 +1,6 @@
 # HarmonyHealth Server
 
-Backend server for the HarmonyHealth application built with Node.js and TypeScript.
+Backend server for the Harmony Health application built with Node.js and TypeScript.
 
 ## Environment Variables
 
