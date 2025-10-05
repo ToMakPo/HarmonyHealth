@@ -60,7 +60,7 @@ const LoginModal = forwardRef<ModalRef, LoginModalProps>((props, ref) => {
 	}
 
 	return (
-		<Modal ref={modalRef} open={props.open} onClose={props.onClose} header="Login" classNames="login-modal">
+		<Modal ref={modalRef} open={props.open} onClose={props.onClose} header="Login" className="login-modal">
 			<form className="login-form" onSubmit={handleLogin}>
 				<div className="form-group">
 					<label htmlFor="credentials">Email or Username</label>

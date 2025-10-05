@@ -4,7 +4,7 @@ import './modal.styles.sass'
 
 export interface ModalProps {
 	id?: string | undefined
-	classNames?: string | string[]
+	className?: string | string[]
 
 	header?: string
 
@@ -29,10 +29,10 @@ const Modal = forwardRef<ModalRef, ModalProps>((props, ref) => {
 	const dialogRef = useRef<HTMLDialogElement>(null)
 
 	const id = props.id || `modal-${Math.random().toString(36).substr(2, 8)}`
-	const classNames = joinClassNames('modal', '.modal-component', isOpen ? 'opened' : '', props.classNames)
+	const className = joinClassNames('modal', '.modal-component', isOpen ? 'opened' : '', props.className)
 
 	const modalProps = {
-		id, classNames,
+		id, className,
 		'aria-modal': 'true',
 		'aria-labelledby': `${id}-header`
 	} as React.DialogHTMLAttributes<HTMLDialogElement>
