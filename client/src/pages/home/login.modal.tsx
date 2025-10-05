@@ -6,6 +6,7 @@ import { getServerUrl } from "../../lib/utils"
 import { useGlobal } from "../../context"
 
 export interface LoginModalProps {
+	id?: string | undefined
 	target: 'customer' | 'employee'
 
 	open?: boolean
@@ -18,18 +19,18 @@ const LoginModal = forwardRef<ModalRef, LoginModalProps>((props, ref) => {
 
 	const global = useGlobal()
 
-	const credentialsRef = useRef<HTMLInputElement>(null)
-	const passwordRef = useRef<HTMLInputElement>(null)
+	const credentialsInputRef = useRef<HTMLInputElement>(null)
+	const passwordInputRef = useRef<HTMLInputElement>(null)
 	const [error, setError] = useState<string | null>(null)
 
-	const rememberMeRef = useRef<HTMLInputElement>(null)
+	const rememberMeCheckboxRef = useRef<HTMLInputElement>(null)
 
 	async function handleLogin(e: React.FormEvent) {
 		e.preventDefault()
 
-		const credentials = credentialsRef.current?.value.trim() || ''
-		const password = passwordRef.current?.value.trim() || ''
-		const rememberMe = rememberMeRef.current?.checked || false
+		const credentials = credentialsInputRef.current?.value.trim() || ''
+		const password = passwordInputRef.current?.value.trim() || ''
+		const rememberMe = rememberMeCheckboxRef.current?.checked || false
 
 		const response = await fetch(getServerUrl() + `/api/${props.target}/login`, {
 			method: 'POST',
@@ -41,10 +42,10 @@ const LoginModal = forwardRef<ModalRef, LoginModalProps>((props, ref) => {
 		if (!response.passed) {
 			switch (response.focus) {
 				case 'credentials':
-					credentialsRef.current?.focus()
+					credentialsInputRef.current?.focus()
 					break
 				case 'password':
-					passwordRef.current?.focus()
+					passwordInputRef.current?.focus()
 					break
 			}
 			setError(response.message)
@@ -60,23 +61,21 @@ const LoginModal = forwardRef<ModalRef, LoginModalProps>((props, ref) => {
 	}
 
 	return (
-		<Modal ref={modalRef} open={props.open} onClose={props.onClose} header="Login" className="login-modal">
+		<Modal id={props.id} ref={modalRef} open={props.open} onClose={props.onClose} header="Login" className={["login-modal", `${props.target}-login-modal`]}>
 			<form className="login-form" onSubmit={handleLogin}>
-				<div className="form-group">
-					<label htmlFor="credentials">Email or Username</label>
-					<input type="text" id="credentials" ref={credentialsRef} required />
+				<div className="field-group">
+					<label htmlFor="credentials-input">Username or Email</label>
+					<input type="text" id="credentials-input" ref={credentialsInputRef} autoComplete="username" required />
 				</div>
 
-				<div className="form-group">
-					<label htmlFor="password">Password</label>
-					<input type="password" id="password" ref={passwordRef} required />
+				<div className="field-group">
+					<label htmlFor="password-input">Password</label>
+					<input type="password" id="password-input" ref={passwordInputRef} autoComplete="current-password" required />
 				</div>
 
-				<div className="form-group">
-					<label htmlFor="rememberMe">
-						<input type="checkbox" id="rememberMe" ref={rememberMeRef} />
-						Remember Me
-					</label>
+				<div className="click-group">
+					<label htmlFor="remember-me-checkbox">Remember Me</label>
+					<input type="checkbox" id="remember-me-checkbox" ref={rememberMeCheckboxRef} />
 				</div>
 
 				{error && <div className="error-message" role="alert">{error}</div>}

@@ -11,13 +11,18 @@ const HomePage: React.FC = () => {
 			<p>Your journey to better health starts here.</p>
 
 			<div className="button-group">
-				<button type="button" onClick={() => setShowCustomerLogin(true)}>Customer Login</button>
+				<button type="button" onClick={() => {
+					console.log('clicked')
+					setShowCustomerLogin(true)
+				}}>Customer Login</button>
 				<button type="button" onClick={() => setShowEmployeeLogin(true)}>Employee Login</button>
 			</div>
 		</div>
 
-		<LoginModal target="customer" open={showCustomerLogin} onClose={() => setShowCustomerLogin(false)} />
+		<LoginModal id="show-customer-login-btn" target="customer" open={showCustomerLogin} onClose={() => setShowCustomerLogin(false)} />
 		<LoginModal target="employee" open={showEmployeeLogin} onClose={() => setShowEmployeeLogin(false)} />
+
+		<a href="#">Forgot your password?</a>
 	</>
 }
 

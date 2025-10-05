@@ -13,6 +13,9 @@
 	--main-bg: #202020
 	--main-fg: #bababa
 
+	--error-fg: hsl(from firebrick h s calc( l + 15 ))
+	--close-bg: hsl(from firebrick h s calc( l + 15 ))
+
 	--link-fg: #646cff
 	--link-hv: #747bff
 
@@ -20,6 +23,10 @@
 	--button-fg: #fafafa
 	--button-bd: #838383
 	--button-hv: #414141
+
+	--card-bg: #2a2a2a
+
+	--input-ac: #bada55
 
 	background-color: var(--main-bg)
 	color: var(--main-fg)
@@ -29,6 +36,9 @@
 		--main-bg: #fafafa
 		--main-fg: #202020
 
+		--error-fg: firebrick
+		--close-bg: firebrick
+
 		--link-fg: #0066ff
 		--link-hv: #0056e0
 
@@ -36,6 +46,8 @@
 		--button-fg: #202020
 		--button-bd: #303030
 		--button-hv: #d1d1d1
+
+		--card-bg: #ffffff
 
 body
 	display: flex
@@ -101,3 +113,72 @@ button
 
 	&:is(:focus, :focus-visible)
 		outline: 4px auto -webkit-focus-ring-color
+
+form
+	display: flex
+	flex-direction: column
+	gap: 1rem
+	min-width: 280px
+
+	// Format all inputs that take user text input or choices (text, email, password, number, textarea, select, ...)
+	.field-group
+		display: flex
+		flex-direction: column
+		gap: 0.05rem
+
+		label
+			font-weight: 600
+			font-size: 0.9em
+
+		input, select, textarea
+			font-family: inherit
+			font-size: 1em
+			padding: 0.5em
+			border: 1px solid hsl(from currentColor h s 50%)
+			border-radius: 0.5rem
+			background-color: var(--main-bg)
+			color: var(--main-fg)
+			transition: 0.25s
+
+			&:hover
+				filter: brightness(1.2)
+
+			&:focus,
+			&:focus-visible
+				outline: 4px auto -webkit-focus-ring-color
+	
+		textarea
+			resize: vertical
+			min-height: 80px
+			max-height: 300px
+	
+	// Format all clickable inputs (radio, checkbox)
+	.click-group
+		display: flex
+		align-items: center
+		gap: 0.5rem
+
+		input
+			width: auto
+			margin: 0
+			padding: 0
+			transform: scale(1.2)
+			cursor: pointer
+			transition: 0.25s
+			accent-color: var(--input-ac)
+
+			&:hover
+				filter: brightness(1.2)
+	
+	// Add asterisk to all labels of required inputs
+	:has(:is(input, textarea, select)[required]) label::after
+		content: ' *'
+		color: firebrick
+		font-weight: 600
+		font-size: 1.2em
+
+	// Format error messages
+	.error-message
+		color: var(--error-fg)
+		font-weight: 600
+		font-size: 0.8em

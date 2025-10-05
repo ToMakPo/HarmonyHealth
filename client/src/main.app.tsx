@@ -1,13 +1,15 @@
 import React, { useCallback, useEffect, useMemo } from 'react'
 import * as ReactDOM from 'react-dom/client'
-import './styles.sass'
-import HomePage from './pages/home/home.page'
-import Employee from './models/Employee'
-import Customer, { type ICustomer } from './models/Customer'
+
+import GlobalContext, { type IGlobalContext } from './context'
 import { getServerUrl } from './lib/utils'
 import { apiResponse, type ApiResponse } from './lib/apiResponse'
-import type { IEmployee } from './models/Employee'
-import GlobalContext, { type IGlobalContext } from './context'
+
+import HomePage from './pages/home/home.page'
+import Employee, { type IEmployee } from './models/Employee'
+import Customer, { type ICustomer } from './models/Customer'
+
+import './main.styles.sass'
 
 const App = () => {
 	const [activeUser, setActiveUser] = React.useState<Customer | Employee | null>(null)

@@ -1,4 +1,4 @@
-import { forwardRef, useImperativeHandle, useRef, useState } from 'react'
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import { joinClassNames } from '../../lib/utils'
 import './modal.styles.sass'
 
@@ -29,13 +29,19 @@ const Modal = forwardRef<ModalRef, ModalProps>((props, ref) => {
 	const dialogRef = useRef<HTMLDialogElement>(null)
 
 	const id = props.id || `modal-${Math.random().toString(36).substr(2, 8)}`
-	const className = joinClassNames('modal', '.modal-component', isOpen ? 'opened' : '', props.className)
+	const className = joinClassNames('modal', 'modal-component', isOpen ? 'opened' : '', props.className)
 
 	const modalProps = {
 		id, className,
 		'aria-modal': 'true',
 		'aria-labelledby': `${id}-header`
 	} as React.DialogHTMLAttributes<HTMLDialogElement>
+
+	useEffect(() => {
+		console.log('props.open changed', props.open)
+		if (props.open) open()
+		else close()
+	}, [props.open])
 
 	const open = () => {
 		setIsOpen(true)
@@ -63,7 +69,7 @@ const Modal = forwardRef<ModalRef, ModalProps>((props, ref) => {
 			{!isOpen ? null : <>
 				{props.header && <h2 id={`${id}-header`} className="modal-header">{props.header}</h2>}
 				{props.children}
-				<button type="button" className="modal-close" onClick={close} aria-label="Close modal">&times;</button>
+				<button type="button" className="modal-close-button" onClick={close} aria-label="Close modal">❌</button>
 			</>}
 		</dialog>
 	</>
