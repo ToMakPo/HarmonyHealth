@@ -120,6 +120,18 @@ form
 	gap: 1rem
 	min-width: 280px
 
+	.input-row
+		display: flex
+		flex-direction: row
+		flex-wrap: wrap
+		gap: 1rem
+
+		@media (max-width: 600px)
+			flex-direction: column
+		
+		> div
+			flex: 1 1 auto
+
 	// Format all inputs that take user text input or choices (text, email, password, number, textarea, select, ...)
 	.field-group
 		display: flex

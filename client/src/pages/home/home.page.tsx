@@ -1,9 +1,33 @@
-import { useState } from "react"
-import LoginModal from "./login.modal"
+import { useRef, useState } from "react"
+import CustomerLoginModal from "./customer-login.modal"
+import CustomerRegisterModal from "./customer-register.modal"
+import type { ModalRef } from "../../components/modal/modal.component"
 
 const HomePage: React.FC = () => {
-	const [showCustomerLogin, setShowCustomerLogin] = useState(false)
-	const [showEmployeeLogin, setShowEmployeeLogin] = useState(false)
+	const [showLoginModal, setShowLoginModal] = useState(false)
+	const loginModalRef = useRef<ModalRef>(null)
+
+	const [showRegisterModal, setShowRegisterModal] = useState(false)
+	const registerModalRef = useRef<ModalRef>(null)
+
+	const loginModal = (
+		<CustomerLoginModal
+			id="customer-login-modal" 
+			open={showLoginModal}
+			onClose={() => setShowLoginModal(false)}
+			setShowRegister={setShowRegisterModal}
+			ref={loginModalRef}
+		/>
+	)
+	const registerModal = (
+		<CustomerRegisterModal
+			id="customer-register-modal"
+			open={showRegisterModal}
+			onClose={() => setShowRegisterModal(false)}
+			setShowLogin={setShowLoginModal}
+			ref={registerModalRef}
+		/>
+	)
 
 	return <>
 		<div>
@@ -11,18 +35,13 @@ const HomePage: React.FC = () => {
 			<p>Your journey to better health starts here.</p>
 
 			<div className="button-group">
-				<button type="button" onClick={() => {
-					console.log('clicked')
-					setShowCustomerLogin(true)
-				}}>Customer Login</button>
-				<button type="button" onClick={() => setShowEmployeeLogin(true)}>Employee Login</button>
+				<button type="button" onClick={() => setShowLoginModal(true)}>Login</button>
+				<button type="button" onClick={() => setShowRegisterModal(true)}>Register</button>
 			</div>
 		</div>
 
-		<LoginModal id="show-customer-login-btn" target="customer" open={showCustomerLogin} onClose={() => setShowCustomerLogin(false)} />
-		<LoginModal target="employee" open={showEmployeeLogin} onClose={() => setShowEmployeeLogin(false)} />
-
-		<a href="#">Forgot your password?</a>
+		{loginModal}
+		{registerModal}
 	</>
 }
 
