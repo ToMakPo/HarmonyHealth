@@ -1,0 +1,112 @@
+:root
+	color-scheme: light dark
+
+:root[data-theme="dark"]
+	--hue: 100
+	--chroma: 0.035
+
+	--chroma-bg: calc(var(--chroma) * 0.5)
+	--chroma-fg: min(var(--chroma), 0.1)
+	--chroma-action: max(var(--chroma), 0.1)
+	--chroma-alert: max(var(--chroma), 0.05)
+
+	--lv0-bg: oklch(0.15 var(--chroma-bg) var(--hue))
+	--lv1-bg: oklch(0.20 var(--chroma-bg) var(--hue))
+	--lv2-bg: oklch(0.28 var(--chroma-bg) var(--hue))
+
+	--lv0-fg: oklch(0.96 var(--chroma-fg) var(--hue))
+	--lv1-fg: oklch(0.76 var(--chroma-fg) var(--hue))
+	--lv2-fg: oklch(0.56 var(--chroma-fg) var(--hue))
+
+	--border: oklch(0.35 var(--chroma) var(--hue))
+	--gradient-tp: linear-gradient(0deg, var(--lv1-bg) 97%, var(--lv2-bg))
+	--gradient-bg: linear-gradient(0deg, var(--lv1-bg) 0%, var(--lv2-bg))
+	--highlight: oklch(0.55 var(--chroma) var(--hue))
+	--shadow: 0px 2px 2px oklch(0 0 0 / 0.2), 0px 4px 4px oklch(0 0 0 / 0.1)
+
+	--main-bg: var(--lv0-bg)
+	--main-fg: var(--lv1-fg)
+
+	--bold-fg: var(--lv0-fg)
+	--muted-fg: var(--lv2-fg)
+
+	--header-bg: var(--gradient-bg)
+	--header-fg: var(--lv1-fg)
+	--header-menu-bg: var(--lv1-bg)
+	--header-menu-hv: oklch(0.35 var(--chroma-bg) var(--hue))
+	--header-button-bg: oklch(0.35 var(--chroma-bg) var(--hue))
+	--header-close-bg: oklch(0.50 var(--chroma-alert) 30)
+
+	--primary: oklch(0.76 var(--chroma-action) var(--hue))
+	--secondary: oklch(0.76 var(--chroma-action) calc(var(--hue) + 180))
+	--danger: oklch(0.70 var(--chroma-alert) 30)
+	--warning: oklch(0.70 var(--chroma-alert) 100)
+	--success: oklch(0.70 var(--chroma-alert) 160)
+	--info: oklch(0.70 var(--chroma-alert) 260)
+	--close: oklch(0.90 var(--chroma-alert) 30)
+
+	--card-bg: var(--gradient-tp)
+	--card-hv: var(--gradient-bg)
+	--card-bd: var(--border)
+
+	--link-fg: var(--info)
+	--link-hv: hsl(from var(--link-fg) h s calc( l + 10 ))
+
+	--button-bg: var(--lv2-bg)
+	--button-fg: var(--lv0-fg)
+	--button-bd: var(--border)
+
+:root[data-theme="light"]
+	--hue: 100
+	--chroma: 0.07
+
+	--chroma-bg: calc(var(--chroma) * 0.5)
+	--chroma-fg: min(var(--chroma), 0.1)
+	--chroma-action: max(var(--chroma), 0.1)
+	--chroma-alert: max(var(--chroma), 0.05)
+
+	--lv0-bg: oklch(0.92 var(--chroma-bg) var(--hue))
+	--lv1-bg: oklch(0.96 var(--chroma-bg) var(--hue))
+	--lv2-bg: oklch(1.00 var(--chroma-bg) var(--hue))
+
+	--lv0-fg: oklch(0.15 var(--chroma-fg) var(--hue))
+	--lv1-fg: oklch(0.40 var(--chroma-fg) var(--hue))
+	--lv2-fg: oklch(0.60 var(--chroma-fg) var(--hue))
+
+	--border: oklch(0.6 var(--chroma) var(--hue))
+	--gradient-tp: linear-gradient(0deg, var(--lv1-bg) 97%, var(--lv2-bg))
+	--gradient-bg: linear-gradient(0deg, var(--lv1-bg) 0%, var(--lv2-bg))
+	--highlight: oklch(1.0 var(--chroma) var(--hue))
+	--shadow: 0px 2px 2px oklch(0 0 0 / 0.2), 0px 4px 4px oklch(0 0 0 / 0.1)
+
+	--main-bg: var(--lv0-bg)
+	--main-fg: var(--lv1-fg)
+
+	--bold-fg: var(--lv0-fg)
+	--muted-fg: var(--lv2-fg)
+
+	--header-bg: oklch(0.3 var(--chroma-bg) var(--hue))
+	--header-fg: oklch(0.9 var(--chroma-fg) var(--hue))
+	--header-menu-bg: oklch(0.3 var(--chroma-bg) var(--hue))
+	--header-menu-hv: oklch(0.4 var(--chroma-bg) var(--hue))
+	--header-button-bg: oklch(0.40 var(--chroma-bg) var(--hue))
+	--header-close-bg: oklch(0.50 var(--chroma-alert) 30)
+
+	--primary: oklch(0.40 var(--chroma-action) var(--hue))
+	--secondary: oklch(0.40 var(--chroma-action) calc(var(--hue) + 180))
+	--danger: oklch(0.50 var(--chroma-alert) 30)
+	--warning: oklch(0.50 var(--chroma-alert) 100)
+	--success: oklch(0.50 var(--chroma-alert) 160)
+	--info: oklch(0.50 var(--chroma-alert) 260)
+	--close: oklch(0.90 var(--chroma-alert) 30)
+
+	--card-bg: var(--gradient-tp)
+	--card-hv: var(--gradient-bg)
+	--card-bd: var(--main-bg)
+
+	--link-fg: var(--info)
+	--link-hv: hsl(from var(--link-fg) h s calc( l + 10 ))
+
+	--button-bg: var(--lv2-bg)
+	--button-fg: var(--lv0-fg)
+	--button-bd: var(--main-bg)

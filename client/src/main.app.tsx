@@ -9,11 +9,13 @@ import HomePage from './pages/home/home.page'
 import Employee, { type IEmployee } from './models/Employee'
 import Customer, { type ICustomer } from './models/Customer'
 
+import './colors.styles.sass'
 import './main.styles.sass'
 
 const App = () => {
 	const [activeUser, setActiveUser] = React.useState<Customer | Employee | null>(null)
 	const [loading, setLoading] = React.useState(true)
+	const [theme, setTheme] = React.useState<'light' | 'dark'>()
 
 	const fetchUser = useCallback(async () => {
 		const response: ApiResponse = await fetch(getServerUrl() + '/api/auth/session', {
@@ -48,6 +50,21 @@ const App = () => {
 		}
 		setupApp()
 	}, [fetchUser])
+
+	useEffect(() => {
+		// Set theme on initial load
+		const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null
+		
+		setTheme(savedTheme ?? ((window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light'))
+	}, [])
+
+	useEffect(() => {
+		// Update theme class on <html> element
+		if (theme) {
+			document.documentElement.setAttribute('data-theme', theme)
+			localStorage.setItem('theme', theme)
+		}
+	}, [theme])
 
 	return loading ? null : <>
 		<GlobalContext.Provider value={globalContextValues}>

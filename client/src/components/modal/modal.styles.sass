@@ -4,7 +4,7 @@
 	position: relative
 	gap: 0.75rem
 
-	background-color: var(--main-bg)
+	background: var(--main-bg)
 	border-radius: 1rem
 
 	border: 2px solid hsl(from currentColor h s 50%)
@@ -12,7 +12,7 @@
 	padding: 1rem
 
 	&::backdrop
-		background-color: rgba(0, 0, 0, 0.8)
+		background: rgba(0, 0, 0, 0.8)
 
 	&:not(.opened)
 		display: none
@@ -29,7 +29,7 @@
 		background: none
 		border: none
 		border-radius: 0.75rem
-		background-color: var(--main-bg)
+		background: var(--main-bg)
 		opacity: 0.35
 		cursor: pointer
 		padding: 0
@@ -43,7 +43,7 @@
 		transition: 0.25s
 
 		&:hover
-			background-color: firebrick
+			background: var(--close)
 			color: white
 			opacity: 1
 			font-size: 0.8rem

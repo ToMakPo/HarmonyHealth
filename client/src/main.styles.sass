@@ -1,5 +1,6 @@
 :root
-	font-family: quicksand, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+	// font-family: quicksand, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+	font-family: manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
 	line-height: 1.5
 	font-weight: 400
 
@@ -8,56 +9,37 @@
 	-webkit-font-smoothing: antialiased
 	-moz-osx-font-smoothing: grayscale
 
-	color-scheme: light dark
-
-	--main-bg: #202020
-	--main-fg: #bababa
-
-	--error-fg: hsl(from firebrick h s calc( l + 15 ))
-	--close-bg: hsl(from firebrick h s calc( l + 15 ))
-
-	--link-fg: #646cff
-	--link-hv: #747bff
-
-	--button-bg: #343434
-	--button-fg: #fafafa
-	--button-bd: #838383
-	--button-hv: #414141
-
-	--card-bg: #2a2a2a
-
-	--input-ac: #bada55
-
-	background-color: var(--main-bg)
-	color: var(--main-fg)
-
-@media (prefers-color-scheme: light)
-	:root
-		--main-bg: #fafafa
-		--main-fg: #202020
-
-		--error-fg: firebrick
-		--close-bg: firebrick
-
-		--link-fg: #0066ff
-		--link-hv: #0056e0
-
-		--button-bg: #e0e0e0
-		--button-fg: #202020
-		--button-bd: #303030
-		--button-hv: #d1d1d1
-
-		--card-bg: #ffffff
-
-body
-	display: flex
-	place-content: center
+html, body, #root
+	width: 100vw
+	height: 100vh
+	max-width: 100vw
+	max-height: 100vh
 	margin: 0
-	padding: 0 2em
+	padding: 0
+	box-sizing: border-box
 	min-width: 320px
 	min-height: 320px
 
+body
+	display: flex
+	flex-direction: column
+	background: var(--main-bg)
+	color: var(--main-fg)
+
+main
+	flex: 1 1 auto
+	display: flex
+	flex-direction: column
+	// align-items: center
+	gap: 10px
+	width: 100%
+	max-width: 1200px
+	padding: 20px
+	margin: 0 auto
+	box-sizing: border-box
+
 h1, h2, h3, h4, h5, h6
+	color: var(--bold-fg)
 	margin: 0
 	padding: 0
 
@@ -70,15 +52,15 @@ h2
 	font-weight: 600
 
 h3
-	font-size: 1.75em
-	font-weight: 600
-
-h4
 	font-size: 1.5em
 	font-weight: 600
 
-h5
+h4
 	font-size: 1.25em
+	font-weight: 600
+
+h5
+	font-size: 1.15em
 	font-weight: 600
 
 h6
@@ -95,24 +77,72 @@ a
 		color: var(--link-hv)
 		text-decoration-color: currentColor
 
-button
-	border-radius: 8px
-	border: 1px solid transparent
-	color: var(--button-fg)
-	background-color: var(--button-bg)
-	padding: 0.6em 1.2em
-	font-size: 1em
-	font-weight: 500
-	font-family: inherit
-	cursor: pointer
+.card
+	background: var(--card-bg)
+	padding: 1.5rem
+	border: 1px solid var(--card-bd)
+	border-top-color: var(--highlight)
+	border-radius: 1rem
+	box-shadow: var(--shadow)
 	transition: 0.25s
 
 	&:hover
-		border-color: var(--button-bd)
-		background-color: var(--button-hv)
+		background: var(--card-hv)
 
-	&:is(:focus, :focus-visible)
-		outline: 4px auto -webkit-focus-ring-color
+	// display: flex-block
+	// flex-direction: column
+	// background: var(--card-bg)
+	// border: var(--card-bd)
+	// border-top: var(--highlight)
+	
+	// border-radius: 12px
+	// padding: 1rem
+	// box-sizing: border-box
+	// box-shadow: 0 2px 4px hsl(from currentColor h s 10% / 0.1)
+	// transition: 0.25s
+	// width: 100%
+	// max-width: 800px
+
+	// &:hover
+	// 	box-shadow: 0 4px 8px hsl(from currentColor h s 10% / 0.2)
+
+button, input[type="button"], input[type="submit"], input[type="reset"], .button
+	background: var(--button-bg)
+	color: var(--button-fg)
+	padding: 0.5rem 1rem
+	font-weight: 700
+	border: 1px solid transparent
+	border-radius: 0.5rem
+	box-shadow: var(--shadow)
+	cursor: pointer
+	transition: 0.25s
+	white-space: nowrap
+	box-sizing: border-box
+	font: 600 1rem/1.6em quicksand
+
+	&:hover
+		border-color: var(--button-bd)
+		border-top-color: var(--highlight)
+	
+	&:has(:focus, :focus-visible)
+		outline: 1px auto -webkit-focus-ring-color
+
+	// border-radius: 8px
+	// border: 1px solid var(--button-bd)
+	// outline: 2px solid transparent
+	// color: var(--button-fg)
+	// background: var(--button-bg)
+	// padding: 0.6em 1.2em
+	// font-size: 1em
+	// font-weight: 500
+	// font-family: inherit
+	// cursor: pointer
+	// transition: 0.25s
+	// box-sizing: border-box
+
+	// &:hover
+	// 	outline: 2px solid var(--button-bd)
+	// 	background: var(--button-hv)
 
 form
 	display: flex
@@ -148,7 +178,7 @@ form
 			padding: 0.5em
 			border: 1px solid hsl(from currentColor h s 50%)
 			border-radius: 0.5rem
-			background-color: var(--main-bg)
+			background: var(--main-bg)
 			color: var(--main-fg)
 			transition: 0.25s
 
