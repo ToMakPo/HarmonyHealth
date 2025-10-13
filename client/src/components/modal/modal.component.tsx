@@ -38,7 +38,6 @@ const Modal = forwardRef<ModalRef, ModalProps>((props, ref) => {
 	} as React.DialogHTMLAttributes<HTMLDialogElement>
 
 	useEffect(() => {
-		console.log('props.open changed', props.open)
 		if (props.open) open()
 		else close()
 	}, [props.open])
