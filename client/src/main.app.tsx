@@ -5,6 +5,7 @@ import GlobalContext, { type IGlobalContext } from './context'
 import { getServerUrl } from './lib/utils'
 import { apiResponse, type ApiResponse } from './lib/apiResponse'
 
+import HomeHeader from './pages/header/header.main'
 import HomePage from './pages/home/home.page'
 import Employee, { type IEmployee } from './models/Employee'
 import Customer, { type ICustomer } from './models/Customer'
@@ -68,7 +69,10 @@ const App = () => {
 
 	return loading ? null : <>
 		<GlobalContext.Provider value={globalContextValues}>
+			<HomeHeader />
+			<main>
 			<HomePage />
+			</main>
 		</GlobalContext.Provider>
 	</>
 }

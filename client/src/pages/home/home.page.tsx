@@ -33,11 +33,6 @@ const HomePage: React.FC = () => {
 		<div>
 			<h1>Welcome to Harmony Health</h1>
 			<p>Your journey to better health starts here.</p>
-
-			<div className="button-group">
-				<button type="button" onClick={() => setShowLoginModal(true)}>Login</button>
-				<button type="button" onClick={() => setShowRegisterModal(true)}>Register</button>
-			</div>
 		</div>
 
 		{loginModal}
