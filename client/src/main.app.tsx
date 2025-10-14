@@ -71,7 +71,34 @@ const App = () => {
 		<GlobalContext.Provider value={globalContextValues}>
 			<HomeHeader />
 			<main>
-			<HomePage />
+				<HomePage />
+
+				<span className="theme-toggle"
+					onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+					style={{
+						display: 'flex',
+						alignItems: 'flex-start',
+						justifyContent: 'center',
+						lineHeight: '0',
+						fontSize: '22px',
+						position: 'fixed',
+						bottom: '20px',
+						right: '20px',
+						padding: '19px',
+						borderRadius: '50%',
+						width: '40px',
+						height: '40px',
+						whiteSpace: 'nowrap',
+						cursor: 'pointer',
+						boxSizing: 'border-box',
+						userSelect: 'none',
+						zIndex: 10,
+					}}
+				>
+					<abbr title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`} style={{textDecoration: 'none'}}>
+					{theme === 'dark' ? '🌙' : '☀️'}
+					</abbr>
+				</span>
 			</main>
 		</GlobalContext.Provider>
 	</>
