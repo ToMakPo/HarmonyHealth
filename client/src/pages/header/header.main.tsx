@@ -25,6 +25,7 @@ const HomeHeader: React.FC = () => {
 		] },
 	]
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const userData = {
 		id: '1S56DSF6SDF',
 		username: 'johndoe',
@@ -41,7 +42,7 @@ const HomeHeader: React.FC = () => {
 		status: 'Active'
 	}
 
-	const [user] = useState<typeof userData | null>(userData)
+	const [user] = useState<typeof userData | null>(null)
 	const [useName] = useState(true)
 
 	const brandingEl = (
