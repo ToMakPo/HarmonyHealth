@@ -7,6 +7,9 @@ import HomeHeader from '../pages/header/header.main'
 import HomePage from '../pages/home/home.page'
 import Customer from '../models/Customer'
 
+import './colors.styles.sass'
+import './main.styles.sass'
+
 const App = () => {
     const [loading, setLoading] = React.useState(true)
 
