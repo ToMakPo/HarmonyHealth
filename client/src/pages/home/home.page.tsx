@@ -1,6 +1,6 @@
 import { useRef, useState } from "react"
-import CustomerLoginModal from "./customer-login.modal"
-import CustomerRegisterModal from "./customer-register.modal"
+import CustomerLoginModal from "../header/customer-login.modal"
+import CustomerRegisterModal from "../header/customer-register.modal"
 import type { ModalRef } from "../../components/modal/modal.component"
 
 const HomePage: React.FC = () => {
