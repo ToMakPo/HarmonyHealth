@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react'
 import './theme-toggle.style.sass'
 
 /**
- * Theme Toggle Component
+ * Theme Toggle Element
  * 
  * Toggles between light and dark themes, saving preference to localStorage.
  * 
- * This component should only be used on the main application page.
+ * This element should only be used on the main application page.
  * 
  * @returns Theme toggle button element
  */

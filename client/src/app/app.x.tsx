@@ -1,14 +1,17 @@
 import React, { useCallback, useEffect, useMemo } from 'react'
+
 import GlobalContext, { type IGlobalContext } from './global-context'
-import { getServerUrl } from '../lib/utils'
-import { apiResponse, type ApiResponse } from '../lib/apiResponse'
-import ThemeToggle from './theme-toggle/theme-toggle.component'
+import ThemeToggle from './theme-toggle/theme-toggle.element'
+
 import HomeHeader from '../pages/header/header.main'
 import HomePage from '../pages/home/home.page'
 import Customer from '../models/Customer'
 
+import { getServerUrl } from '../lib/utils'
+import { apiResponse, type ApiResponse } from '../lib/apiResponse'
+
 import './colors.styles.sass'
-import './main.styles.sass'
+import './app.styles.sass'
 
 const App = () => {
     const [loading, setLoading] = React.useState(true)
