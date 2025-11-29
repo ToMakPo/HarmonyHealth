@@ -1,24 +1,4 @@
-// import axios from 'axios'
-// import { apiResponse } from '../lib/apiResponse'
-
-export interface ICustomer {
-	id: string
-	username: string
-	passHash: string
-	firstName: string
-	lastName: string
-	title?: string
-	email: string
-	phone?: string
-	address?: string
-	gender?: string
-	dob?: string
-	notes?: string
-	imagePath?: string
-	status?: string
-}
-
-class Customer implements ICustomer {
+class Customer {
 	private _id: string
 	private _username: string
 	private _passHash: string
@@ -34,7 +14,7 @@ class Customer implements ICustomer {
 	private _imagePath?: string
 	private _status?: string
 
-	constructor(data: ICustomer) {
+	constructor(data: Customer) {
 		this._id = data.id
 		this._username = data.username
 		this._passHash = data.passHash

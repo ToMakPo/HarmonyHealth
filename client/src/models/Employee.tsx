@@ -1,31 +1,10 @@
-// import axios from 'axios'
-// import { apiResponse } from '../lib/apiResponse'
-
-export interface IEmployee {
-	id: string
-	username: string
-	firstName: string
-	lastName: string
-	title?: string
-	role: 'admin' | 'staff' | 'manager' | 'contractor'
-	email: string
-	phone?: string
-	address?: string
-	gender?: string
-	dob?: string
-	notes?: string
-	imagePath?: string
-	showOnSite?: boolean
-	status?: string
-}
-
-class Employee implements IEmployee {
+class Employee {
 	private _id: string
 	private _username: string
 	private _firstName: string
 	private _lastName: string
 	private _title?: string
-	private _role: IEmployee['role']
+	private _role: 'admin' | 'staff' | 'manager' | 'contractor'
 	private _email: string
 	private _phone?: string
 	private _address?: string
@@ -36,7 +15,7 @@ class Employee implements IEmployee {
 	private _showOnSite?: boolean
 	private _status?: string
 
-	constructor(data: IEmployee) {
+	constructor(data: Employee) {
 		this._id = data.id
 		this._username = data.username
 		this._firstName = data.firstName

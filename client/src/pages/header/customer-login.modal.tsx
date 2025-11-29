@@ -2,7 +2,7 @@ import { forwardRef, useRef, useState } from "react"
 import Modal, { type ModalRef } from "../../components/modal/modal.component"
 import Customer from "../../models/Customer"
 import { getServerUrl } from "../../lib/utils"
-import { useGlobal } from "../../context"
+import { useGlobal } from "../../app/global-context"
 
 export interface CustomerLoginModalProps {
 	id?: string | undefined

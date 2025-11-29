@@ -1,24 +1,12 @@
-// import axios from 'axios'
-// import { apiResponse } from '../lib/apiResponse'
-
-export interface IAppointment {
-	id: string
-	customerId: string
-	serviceId: string
-	employeeId: string
-	datetime: string
-	status: 'booked' | 'cancelled' | 'completed' | 'no-show'
-}
-
-class Appointment implements IAppointment {
+class Appointment {
 	private _id: string
 	private _customerId: string
 	private _serviceId: string
 	private _employeeId: string
 	private _datetime: string
-	private _status: IAppointment['status']
+	private _status: 'booked' | 'cancelled' | 'completed' | 'no-show'
 
-	constructor(data: IAppointment) {
+	constructor(data: Appointment) {
 		this._id = data.id
 		this._customerId = data.customerId
 		this._serviceId = data.serviceId

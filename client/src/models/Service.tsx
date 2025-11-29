@@ -1,19 +1,4 @@
-// import axios from 'axios'
-// import { apiResponse } from '../lib/apiResponse'
-
-export interface IService {
-	id: string
-	groupId?: string
-	name: string
-	description?: string
-	details: string
-	cost: number
-	priceInfo?: string
-	imagePath?: string
-	sortOrder?: number
-}
-
-class Service implements IService {
+class Service {
 	private _id: string
 	private _groupId?: string
 	private _name: string
@@ -24,7 +9,7 @@ class Service implements IService {
 	private _imagePath?: string
 	private _sortOrder?: number
 
-	constructor(data: IService) {
+	constructor(data: Service) {
 		this._id = data.id
 		this._groupId = data.groupId
 		this._name = data.name

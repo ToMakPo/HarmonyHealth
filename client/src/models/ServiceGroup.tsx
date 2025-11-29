@@ -1,18 +1,9 @@
-// import axios from 'axios'
-// import { apiResponse } from '../lib/apiResponse'
-
-export interface IServiceGroup {
-	id: string
-	name: string
-	sortOrder?: number
-}
-
-class ServiceGroup implements IServiceGroup {
+class ServiceGroup {
 	private _id: string
 	private _name: string
 	private _sortOrder?: number
 
-	constructor(data: IServiceGroup) {
+	constructor(data: ServiceGroup) {
 		this._id = data.id
 		this._name = data.name
 		this._sortOrder = data.sortOrder
