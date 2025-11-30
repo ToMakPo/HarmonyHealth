@@ -1,21 +1,21 @@
-.theme-toggle
+#theme-toggle
 	display: flex
-	align-items: flex-start
+	align-items: center
 	justify-content: center
-	line-height: 0
-	font-size: 22px
+	background-color: red
 	position: fixed
 	bottom: 20px
 	right: 20px
-	padding: 19px
-	border-radius: 50%
 	width: 40px
 	height: 40px
-	white-space: nowrap
+	font-size: 24px
+	border-radius: 50%
+	background-color: hsl(from var(--main-bg) h s l / 0.5)
+	color: hsl(from var(--main-fg) h s l / 1)
 	cursor: pointer
-	box-sizing: border-box
-	user-select: none
-	z-index: 10
+	z-index: 499
+	transition: 0.3s ease
 
-	abbr
-		text-decoration: none
+	&:hover
+		background-color: hsl(from var(--main-bg) h s l / 1)
+		color: hsl(from var(--main-fg) h s l / 1)

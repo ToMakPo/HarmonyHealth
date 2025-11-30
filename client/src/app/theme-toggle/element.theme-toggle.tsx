@@ -29,13 +29,12 @@ const ThemeToggle: React.FC = () => {
 	}, [theme])
 
 	return(
-		<span className="theme-toggle"
+		<span 
+			id='theme-toggle' 
+			className={`icon ${theme === 'dark' ? 'moon' : 'sun'}`}
+			title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
 			onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-		>
-			<abbr title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}>
-				{theme === 'dark' ? '🌙' : '☀️'}
-			</abbr>
-		</span>
+		></span>
 	)
 }
 
