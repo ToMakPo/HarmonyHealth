@@ -4,7 +4,7 @@ import CustomerRegisterModal from "../header/modal.register"
 import type { ModalRef } from "../../components/modal/component.modal"
 import { getImagePath } from "../../lib/utils"
 
-import "./home.styles.sass"
+import "./styles.home.sass"
 
 const HomePage: React.FC = () => {
 	////////////////////

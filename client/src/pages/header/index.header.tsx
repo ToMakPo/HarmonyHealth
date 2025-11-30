@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { getImagePath } from '../../lib/utils'
-import './header.styles.sass'
+import './styles.header.sass'
 
 interface NavRoute {
 	name: string

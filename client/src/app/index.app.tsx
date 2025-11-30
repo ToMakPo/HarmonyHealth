@@ -10,8 +10,9 @@ import Customer from '../models/Customer'
 import { getServerUrl } from '../lib/utils'
 import { apiResponse, type ApiResponse } from '../lib/apiResponse'
 
-import './colors.styles.sass'
-import './app.styles.sass'
+import './styles.colors.sass'
+import './styles.icons.sass'
+import './styles.app.sass'
 
 const App = () => {
     const [loading, setLoading] = React.useState(true)

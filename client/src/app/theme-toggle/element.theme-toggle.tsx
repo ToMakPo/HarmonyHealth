@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import './theme-toggle.style.sass'
+import './style.theme-toggle.sass'
 
 /**
  * Theme Toggle Element

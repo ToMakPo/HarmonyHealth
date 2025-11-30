@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import { joinClassNames } from '../../lib/utils'
-import './modal.styles.sass'
+import './styles.modal.sass'
 
 export interface ModalProps {
 	id?: string | undefined
