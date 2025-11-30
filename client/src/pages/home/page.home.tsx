@@ -1,7 +1,7 @@
 import { useRef, useState } from "react"
-import CustomerLoginModal from "../header/customer-login.modal"
-import CustomerRegisterModal from "../header/customer-register.modal"
-import type { ModalRef } from "../../components/modal/modal.component"
+import CustomerLoginModal from "../header/modal.login"
+import CustomerRegisterModal from "../header/modal.register"
+import type { ModalRef } from "../../components/modal/component.modal"
 import { getImagePath } from "../../lib/utils"
 
 import "./home.styles.sass"

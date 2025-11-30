@@ -1,5 +1,5 @@
 import { forwardRef, useRef, useState } from "react"
-import Modal, { type ModalRef } from "../../components/modal/modal.component"
+import Modal, { type ModalRef } from "../../components/modal/component.modal"
 import Customer from "../../models/Customer"
 import { getServerUrl } from "../../lib/utils"
 import { useGlobal } from "../../app/global-context"

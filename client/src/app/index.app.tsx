@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useMemo } from 'react'
 
 import GlobalContext, { type IGlobalContext } from './global-context'
-import ThemeToggle from './theme-toggle/theme-toggle.element'
+import ThemeToggle from './theme-toggle/element.theme-toggle'
 
-import HomeHeader from '../pages/header/header.main'
-import HomePage from '../pages/home/home.page'
+import HomeHeader from '../pages/header/index.header'
+import HomePage from '../pages/home/page.home'
 import Customer from '../models/Customer'
 
 import { getServerUrl } from '../lib/utils'
