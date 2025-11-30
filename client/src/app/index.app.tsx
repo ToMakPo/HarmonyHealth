@@ -1,11 +1,15 @@
-import React, { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+
+import ThemeToggle from './theme-toggle/app.theme-toggle'
+import AppHeader from './header/app.header'
+
+import HomePage from '../pages/home/page.home'
+
+import Customer from '../models/Customer'
+import CustomerLoginModal from "../pages/auth/modal.login"
+import CustomerRegisterModal from "../pages/auth/modal.register"
 
 import GlobalContext, { type IGlobalContext } from './global-context'
-import ThemeToggle from './theme-toggle/element.theme-toggle'
-
-import HomeHeader from '../pages/header/index.header'
-import HomePage from '../pages/home/page.home'
-import Customer from '../models/Customer'
 
 import { getServerUrl } from '../lib/utils'
 import { apiResponse, type ApiResponse } from '../lib/apiResponse'
@@ -13,16 +17,17 @@ import { apiResponse, type ApiResponse } from '../lib/apiResponse'
 import './styles.colors.sass'
 import './styles.icons.sass'
 import './styles.app.sass'
+import type { ModalRef } from '../components/modal/component.modal'
 
-const App = () => {
-    const [loading, setLoading] = React.useState(true)
+const App: React.FC = () => {
+    const [loading, setLoading] = useState(true)
 
 	////////////////////
 	/// USER PROFILE ///
 	////////////////////
 	// #region User Profile
 	
-    const [activeUser, setActiveUser] = React.useState<Customer | null>(null)
+    const [activeUser, setActiveUser] = useState<Customer | null>(null)
 
     const fetchUser = useCallback(async () => {
         const response: ApiResponse = await fetch(getServerUrl() + '/api/auth/session', {
@@ -59,13 +64,54 @@ const App = () => {
 
 	// #endregion
 
+
+
+	////////////////////////////
+	/// CUSTOMER AUTH MODALS ///
+	////////////////////////////
+	// #region Customer Auth
+	
+	const [showLoginModal, setShowLoginModal] = useState(false)
+	const loginModalRef = useRef<ModalRef>(null)
+
+	const [showRegisterModal, setShowRegisterModal] = useState(false)
+	const registerModalRef = useRef<ModalRef>(null)
+
+	const loginModal = (
+		<CustomerLoginModal
+			id="customer-login-modal" 
+			open={showLoginModal}
+			onClose={() => setShowLoginModal(false)}
+			setShowRegister={setShowRegisterModal}
+			ref={loginModalRef}
+		/>
+	)
+	const registerModal = (
+		<CustomerRegisterModal
+			id="customer-register-modal"
+			open={showRegisterModal}
+			onClose={() => setShowRegisterModal(false)}
+			setShowLogin={setShowLoginModal}
+			ref={registerModalRef}
+		/>
+	)
+
+	// #endregion
+
+
+
     return loading ? null : (
         <GlobalContext.Provider value={globalContextValues}>
-            <HomeHeader />
+            <AppHeader />
+            
             <main>
                 <HomePage />
             </main>
+
             <ThemeToggle />
+
+            {loginModal}
+            {registerModal}
         </GlobalContext.Provider>
     )
 }
