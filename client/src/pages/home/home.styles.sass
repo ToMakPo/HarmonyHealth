@@ -1,0 +1,86 @@
+$mobile-break: 600px
+
+#home-page
+	flex: 0 0 auto
+	display: flex
+	flex-direction: column
+	align-items: center
+	gap: 20px
+
+	#hero-section
+		position: relative
+		width: 100%
+		height: calc(100cqh + 50px)
+		padding-bottom: 50px
+		background-size: cover
+		background-position: center
+		background-repeat: no-repeat
+		box-shadow: 0 -20px 10px -10px var(--main-bg) inset
+		box-sizing: border-box
+
+		#hero-overlay
+			position: absolute
+			top: 0
+			left: 0
+			width: 50%
+			height: calc(100% - 50px)
+			z-index: 1
+
+			display: flex
+			justify-content: center
+			align-items: center
+			
+			box-sizing: border-box
+
+			#hero-text
+				font-size: 12px
+
+				display: flex
+				flex-direction: column
+				justify-content: center
+				align-items: center
+				font-size: max(min(3.5cqw, 3cqh), 0.5em)
+
+				padding: min(50px, 3cqw)
+				border-radius: min(2.5cqw, 2.5cqh)
+
+				$bg-color: #ffffffcc
+				background-color: $bg-color
+				box-shadow: 0 0px 10px 20px $bg-color
+
+				#hero-title
+					display: flex
+					flex-direction: column
+					gap: 10px
+					
+					text-align: center
+
+				h2
+					color: #282828
+					font-weight: 300
+					font-size: 1.75em
+
+				h1
+					color: #8d7a24
+					font-family: 'Josefin Sans', sans-serif
+					font-weight: 400
+					font-size: 2em
+					text-transform: uppercase
+					line-height: 1em
+					
+				p
+					color: #484848
+
+@media (orientation: portrait)
+	#home-page #hero-section
+		background-position-x: 60%
+
+		#hero-overlay
+			width: 100%
+			align-items: flex-end
+			padding: 40px 30px
+
+			#hero-text
+				width: 100%
+				height: auto
+				padding: min(30px, 4cqw)
