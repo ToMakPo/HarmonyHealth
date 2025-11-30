@@ -1,3 +1,6 @@
+import { type ApiResponse, apiResponse } from "../lib/apiResponse"
+import { getServerUrl } from "../lib/utils"
+
 class Customer {
 	private _id: string
 	private _username: string
@@ -45,6 +48,25 @@ class Customer {
 	get notes() { return this._notes }
 	get imagePath() { return this._imagePath }
 	get status() { return this._status }
+
+	static async fetchActive(setActiveUser: (user: Customer | null) => void): Promise<Customer | null> {
+		const response: ApiResponse = await fetch(getServerUrl() + '/api/auth/session', {
+			method: 'GET',
+			credentials: 'include',
+			headers: { 'Content-Type': 'application/json' }
+		}).then(res => res.json()).catch(() => apiResponse(400, 'API_AUTH_SESSION', false, 'Network error'))
+
+		if (!response.passed) {
+			setActiveUser(null)
+			return null
+		}
+
+		const user = new Customer(response.data as Customer)
+
+		setActiveUser(user)
+
+		return user
+	}
 }
 
 export default Customer

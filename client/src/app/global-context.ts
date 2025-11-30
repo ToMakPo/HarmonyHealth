@@ -4,7 +4,6 @@ import Customer from '../models/Customer'
 export interface IGlobalContext {
 	activeUser: Customer | null
 	setActiveUser: React.Dispatch<React.SetStateAction<Customer | null>>
-	fetchUser: () => Promise<Customer | null>
 }
 
 export const GlobalContext = React.createContext<IGlobalContext | null>(null)
