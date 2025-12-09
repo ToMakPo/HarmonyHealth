@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { apiResponse } from '../lib/response'
+import { apiResponse } from '../lib/apiResponse'
 
 const router = Router()
 
