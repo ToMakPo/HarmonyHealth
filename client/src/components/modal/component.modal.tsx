@@ -66,9 +66,19 @@ const Modal = forwardRef<ModalRef, ModalProps>((props, ref) => {
 	return <>
 		<dialog {...modalProps} ref={dialogRef} onClose={close}>
 			{!isOpen ? null : <>
-				{props.header && <h2 id={`${id}-header`} className="modal-header">{props.header}</h2>}
+				{props.header && 
+					<h2 id={`${id}-header`} 
+						className="modal-header"
+					>{props.header}</h2>
+				}
 				{props.children}
-				<button type="button" className="modal-close-button" onClick={close} aria-label="Close modal">❌</button>
+				
+				<button 
+					className="modal-close-button" 
+					type="button" 
+					onClick={close} 
+					aria-label="Close modal"
+				>❌</button>
 			</>}
 		</dialog>
 	</>

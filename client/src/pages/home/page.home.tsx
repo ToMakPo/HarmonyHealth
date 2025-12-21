@@ -1,3 +1,4 @@
+import ServiceCard from "../../components/service-card/component.service-card"
 import { getImagePath } from "../../lib/utils"
 
 import "./styles.home.sass"
@@ -56,19 +57,22 @@ const HomePage: React.FC = () => {
 	const topServiceSection = (
 		<section id="top-service-section">
 			<h2>Our Top Services</h2>
-			<div id="service-cards-container">
-				<div className="service-card">
-					<h3>General Health Check-ups</h3>
-					<p>Comprehensive health assessments to keep you in optimal condition.</p>
-				</div>
-				<div className="service-card">
-					<h3>Specialized Medical Consultations</h3>
-					<p>Expert advice and treatment plans from our team of specialists.</p>
-				</div>
-				<div className="service-card">
-					<h3>Wellness Programs</h3>
-					<p>Personalized programs designed to enhance your overall well-being.</p>
-				</div>
+			<div id="service-cards">
+				<ServiceCard
+					title="Botox"
+					description="Smooth Wrinkles with Botox, Dysport & Daxxify Treatments"
+					imageSrc={getImagePath('service - woman getting botox.png')}
+				/>
+				<ServiceCard
+					title="Dermal Fillers"
+					description="Enhance Facial Contours & Youthful Skin"
+					imageSrc={getImagePath('service - woman getting fillers.png')}
+				/>
+				<ServiceCard
+					title="Microneedling"
+					description="Stimulate collagen production to reduce scars, fine lines, and enlarged pores."
+					imageSrc={getImagePath('service - woman getting microneedling.png')}
+				/>
 			</div>
 		</section>
 	)
