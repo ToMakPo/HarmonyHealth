@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
 import db from "../database"
-import { ApiResponse, apiResponse } from "../lib/apiResponse"
+import { type ApiResponse, apiResponse } from "../lib/apiResponse"
 import { ElementType, Flatten, FlattenChild, Optional, Queryable, Ranged } from "../lib/customUtilityTypes"
 
 /////////////////////////////////
@@ -177,16 +177,16 @@ class Service implements ServiceType {
 	 * Set the sort order of the service, adjusting other services accordingly.
 	 * 
 	 * @param value The new sort order value.
-	 * @param returnResult Whether to return an ApiResponse or the Service instance.
+	 * @param returnApiResponse Whether to return an ApiResponse or the Service instance.
 	 * @returns The updated Service instance or an ApiResponse indicating success or failure.
 	 */ 
-	async setSortOrder(value: number, returnResult: boolean = false) : Promise<Service | ApiResponse> {
+	async setSortOrder(value: number, returnApiResponse: boolean = true) : Promise<Service | ApiResponse> {
 		const code = 'UPDATE_SERVICE_SORT_ORDER'
 
 		// Validate the new sort order.
 		const validationResult = Service.validateSortOrder(value, true) as ApiResponse
 		if (!validationResult.passed) {
-			if (!returnResult) throw new Error(validationResult.message)
+			if (!returnApiResponse) throw new Error(validationResult.message)
 			return validationResult
 		}
 
@@ -199,7 +199,7 @@ class Service implements ServiceType {
 
 		// If the sort order is not changing, do nothing.
 		if (this._sortOrder === value) {
-			return !returnResult ? this
+			return !returnApiResponse ? this
 				: apiResponse(201, code, false, 'Sort order is already set to the specified value.', this, 'service_update_sort_order')
 		}
 
@@ -227,12 +227,12 @@ class Service implements ServiceType {
 
 		if (!updatedService) {
 			const errorMsg = 'Failed to update service sort order.'
-			if (!returnResult) throw new Error(errorMsg)
+			if (!returnApiResponse) throw new Error(errorMsg)
 			return apiResponse(400, code, false, errorMsg, { id: this._id, sortOrder: this._sortOrder }, 'service_update_sort_order')
 		}
 
 		// Return the result.
-		return !returnResult ? this
+		return !returnApiResponse ? this
 			: apiResponse(200, code, true, 'Service sort order updated successfully.', this, 'service_update_sort_order')
 	}
 
@@ -269,23 +269,23 @@ class Service implements ServiceType {
 	 * > - cost: number - The approximate cost of the package to the provider.
 	 * > - price: number - The price charged to the customer for the package.
 	 * > - duration: number - The duration of the package in minutes.
-	 * @param returnResult Whether to return the updated service or an ApiResponse.
+	 * @param returnApiResponse Whether to return the updated service or an ApiResponse.
 	 * @returns The updated Service instance or an ApiResponse indicating success or failure.
 	 */
-	async update(data: Partial<Omit<Service, 'id'>>, returnResult: boolean = false) : Promise<Service | ApiResponse> {
+	async update(data: Partial<Omit<Service, 'id'>>, returnApiResponse: boolean = true) : Promise<Service | ApiResponse> {
 		const code = 'UPDATE_SERVICE'
 
 		// Make sure there is data to update.
 		if (Object.keys(data).length === 0) {
 			const errorMsg = 'No data provided for update.'
-			if (!returnResult) throw new Error(errorMsg)
+			if (!returnApiResponse) throw new Error(errorMsg)
 			return apiResponse(400, code, false, errorMsg, { id: this._id, data }, 'service_update')
 		}
 
 		// Validate the provided data.
 		const validationResult = Service.validate(data, true) as ApiResponse
 		if (!validationResult.passed) {
-			if (!returnResult) throw new Error(validationResult.message)
+			if (!returnApiResponse) throw new Error(validationResult.message)
 			return validationResult
 		}
 
@@ -296,7 +296,7 @@ class Service implements ServiceType {
 			const sortOrderResult = await this.setSortOrder(data.sortOrder, true) as ApiResponse
 			
 			if (!sortOrderResult.passed) {
-				if (!returnResult) throw new Error(sortOrderResult.message)
+				if (!returnApiResponse) throw new Error(sortOrderResult.message)
 				return sortOrderResult
 			}
 		}
@@ -313,16 +313,16 @@ class Service implements ServiceType {
 
 		if (!updatedService) {
 			const errorMsg = 'Failed to update service.'
-			if (!returnResult) throw new Error(errorMsg)
+			if (!returnApiResponse) throw new Error(errorMsg)
 			return apiResponse(401, code, false, errorMsg, { id: this._id, data }, 'service_update')
 		}
 
 		// Return the result.
-		return !returnResult ? this : updatedService
+		return !returnApiResponse ? this : updatedService
 	}
 
 	/** Save the current service instance to the database. */
-	async save(returnResult: boolean = false) : Promise<Service | ApiResponse> {
+	async save(returnApiResponse: boolean = true) : Promise<Service | ApiResponse> {
 		const code = 'SAVE_SERVICE'
 
 		// Prepare the data to be saved.
@@ -339,12 +339,12 @@ class Service implements ServiceType {
 		const updatedService = await ServiceModel.findByIdAndUpdate(this._id, dataToSave, { new: true }).exec()
 		
 		if (!updatedService) {
-			if (!returnResult) throw new Error('Failed to update service')
+			if (!returnApiResponse) throw new Error('Failed to update service')
 			return apiResponse(400, code, false, 'Failed to update service', this.toJSON(), 'service_save')
 		}
 
 		// Return the result.
-		return !returnResult ? this
+		return !returnApiResponse ? this
 			: apiResponse(200, code, true, 'Service saved successfully', this.toJSON(), 'service_save')
 	}
 
@@ -361,11 +361,11 @@ class Service implements ServiceType {
 	}
 
 	toString(): string {
-		return 'Service: ' + this._name + ' (' + this._id + ')'
+		return `Service: '${this._name}' ('${this._id}')`
 	}
 
 	toRepr(): string {
-		return `Service { id: ${this._id}, name: ${this._name}, description: ${this._description}, details: ${this._details}, sortOrder: ${this._sortOrder}, topService: ${this._topService}, packages: [${this._packages.toRepr()}] }`
+		return `Service { id: ${this._id}, name: ${this._name}, description: ${this._description}, details: ${this._details}, sortOrder: ${this._sortOrder}, topService: ${this._topService}, packages: [${this._packages.toJSON()}] }`
 	}
 
 	// #endregion Properties
@@ -399,7 +399,7 @@ class Service implements ServiceType {
 	 * - `package_duration`: number - Exact duration of the package in minutes
 	 * - `package_minDuration`: number - Minimum duration of the package in minutes if no exact duration is provided
 	 * - `package_maxDuration`: number - Maximum duration of the package in minutes if no exact duration is provided
-	 * @param returnResult Whether to return the services or an ApiResponse.
+	 * @param returnApiResponse Whether to return the services or an ApiResponse.
 	 * @returns Promise resolving to an array of Service instances matching the filters.
 	 * 
 	 * @example
@@ -412,14 +412,14 @@ class Service implements ServiceType {
 	 * // Find top services with package cost between 100 and 500
 	 * const topCostlyServices = await Service.find({ topService: true, package_minCost: 100, package_maxCost: 500 })
 	 */
-	static async find(filters?: FilterType, returnResult: boolean = false): Promise<Service[] | ApiResponse> {
+	static async find(filters?: FilterType, returnApiResponse: boolean = true): Promise<Service[] | ApiResponse> {
 		const code = 'FIND_SERVICES'
 
 		// If no filters provided, return all services
 		if (!filters || Object.keys(filters).length === 0) {
 			const serviceDatas = await ServiceModel.find().exec()
 			const services = serviceDatas.map((sd: { toObject: () => Service }) => new Service(sd.toObject()))
-			return !returnResult ? services
+			return !returnApiResponse ? services
 				: apiResponse(200, code, true, 'All services retrieved successfully.', services, 'service_find')
 		}
 
@@ -461,7 +461,7 @@ class Service implements ServiceType {
 
 		const serviceDatas = await ServiceModel.find(query).exec()
 		const services = serviceDatas.map((sd: { toObject: () => Service }) => new Service(sd.toObject()))
-		return !returnResult ? services
+		return !returnApiResponse ? services
 			: apiResponse(201, code, true, 'Services retrieved successfully.', services, 'service_find')
 	}
 
@@ -481,9 +481,9 @@ class Service implements ServiceType {
 	 * > - cost: number - Cost of the package to the provider.
 	 * > - price: number - Price of the package charged to the customer.
 	 * > - duration: number - Duration of the package in minutes.
-	 * @param returnResult Whether to return the inserted service or an ApiResponse.
+	 * @param returnApiResponse Whether to return the inserted service or an ApiResponse.
 	 */
-	static async insert(data: InputType, returnResult: boolean = false): Promise<Service | ApiResponse> {
+	static async insert(data: InputType, returnApiResponse: boolean = true): Promise<Service | ApiResponse> {
 		const code = 'INSERT_SERVICE'
 
 		// Add an id if not provided.
@@ -496,7 +496,7 @@ class Service implements ServiceType {
 		// Validate the provided data.
 		const validationResult = Service.validate(data, true) as ApiResponse
 		if (!validationResult.passed) {
-			if (!returnResult) throw new Error(validationResult.message)
+			if (!returnApiResponse) throw new Error(validationResult.message)
 			return validationResult
 		}
 
@@ -535,13 +535,13 @@ class Service implements ServiceType {
 				return ['Failed to insert new service into database:\n' + e.message, 498]
 			})(e)
 
-			if (!returnResult) throw new Error(errorMsg)
+			if (!returnApiResponse) throw new Error(errorMsg)
 			return apiResponse(errorId, code, false, errorMsg, { data }, 'service_insert')
 		}
 		const serviceData = savedServiceModel.toObject() as unknown as Service
 		const newService = new Service(serviceData)
 
-		return !returnResult ? newService
+		return !returnApiResponse ? newService
 			: apiResponse(200, code, true, 'Service inserted successfully.', newService, 'service_insert')
 	}
 
@@ -561,10 +561,10 @@ class Service implements ServiceType {
 	 * > - cost: number - The approximate cost of the package to the provider.
 	 * > - price: number - The price charged to the customer for the package.
 	 * > - duration: number - The duration of the package in minutes.
-	 * @param returnResult Whether to return the updated service or an ApiResponse.
+	 * @param returnApiResponse Whether to return the updated service or an ApiResponse.
 	 * @returns The updated Service instance or an ApiResponse indicating success or failure.
 	 */
-	static async update(id: string, data: Partial<Omit<Service, 'id'>>, returnResult: boolean = false) {
+	static async update(id: string, data: Partial<Omit<Service, 'id'>>, returnApiResponse: boolean = true) {
 		const code = 'STATIC_UPDATE_SERVICE'
 
 		// Find the service instance.
@@ -572,7 +572,7 @@ class Service implements ServiceType {
 
 		if (!serviceInstance) {
 			const errorMsg = `The service with id ${id} not found.`
-			if (!returnResult) throw new Error(errorMsg)
+			if (!returnApiResponse) throw new Error(errorMsg)
 			return apiResponse(401, code, false, errorMsg, { id, data }, 'service_update')
 		}
 
@@ -581,17 +581,17 @@ class Service implements ServiceType {
 		const service = new Service(serviceData)
 
 		// Use the instance's update method to perform the update.
-		return service.update(data, returnResult)
+		return service.update(data, returnApiResponse)
 	}
 
 	/**
 	 * Delete a service by id.
 	 *
 	 * @param id The id of the service to delete.
-	 * @param returnResult Whether to return a boolean or an ApiResponse.
+	 * @param returnApiResponse Whether to return a boolean or an ApiResponse.
 	 * @returns True if deletion was successful, false otherwise, or an ApiResponse.
 	 */
-	static async delete(id: string, returnResult: boolean = false): Promise<boolean | ApiResponse> {
+	static async delete(id: string, returnApiResponse: boolean = true): Promise<boolean | ApiResponse> {
 		const code = 'DELETE_SERVICE'
 
 		const deletedService = await ServiceModel.findByIdAndDelete(id).exec()
@@ -599,7 +599,7 @@ class Service implements ServiceType {
 
 		if (!passed) {
 			const errorMsg = `Service with id ${id} not found for deletion.`
-			if (!returnResult) throw new Error(errorMsg)
+			if (!returnApiResponse) throw new Error(errorMsg)
 			return apiResponse(400, code, false, errorMsg, { id }, 'service_delete')
 		}
 
@@ -611,7 +611,7 @@ class Service implements ServiceType {
 		).exec()
 
 		// Return the result.
-		return !returnResult ? true
+		return !returnApiResponse ? true
 			: apiResponse(200, code, true, 'Service deleted successfully.', { id }, 'service_delete')
 	}
 
@@ -626,17 +626,17 @@ class Service implements ServiceType {
 	 * - cost: number | { min?: number; max?: number } (optional) - The cost of the package or a range to search within.
 	 * - price: number | { min?: number; max?: number } (optional) - The price of the package or a range to search within.
 	 * - duration: number | { min?: number; max?: number } (optional) - The duration of the package in minutes or a range to search within.
-	 * @param returnResult Whether to return the found package or an ApiResponse.
+	 * @param returnApiResponse Whether to return the found package or an ApiResponse.
 	 * @returns The found Package instance or an ApiResponse indicating success or failure.
 	 */
-	static async findPackage(serviceId: string, packageData: Partial<Ranged<Queryable<PackageType, 'id'>, 'cost' | 'price' | 'duration'>>, returnResult: boolean = false): Promise<PackageType | ApiResponse> {
+	static async findPackage(serviceId: string, packageData: Partial<Ranged<Queryable<PackageType, 'id'>, 'cost' | 'price' | 'duration'>>, returnApiResponse: boolean = true): Promise<PackageType | ApiResponse> {
 		const code = 'SERVICE_FIND_PACKAGE'
 
 		// Find the service instance.
 		const serviceInstance = await Service.find({ id: serviceId }, true) as ApiResponse
 
 		if (!serviceInstance.passed) {
-			if (!returnResult) throw new Error(serviceInstance.message)
+			if (!returnApiResponse) throw new Error(serviceInstance.message)
 			return serviceInstance
 		}
 
@@ -646,14 +646,14 @@ class Service implements ServiceType {
 		const response = await service._packages.find(packageData, true) as ApiResponse
 
 		if (!response.passed) {
-			if (!returnResult) throw new Error(response.message)
+			if (!returnApiResponse) throw new Error(response.message)
 			return response
 		}
 
 		const found = response.data as ApiResponse
 
 		// Return the found package.
-		return !returnResult ? found
+		return !returnApiResponse ? found
 			: apiResponse(200, code, true, 'Package found successfully.', found, 'service_find_package')
 	}
 
@@ -668,16 +668,16 @@ class Service implements ServiceType {
 	 * - cost: number - The approximate cost of the package to the provider.
 	 * - price: number - The price charged to the customer for the package.
 	 * - duration: number - The duration of the package in minutes.
-	 * @param returnResult Whether to return the added package or an ApiResponse.
+	 * @param returnApiResponse Whether to return the added package or an ApiResponse.
 	 * @returns The added Package instance or an ApiResponse indicating success or failure.
 	 */
-	static async addPackage(serviceId: string, packageData: Optional<PackageType, 'id'>, returnResult: boolean = false): Promise<PackageType | ApiResponse> {
+	static async addPackage(serviceId: string, packageData: Optional<PackageType, 'id'>, returnApiResponse: boolean = true): Promise<PackageType | ApiResponse> {
 		const code = 'SERVICE_ADD_PACKAGE'
 
 		// Find the service instance.
 		const serviceInstance = await Service.find({ id: serviceId }, true) as ApiResponse
 		if (!serviceInstance.passed) {
-			if (!returnResult) throw new Error(serviceInstance.message)
+			if (!returnApiResponse) throw new Error(serviceInstance.message)
 			return serviceInstance
 		}
 
@@ -687,7 +687,7 @@ class Service implements ServiceType {
 		const response = await service._packages.add(packageData, true) as ApiResponse
 
 		if (!response.passed) {
-			if (!returnResult) throw new Error(response.message)
+			if (!returnApiResponse) throw new Error(response.message)
 			return response
 		}
 
@@ -697,12 +697,12 @@ class Service implements ServiceType {
 		const saveResult = await service.save(true) as ApiResponse
 
 		if (!saveResult.passed) {
-			if (!returnResult) throw new Error(saveResult.message)
+			if (!returnApiResponse) throw new Error(saveResult.message)
 			return saveResult
 		}
 
 		// Return the added package.
-		return !returnResult ? added
+		return !returnApiResponse ? added
 			: apiResponse(200, code, true, 'Package added successfully.', added, 'service_add_package')
 	}
 
@@ -716,17 +716,17 @@ class Service implements ServiceType {
 	 * - cost: number (optional) - The approximate cost of the package to the provider.
 	 * - price: number (optional) - The price charged to the customer for the package.
 	 * - duration: number (optional) - The duration of the package in minutes.
-	 * @param returnResult Whether to return the updated package or an ApiResponse.
+	 * @param returnApiResponse Whether to return the updated package or an ApiResponse.
 	 * @returns The updated Package instance or an ApiResponse indicating success or failure.
 	 */
-	static async updatePackage(packageId: string, packageData: Partial<Omit<PackageType, 'id'>>, returnResult: boolean = false): Promise<PackageType | ApiResponse> {
+	static async updatePackage(packageId: string, packageData: Partial<Omit<PackageType, 'id'>>, returnApiResponse: boolean = true): Promise<PackageType | ApiResponse> {
 		const code = 'SERVICE_UPDATE_PACKAGE'
 
 		// Find the service instance.
 		const serviceInstance = await Service.find({ 'package_id': packageId }, true) as ApiResponse
 
 		if (!serviceInstance.passed) {
-			if (!returnResult) throw new Error(serviceInstance.message)
+			if (!returnApiResponse) throw new Error(serviceInstance.message)
 			return serviceInstance
 		}
 
@@ -736,7 +736,7 @@ class Service implements ServiceType {
 		const response = await service._packages.update(packageId, packageData, true) as ApiResponse
 
 		if (!response.passed) {
-			if (!returnResult) throw new Error(response.message)
+			if (!returnApiResponse) throw new Error(response.message)
 			return response
 		}
 
@@ -746,12 +746,12 @@ class Service implements ServiceType {
 		const saveResult = await service.save(true) as ApiResponse
 
 		if (!saveResult.passed) {
-			if (!returnResult) throw new Error(saveResult.message)
+			if (!returnApiResponse) throw new Error(saveResult.message)
 			return saveResult
 		}
 
 		// Return the updated package.
-		return !returnResult ? updated
+		return !returnApiResponse ? updated
 			: apiResponse(200, code, true, 'Package updated successfully.', updated, 'service_update_package')
 	}
 
@@ -759,17 +759,17 @@ class Service implements ServiceType {
 	 * Remove a package from a service by package id.
 	 *
 	 * @param packageId The id of the package to remove.
-	 * @param returnResult Whether to return a boolean or an ApiResponse.
+	 * @param returnApiResponse Whether to return a boolean or an ApiResponse.
 	 * @returns True if removal was successful, false otherwise, or an ApiResponse.
 	 */
-	static async removePackage(packageId: string, returnResult: boolean = false): Promise<boolean | ApiResponse> {
+	static async removePackage(packageId: string, returnApiResponse: boolean = true): Promise<boolean | ApiResponse> {
 		const code = 'SERVICE_REMOVE_PACKAGE'
 
 		// Find the service instance.
 		const serviceInstance = await Service.find({ 'package_id': packageId }, true) as ApiResponse
 
 		if (!serviceInstance.passed) {
-			if (!returnResult) throw new Error(serviceInstance.message)
+			if (!returnApiResponse) throw new Error(serviceInstance.message)
 			return serviceInstance
 		}
 
@@ -779,7 +779,7 @@ class Service implements ServiceType {
 		const response = await service._packages.remove(packageId, true) as ApiResponse
 
 		if (!response.passed) {
-			if (!returnResult) throw new Error(response.message)
+			if (!returnApiResponse) throw new Error(response.message)
 			return response
 		}
 
@@ -789,12 +789,12 @@ class Service implements ServiceType {
 		const saveResult = await service.save(true) as ApiResponse
 		
 		if (!saveResult.passed) {
-			if (!returnResult) throw new Error(saveResult.message)
+			if (!returnApiResponse) throw new Error(saveResult.message)
 			return saveResult
 		}
 
 		// Return the result.
-		return !returnResult ? removed
+		return !returnApiResponse ? removed
 			: apiResponse(200, code, true, 'Package removed successfully.', { packageId, removed }, 'service_remove_package')
 	}
 
@@ -807,7 +807,7 @@ class Service implements ServiceType {
 	///////////////////////////////
 	// #region Data Validation
 
-	static validate(values: Record<string, any>, returnResult: boolean = false): boolean | ApiResponse {
+	static validate(values: Record<string, any>, returnApiResponse: boolean = true): boolean | ApiResponse {
 		const code = 'VALIDATE_SERVICE'
 
 		const validValues: Record<string, any> = {}
@@ -819,11 +819,11 @@ class Service implements ServiceType {
 			sortOrder: Service.validateSortOrder,
 			topService: Service.validateTopService,
 			packages: Service.validatePackages
-		} as Record<string, (value: any, returnResult: boolean) => any>
+		} as Record<string, (value: any, returnApiResponse: boolean) => any>
 
 		// Check that at least one value is provided.
 		if (!values || Object.keys(values).length === 0)
-			return !returnResult ? false
+			return !returnApiResponse ? false
 				: apiResponse(400, code, false, 'No service values provided for validation.', {}, 'service')
 
 		// Validate each provided value using the corresponding validation function.
@@ -831,7 +831,7 @@ class Service implements ServiceType {
 			const validateFn = options[oKey]
 
 			if (!validateFn)
-				return !returnResult ? false
+				return !returnApiResponse ? false
 					: apiResponse(401, code, false, `Validation function for ${oKey} not found.`, { [oKey]: oValue }, 'service')
 
 			const key = oKey as keyof Record<string, any>
@@ -839,23 +839,23 @@ class Service implements ServiceType {
 			// Validate the value.
 			const result = validateFn(oValue, true) as ApiResponse
 			
-			if (!result.passed) return !returnResult ? false : result
+			if (!result.passed) return !returnApiResponse ? false : result
 			
 			// Store the valid value.
 			validValues[key] = (result.data as Record<string, any>)[key]
 		}
 
 		// All values are valid.
-		return !returnResult ? true
+		return !returnApiResponse ? true
 			: apiResponse(200, code, true, 'All service values are valid.', validValues as Partial<Omit<Service, 'id'>>, 'service')
 	}
 
-	static validateId(value: any, returnResult: boolean = false): boolean | ApiResponse {
+	static validateId(value: any, returnApiResponse: boolean = true): boolean | ApiResponse {
 		const code = 'VALIDATE_SERVICE_ID'
 
 		// Check that the value is a string.
 		if (typeof value !== 'string')
-			return !returnResult ? false
+			return !returnApiResponse ? false
 				: apiResponse(400, code, false, 'Service id must be a string.', { id: value }, 'service_id')
 
 		// Trim the value and set to id.
@@ -864,20 +864,20 @@ class Service implements ServiceType {
 		// Check that id a valid MongoDB ObjectId.
 		const objectIdRegex = /^[0-9a-fA-F]{24}$/
 		if (!objectIdRegex.test(id))
-			return !returnResult ? false
+			return !returnApiResponse ? false
 				: apiResponse(401, code, false, 'Service id must be a valid MongoDB ObjectId.', { id }, 'service_id')
 
 		// Id is valid
-		return !returnResult ? true
+		return !returnApiResponse ? true
 			: apiResponse(200, code, true, 'Service id is valid.', { id }, 'service_id')
 	}
 
-	static validateName(value: any, returnResult: boolean = false) {
+	static validateName(value: any, returnApiResponse: boolean = true) {
 		const code = 'VALIDATE_SERVICE_NAME'
 
 		// Check that the value is a string.
 		if (typeof value !== 'string')
-			return !returnResult ? false
+			return !returnApiResponse ? false
 				: apiResponse(400, code, false, 'Service name must be a string.', { name: value }, 'service_name')
 
 		// Trim the value and set to name.
@@ -885,30 +885,30 @@ class Service implements ServiceType {
 
 		// Validate name length.
 		if (name.length === 0)
-			return !returnResult ? false
+			return !returnApiResponse ? false
 				: apiResponse(401, code, false, 'Service name cannot be empty.', { name }, 'service_name')
 
 		const minLength = 3
 		if (name.length < minLength)
-			return !returnResult ? false
+			return !returnApiResponse ? false
 				: apiResponse(402, code, false, `Service name must be at least ${minLength} characters long.`, { name }, 'service_name')
 
 		const maxLength = 100
 		if (name.length > maxLength)
-			return !returnResult ? false
+			return !returnApiResponse ? false
 				: apiResponse(403, code, false, `Service name must be no more than ${maxLength} characters long.`, { name }, 'service_name')
 
 		// Name is valid
-		return !returnResult ? true
+		return !returnApiResponse ? true
 			: apiResponse(200, code, true, 'Service name is valid.', { name }, 'service_name')
 	}
 
-	static validateDescription(value: any, returnResult: boolean = false) {
+	static validateDescription(value: any, returnApiResponse: boolean = true) {
 		const code = 'VALIDATE_SERVICE_DESCRIPTION'
 
 		// Check that the value is a string.
 		if (typeof value !== 'string')
-			return !returnResult ? false
+			return !returnApiResponse ? false
 				: apiResponse(400, code, false, 'Service description must be a string.', { description: value }, 'service_description')
 
 		// Trim the value and set to description.
@@ -916,40 +916,40 @@ class Service implements ServiceType {
 
 		// Validate description length.
 		if (description.length === 0)
-			return !returnResult ? false
+			return !returnApiResponse ? false
 				: apiResponse(401, code, false, 'Service description cannot be empty.', { description }, 'service_description')
 
 		const minLength = 10
 		if (description.length < minLength)
-			return !returnResult ? false
+			return !returnApiResponse ? false
 				: apiResponse(402, code, false, `Service description must be at least ${minLength} characters long.`, { description }, 'service_description')
 		const maxLength = 500
 		if (description.length > maxLength)
-			return !returnResult ? false
+			return !returnApiResponse ? false
 				: apiResponse(403, code, false, `Service description must be no more than ${maxLength} characters long.`, { description }, 'service_description')
 
 		// Description is valid
-		return !returnResult ? true
+		return !returnApiResponse ? true
 			: apiResponse(200, code, true, 'Service description is valid.', { description }, 'service_description')
 	}
 
-	static validateDetails(value: any, returnResult: boolean = false) {
+	static validateDetails(value: any, returnApiResponse: boolean = true) {
 		const code = 'VALIDATE_SERVICE_DETAILS'
 
 		// Check that the value is a string.
 		if (typeof value !== 'string')
-			return !returnResult ? false
+			return !returnApiResponse ? false
 				: apiResponse(400, code, false, 'Service details must be a string.', { details: value }, 'service_details')
 
 		// Trim the value and set to details.
 		const details = value.trim() as string
 
 		// Details is valid
-		return !returnResult ? true
+		return !returnApiResponse ? true
 			: apiResponse(200, code, true, 'Service details are valid.', { details }, 'service_details')
 	}
 
-	static validateSortOrder(value: any, returnResult: boolean = false) {
+	static validateSortOrder(value: any, returnApiResponse: boolean = true) {
 		const code = 'VALIDATE_SERVICE_SORT_ORDER'
 
 		// Attempt to parse it as an integer.
@@ -957,40 +957,40 @@ class Service implements ServiceType {
 
 		// Check that sort order is a number.
 		if (typeof sortOrder !== 'number' || isNaN(sortOrder))
-			return !returnResult ? false
+			return !returnApiResponse ? false
 				: apiResponse(400, code, false, 'Service sort order must be a number.', { sortOrder: value }, 'service_sort_order')
 
 		// Check that sort order is an integer.
 		if (!Number.isInteger(sortOrder))
-			return !returnResult ? false
+			return !returnApiResponse ? false
 				: apiResponse(401, code, false, 'Service sort order must be an integer.', { sortOrder }, 'service_sort_order')
 
 		// Sort order is valid
-		return !returnResult ? true
+		return !returnApiResponse ? true
 			: apiResponse(200, code, true, 'Service sort order is valid.', { sortOrder }, 'service_sort_order')
 	}
 
-	static validateTopService(value: any, returnResult: boolean = false) {
+	static validateTopService(value: any, returnApiResponse: boolean = true) {
 		const code = 'VALIDATE_SERVICE_TOP_SERVICE'
 
 		const topService = Boolean(value)
 
 		// Top service is valid
-		return !returnResult ? true
+		return !returnApiResponse ? true
 			: apiResponse(200, code, true, 'Service top service flag is valid.', { topService }, 'service_top_service')
 	}
 
-	static validatePackages(value: any, returnResult: boolean = false) {
+	static validatePackages(value: any, returnApiResponse: boolean = true) {
 		const code = 'VALIDATE_SERVICE_PACKAGE'
 
 		// Check that the value is an array.
 		if (!Array.isArray(value))
-			return !returnResult ? false
+			return !returnApiResponse ? false
 				: apiResponse(400, code, false, 'Packages must be an array.', { packages: value }, 'service_package')
 
 		// Check that there are at least one package.
 		if (value.length === 0)
-			return !returnResult ? false
+			return !returnApiResponse ? false
 				: apiResponse(401, code, false, 'Packages cannot be empty.', { packages: value }, 'service_package')
 
 		// Create an array to hold validated packages.
@@ -1001,7 +1001,7 @@ class Service implements ServiceType {
 			const ss = value[i]
 			const result = Package.validate(ss, true) as ApiResponse
 
-			if (!result.passed) return !returnResult ? false : result
+			if (!result.passed) return !returnApiResponse ? false : result
 
 			const validatedValues = result.data as Partial<Package>
 
@@ -1051,7 +1051,7 @@ class Package implements PackageType {
 
 	/** The parent Service instance that contains this Package. */
 	get parent() { return this._parent }
-	async setParent(serviceId: string, returnResult: boolean = false): Promise<Package | ApiResponse> {
+	async setParent(serviceId: string, returnApiResponse: boolean = true): Promise<Package | ApiResponse> {
 		const code = 'UPDATE_PACKAGE_PARENT'
 
 		// Find the new parent service.
@@ -1059,7 +1059,7 @@ class Package implements PackageType {
 
 		if (!result.passed || (result.data as Service[]).length === 0) {
 			const errorMsg = `Service with id ${serviceId} not found.`
-			if (!returnResult) throw new Error(errorMsg)
+			if (!returnApiResponse) throw new Error(errorMsg)
 			return apiResponse(400, code, false, errorMsg, { package: this.toJSON(), newParentServiceId: serviceId }, 'package_update_parent')
 		}
 
@@ -1067,7 +1067,7 @@ class Package implements PackageType {
 
 		// If the new parent is the same as the current parent, no changes are needed.
 		if (newParent.id === this._parent.id) {
-			return !returnResult ? this
+			return !returnApiResponse ? this
 				: apiResponse(201, code, true, 'Package parent is already the specified service.', this.toJSON(), 'package_update_parent')
 		}
 
@@ -1077,7 +1077,7 @@ class Package implements PackageType {
 
 		if (currentIndex === -1) {
 			const errorMsg = `Package id ${this._id} not found in current parent service id ${this._parent.id}.`
-			if (!returnResult) throw new Error(errorMsg)
+			if (!returnApiResponse) throw new Error(errorMsg)
 			return apiResponse(401, code, false, errorMsg, { package: this.toJSON(), currentParentService: this._parent.toJSON() }, 'package_update_parent')
 		}
 
@@ -1093,19 +1093,19 @@ class Package implements PackageType {
 		const oldParentSaveResult = await oldParent.save(true) as ApiResponse
 		if (!oldParentSaveResult.passed) {
 			const errorMsg = 'Failed to save old parent service after package parent update.'
-			if (!returnResult) throw new Error(errorMsg)
+			if (!returnApiResponse) throw new Error(errorMsg)
 			return apiResponse(402, code, false, errorMsg, { package: this.toJSON(), oldParentService: oldParent.toJSON() }, 'package_update_parent')
 		}
 
 		const newParentSaveResult = await newParent.save(true) as ApiResponse
 		if (!newParentSaveResult.passed) {
 			const errorMsg = 'Failed to save new parent service after package parent update.'
-			if (!returnResult) throw new Error(errorMsg)
+			if (!returnApiResponse) throw new Error(errorMsg)
 			return apiResponse(403, code, false, errorMsg, { package: this.toJSON(), newParentService: newParent.toJSON() }, 'package_update_parent')
 		}
 
 		// Return the result.
-		return !returnResult ? this
+		return !returnApiResponse ? this
 			: apiResponse(200, code, true, 'Package parent updated successfully.', this.toJSON(), 'package_update_parent')
 	}
 
@@ -1167,17 +1167,17 @@ class Package implements PackageType {
 	 * Move the Package instance to a new index within its parent Service's packages array.
 	 * 
 	 * @param newIndex The new index to move the package to.
-	 * @param returnResult Whether to return an ApiResponse or the Package instance. (default: `false`)
+	 * @param returnApiResponse Whether to return an ApiResponse or the Package instance. (default: `false`)
 	 * @returns The updated Package instance or an ApiResponse indicating the result of the operation.
 	 */
-	async setIndex(newIndex: number, returnResult: boolean = false): Promise<Package | ApiResponse> {
+	async setIndex(newIndex: number, returnApiResponse: boolean = true): Promise<Package | ApiResponse> {
 		const code = 'MOVE_PACKAGE_INSTANCE'
 
 		// Find the current index of this package in the parent's packages array.
 		const currentIndex = this._parent.packages.findIndex(pkg => pkg.id === this._id)
 		if (currentIndex === -1) {
 			const errorMsg = `Package id ${this._id} not found in parent service id ${this._parent.id}.`
-			if (!returnResult) throw new Error(errorMsg)
+			if (!returnApiResponse) throw new Error(errorMsg)
 			return apiResponse(401, code, false, errorMsg, { package: this.toJSON(), parentService: this._parent.toJSON() }, 'package_move')
 		}
 
@@ -1188,7 +1188,7 @@ class Package implements PackageType {
 
 		// If the new index is the same as the current index, no changes are needed.
 		if (adjustedIndex === currentIndex) {
-			return !returnResult ? this
+			return !returnApiResponse ? this
 				: apiResponse(201, code, true, 'Package is already at the specified index.', this, 'package_move')
 		}
 
@@ -1200,7 +1200,7 @@ class Package implements PackageType {
 		await this._parent.save()
 
 		// Return the result.
-		return !returnResult ? this
+		return !returnApiResponse ? this
 			: apiResponse(200, code, true, 'Package moved successfully.', this, 'package_move')
 	}
 
@@ -1215,17 +1215,17 @@ class Package implements PackageType {
 	 * - cost: number - The approximate cost of the package to the provider.
 	 * - price: number - The price charged to the customer for the package.
 	 * - duration: number - Duration of the package in minutes. 
-	 * @param returnResult Whether to return an ApiResponse or the Package instance. (default: `false`)
+	 * @param returnApiResponse Whether to return an ApiResponse or the Package instance. (default: `false`)
 	 * @returns The updated Package instance or an ApiResponse indicating the result of the operation.
 	 */
-	async update(data: Partial<Omit<Package, 'id'>> & { parentId?: string, index?: number }, returnResult: boolean = false) : Promise<Package | ApiResponse> {
+	async update(data: Partial<Omit<Package, 'id'>> & { parentId?: string, index?: number }, returnApiResponse: boolean = true) : Promise<Package | ApiResponse> {
 		const code = 'UPDATE_PACKAGE_INSTANCE'
 
 		// Validate the provided data.
 		const validationResult = Package.validate(data, true) as ApiResponse
 		
 		if (!validationResult.passed) { 
-			if (!returnResult) throw new Error(validationResult.message)
+			if (!returnApiResponse) throw new Error(validationResult.message)
 			return validationResult
 		}
 
@@ -1236,7 +1236,7 @@ class Package implements PackageType {
 			const parentUpdateResult = await this.setParent(data.parentId, true) as ApiResponse
 
 			if (!parentUpdateResult.passed) {
-				if (!returnResult) throw new Error(parentUpdateResult.message)
+				if (!returnApiResponse) throw new Error(parentUpdateResult.message)
 				return parentUpdateResult
 			}
 		}
@@ -1246,7 +1246,7 @@ class Package implements PackageType {
 			const indexUpdateResult = await this.setIndex(data.index, true) as ApiResponse
 
 			if (!indexUpdateResult.passed) {
-				if (!returnResult) throw new Error(indexUpdateResult.message)
+				if (!returnApiResponse) throw new Error(indexUpdateResult.message)
 				return indexUpdateResult
 			}
 		}
@@ -1261,17 +1261,17 @@ class Package implements PackageType {
 
 		this.save()
 
-		return !returnResult ? this
+		return !returnApiResponse ? this
 			: apiResponse(200, code, true, 'Package updated successfully.', this, 'package_update')
 	}
 
 	/**
 	 * Save the current Package instance to the database.
 	 * 
-	 * @param returnResult Whether to return an ApiResponse or the Package instance. (default: `false`)
+	 * @param returnApiResponse Whether to return an ApiResponse or the Package instance. (default: `false`)
 	 * @returns The saved Package instance or an ApiResponse indicating the result of the operation.
 	 */
-	async save(returnResult: boolean = false): Promise<Package | ApiResponse> {
+	async save(returnApiResponse: boolean = true): Promise<Package | ApiResponse> {
 		const code = 'SAVE_PACKAGE_INSTANCE'
 
 		// Find the index of this package in the parent's packages array.
@@ -1279,7 +1279,7 @@ class Package implements PackageType {
 
 		if (index === -1) {
 			const errorMsg = `Package id ${this._id} not found in parent service id ${this._parent.id}.`
-			if (!returnResult) throw new Error(errorMsg)
+			if (!returnApiResponse) throw new Error(errorMsg)
 			return apiResponse(400, code, false, errorMsg, { package: this.toJSON(), parentService: this._parent.toJSON() }, 'package_save')
 		}
 
@@ -1291,7 +1291,7 @@ class Package implements PackageType {
 
 		if (!parentSaveResult.passed) {
 			const errorMsg = `Failed to save parent service (${this._parent.id}) while saving package (${this._id}).`
-			if (!returnResult) throw new Error(errorMsg)
+			if (!returnApiResponse) throw new Error(errorMsg)
 			return apiResponse(401, code, false, errorMsg, { package: this.toJSON(), parentService: this._parent.toJSON() }, 'package_save')
 		}
 
@@ -1313,12 +1313,12 @@ class Package implements PackageType {
 
 	/** Get a string representation of the Package instance. */
 	toString(): string {
-		return `Package: ${this._name} (${this._id})`
+		return `Service Package: ${this._name} (${this._id})`
 	}
 
 	/** Get a detailed string representation of the Package instance. */
 	toRepr(): string {
-		return `Package(id=${this._id}, name=${this._name}, description=${this._description}, cost=${this._cost}, price=${this._price}, duration=${this._duration})`
+		return `Service.Package (id=${this._id}, name=${this._name}, description=${this._description}, cost=${this._cost}, price=${this._price}, duration=${this._duration})`
 	}
 
 	// #endregion Properties
@@ -1330,7 +1330,7 @@ class Package implements PackageType {
 	///////////////////////////////
 	// #region Data Validation
 
-	static validate(values: Record<string, any>, returnResult: boolean = false) {
+	static validate(values: Record<string, any>, returnApiResponse: boolean = true) {
 		const code = 'VALIDATE_PACKAGE'
 
 		const validValues: Record<string, any> = {}
@@ -1341,34 +1341,34 @@ class Package implements PackageType {
 			cost: Package.validateCost,
 			price: Package.validatePrice,
 			duration: Package.validateDuration,
-		} as Record<string, (value: any, returnResult: boolean) => any>
+		} as Record<string, (value: any, returnApiResponse: boolean) => any>
 
 		// Validate each provided value using the corresponding validation function.
 		for (const [oKey, oValue] of Object.entries(values)) {
 			const validateFn = options[oKey]
 			if (!validateFn)
-				return !returnResult ? false
+				return !returnApiResponse ? false
 					: apiResponse(400, code, false, `Validation function for ${oKey} not found.`, { [oKey]: oValue }, 'package')
 
 			const key = oKey as keyof Record<string, any>
 
-			const result = validateFn(oValue, returnResult)
+			const result = validateFn(oValue, returnApiResponse)
 			if (!result.passed) return result
 
 			validValues[key] = result.data[key]
 		}
 
 		// All values are valid.
-		return !returnResult ? true
+		return !returnApiResponse ? true
 			: apiResponse(200, code, true, 'Package data is valid.', validValues as Partial<Package>, 'package')
 	}
 
-	static validateId(value: any, returnResult: boolean = false) {
+	static validateId(value: any, returnApiResponse: boolean = true) {
 		const code = 'VALIDATE_PACKAGE_ID'
 
 		// Check that the value is a string.
 		if (typeof value !== 'string')
-			return !returnResult ? false
+			return !returnApiResponse ? false
 				: apiResponse(400, code, false, 'Package id must be a string.', { id: value }, 'package_id')
 
 		// Trim the value and set to id.
@@ -1377,20 +1377,20 @@ class Package implements PackageType {
 		// Check that id a valid MongoDB ObjectId.
 		const objectIdRegex = /^[0-9a-fA-F]{24}$/
 		if (!objectIdRegex.test(id))
-			return !returnResult ? false
+			return !returnApiResponse ? false
 				: apiResponse(401, code, false, 'Package id must be a valid MongoDB ObjectId.', { id }, 'package_id')
 
 		// Id is valid.
-		return !returnResult ? true
+		return !returnApiResponse ? true
 			: apiResponse(200, code, true, 'Package id is valid.', { id }, 'package_id')
 	}
 
-	static validateName(value: any, returnResult: boolean = false) {
+	static validateName(value: any, returnApiResponse: boolean = true) {
 		const code = 'VALIDATE_PACKAGE_NAME'
 
 		// Check that the value is a string.
 		if (typeof value !== 'string')
-			return !returnResult ? false
+			return !returnApiResponse ? false
 				: apiResponse(400, code, false, 'Package name must be a string.', { name: value }, 'package_name')
 
 		// Trim the value and set to name.
@@ -1398,30 +1398,30 @@ class Package implements PackageType {
 
 		// Validate name length.
 		if (name.length === 0)
-			return !returnResult ? false
+			return !returnApiResponse ? false
 				: apiResponse(401, code, false, 'Package name cannot be empty.', { name }, 'package_name')
 
 		const minLength = 3
 		if (name.length < minLength)
-			return !returnResult ? false
+			return !returnApiResponse ? false
 				: apiResponse(402, code, false, `Package name must be at least ${minLength} characters long.`, { name }, 'package_name')
 
 		const maxLength = 100
 		if (name.length > maxLength)
-			return !returnResult ? false
+			return !returnApiResponse ? false
 				: apiResponse(403, code, false, `Package name must be no more than ${maxLength} characters long.`, { name }, 'package_name')
 
 		// Name is valid.
-		return !returnResult ? true
+		return !returnApiResponse ? true
 			: apiResponse(200, code, true, 'Package name is valid.', { name }, 'package_name')
 	}
 
-	static validateDescription(value: any, returnResult: boolean = false) {
+	static validateDescription(value: any, returnApiResponse: boolean = true) {
 		const code = 'VALIDATE_PACKAGE_DESCRIPTION'
 
 		// Check that the value is a string.
 		if (typeof value !== 'string')
-			return !returnResult ? false
+			return !returnApiResponse ? false
 				: apiResponse(400, code, false, 'Package description must be a string.', { description: value }, 'package_description')
 
 		// Trim the value and set to description.
@@ -1429,25 +1429,25 @@ class Package implements PackageType {
 
 		// Validate description length.
 		if (description.length === 0)
-			return !returnResult ? false
+			return !returnApiResponse ? false
 				: apiResponse(401, code, false, 'Package description cannot be empty.', { description }, 'package_description')
 
 		const minLength = 10
 		if (description.length < minLength)
-			return !returnResult ? false
+			return !returnApiResponse ? false
 				: apiResponse(402, code, false, `Package description must be at least ${minLength} characters long.`, { description }, 'package_description')
 
 		const maxLength = 500
 		if (description.length > maxLength)
-			return !returnResult ? false
+			return !returnApiResponse ? false
 				: apiResponse(403, code, false, `Package description must be no more than ${maxLength} characters long.`, { description }, 'package_description')
 
 		// Description is valid.
-		return !returnResult ? true
+		return !returnApiResponse ? true
 			: apiResponse(200, code, true, 'Package description is valid.', { description }, 'package_description')
 	}
 
-	static validateCost(value: any, returnResult: boolean = false) {
+	static validateCost(value: any, returnApiResponse: boolean = true) {
 		const code = 'VALIDATE_PACKAGE_COST'
 
 		// Attempt to parse it as a float.
@@ -1455,20 +1455,20 @@ class Package implements PackageType {
 
 		// Check that cost is a non-negative number.
 		if (typeof cost !== 'number' || isNaN(cost))
-			return !returnResult ? false
+			return !returnApiResponse ? false
 				: apiResponse(400, code, false, 'Package cost must be a non-negative number.', { cost: value }, 'package_cost')
 
 		// Check that cost is non-negative.
 		if (cost < 0)
-			return !returnResult ? false
+			return !returnApiResponse ? false
 				: apiResponse(401, code, false, 'Package cost cannot be negative.', { cost }, 'package_cost')
 
 		// Cost is valid.
-		return !returnResult ? true
+		return !returnApiResponse ? true
 			: apiResponse(200, code, true, 'Package cost is valid.', { cost }, 'package_cost')
 	}
 
-	static validatePrice(value: any, returnResult: boolean = false) {
+	static validatePrice(value: any, returnApiResponse: boolean = true) {
 		const code = 'VALIDATE_PACKAGE_PRICE'
 
 		// Attempt to parse it as a float.
@@ -1476,20 +1476,20 @@ class Package implements PackageType {
 
 		// Check that price is a non-negative number.
 		if (typeof price !== 'number' || isNaN(price))
-			return !returnResult ? false
+			return !returnApiResponse ? false
 				: apiResponse(400, code, false, 'Package price must be a non-negative number.', { price: value }, 'package_price')
 
 		// Check that price is non-negative.
 		if (price < 0)
-			return !returnResult ? false
+			return !returnApiResponse ? false
 				: apiResponse(401, code, false, 'Package price cannot be negative.', { price }, 'package_price')
 
 		// Price is valid.
-		return !returnResult ? true
+		return !returnApiResponse ? true
 			: apiResponse(200, code, true, 'Package price is valid.', { price }, 'package_price')
 	}
 
-	static validateDuration(value: any, returnResult: boolean = false) {
+	static validateDuration(value: any, returnApiResponse: boolean = true) {
 		const code = 'VALIDATE_PACKAGE_DURATION'
 
 		// Attempt to parse it as an integer.
@@ -1497,17 +1497,17 @@ class Package implements PackageType {
 
 		// Check that duration is a number.
 		if (typeof duration !== 'number' || isNaN(duration))
-			return !returnResult ? false
+			return !returnApiResponse ? false
 				: apiResponse(400, code, false, 'Package duration must be a number.', { duration: value }, 'package_duration')
 
 		// Check that duration is an integer.
 		if (!Number.isInteger(duration))
-			return !returnResult ? false
+			return !returnApiResponse ? false
 				: apiResponse(401, code, false, 'Package duration must be an integer.', { duration }, 'package_duration')
 
 		// Check that duration is non-negative.
 		if (duration < 0)
-			return !returnResult ? false
+			return !returnApiResponse ? false
 				: apiResponse(402, code, false, 'Package duration cannot be negative.', { duration }, 'package_duration')
 
 		// Duration is valid.
@@ -1548,7 +1548,7 @@ class Packages {
 		return this._items[index]
 	}
 
-	async find(data: Partial<Ranged<Queryable<PackageType, 'id'>, 'cost' | 'price' | 'duration'>>, returnResult: boolean = false) : Promise<Package[] | ApiResponse> {
+	async find(data: Partial<Ranged<Queryable<PackageType, 'id'>, 'cost' | 'price' | 'duration'>>, returnApiResponse: boolean = true) : Promise<Package[] | ApiResponse> {
 		const code = 'FIND_PACKAGE'
 
 		// Find the package based on provided data.
@@ -1578,17 +1578,17 @@ class Packages {
 		})
 
 		// Return the result.
-		return !returnResult ? found 
+		return !returnApiResponse ? found 
 			: apiResponse(200, code, true, 'Package found successfully.', found, 'service_find_package')
 	}
 
-	async add(data: Optional<PackageType, 'id'>, returnResult: boolean = false) : Promise<Package | ApiResponse> {
+	async add(data: Optional<PackageType, 'id'>, returnApiResponse: boolean = true) : Promise<Package | ApiResponse> {
 		const code = 'ADD_PACKAGE'
 
 		// Validate the package data.
 		const validationResult = Package.validate(data, true) as ApiResponse
 		if (!validationResult.passed) {
-			if (!returnResult) throw new Error(validationResult.message)
+			if (!returnApiResponse) throw new Error(validationResult.message)
 			return validationResult
 		}
 
@@ -1602,16 +1602,16 @@ class Packages {
 		const updatedServiceResponse = await this._parent.save(true) as ApiResponse
 
 		if (!updatedServiceResponse.passed) {
-			if (!returnResult) throw new Error(updatedServiceResponse.message)
+			if (!returnApiResponse) throw new Error(updatedServiceResponse.message)
 			return updatedServiceResponse
 		}
 
 		// Return the result.
-		return !returnResult ? newPackage
+		return !returnApiResponse ? newPackage
 			: apiResponse(200, code, true, 'Package added to service successfully.', newPackage, 'service_add_package')
 	}
 
-	async update(idOrIndex: string | number, packageData: Partial<Omit<PackageType, 'id'>>, returnResult: boolean = false) : Promise<Package | ApiResponse> {
+	async update(idOrIndex: string | number, packageData: Partial<Omit<PackageType, 'id'>>, returnApiResponse: boolean = true) : Promise<Package | ApiResponse> {
 		const code = 'UPDATE_PACKAGE'
 
 		// Find the package to update.
@@ -1620,7 +1620,7 @@ class Packages {
 
 			if (idOrIndex === -1) {
 				const errorMsg = 'Package with specified id not found.'
-				if (!returnResult) throw new Error(errorMsg)
+				if (!returnApiResponse) throw new Error(errorMsg)
 				return apiResponse(400, code, false, errorMsg, { id: this._parent.id, packageIdOrIndex: idOrIndex }, 'service_update_package')
 			}
 		}
@@ -1629,7 +1629,7 @@ class Packages {
 
 		if (packageIndex < 0 || packageIndex >= this._items.length) {
 			const errorMsg = 'Package index out of bounds.'
-			if (!returnResult) throw new Error(errorMsg)
+			if (!returnApiResponse) throw new Error(errorMsg)
 			return apiResponse(401, code, false, errorMsg, { id: this._parent.id, packageIdOrIndex: idOrIndex }, 'service_update_package')
 		}
 
@@ -1639,15 +1639,15 @@ class Packages {
 		const updateResult = await currentPackage.update(packageData, true) as ApiResponse
 
 		if (!updateResult.passed) {
-			if (!returnResult) throw new Error(updateResult.message)
+			if (!returnApiResponse) throw new Error(updateResult.message)
 			return updateResult
 		}
 
 		// Return the result.
-		return !returnResult ? currentPackage : updateResult
+		return !returnApiResponse ? currentPackage : updateResult
 	}
 
-	async remove(idOrIndex: string | number, returnResult: boolean = false) : Promise<boolean | ApiResponse> {
+	async remove(idOrIndex: string | number, returnApiResponse: boolean = true) : Promise<boolean | ApiResponse> {
 		const code = 'REMOVE_PACKAGE'
 
 		// Find the package to remove.
@@ -1656,7 +1656,7 @@ class Packages {
 
 			if (idOrIndex === -1) {
 				const errorMsg = 'Package with specified id not found.'
-				if (!returnResult) throw new Error(errorMsg)
+				if (!returnApiResponse) throw new Error(errorMsg)
 				return apiResponse(400, code, false, errorMsg, { id: this._parent.id, packageIdOrIndex: idOrIndex }, 'service_remove_package')
 			}
 		}
@@ -1665,7 +1665,7 @@ class Packages {
 
 		if (packageIndex < 0 || packageIndex >= this._items.length) {
 			const errorMsg = 'Package index out of bounds.'
-			if (!returnResult) throw new Error(errorMsg)
+			if (!returnApiResponse) throw new Error(errorMsg)
 			return apiResponse(401, code, false, errorMsg, { id: this._parent.id, packageIdOrIndex: idOrIndex }, 'service_remove_package')
 		}
 		
@@ -1675,12 +1675,12 @@ class Packages {
 		const updatedServiceResponse = await this._parent.save(true) as ApiResponse
 
 		if (!updatedServiceResponse.passed) {
-			if (!returnResult) throw new Error(updatedServiceResponse.message)
+			if (!returnApiResponse) throw new Error(updatedServiceResponse.message)
 			return updatedServiceResponse
 		}
 
 		// Return the result.
-		return !returnResult ? true
+		return !returnApiResponse ? true
 			: apiResponse(200, code, true, 'Package removed from service successfully.', { id: this._parent.id, packageIndex }, 'service_remove_package')
 	}
 
@@ -1689,11 +1689,11 @@ class Packages {
 	}
 
 	toString(): string {
-		return `Packages (${this._items.length} items)`
+		return `Service Packages: ${this._items.length} items`
 	}
 
 	toRepr(): string {
-		return `Packages(serviceId=${this._parent.id}, items=[${this._items.map(pkg => pkg.toRepr()).join(', ')}])`
+		return `Service.Packages (serviceId=${this._parent.id}, items=[${this._items.map(pkg => pkg.toJSON()).join(', ')}])`
 	}
 }
 

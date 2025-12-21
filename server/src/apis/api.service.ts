@@ -27,7 +27,7 @@ const router = Router()
  * - `package_duration`: number - Exact duration of the package in minutes
  * - `package_minDuration`: number - Minimum duration of the package in minutes if no exact duration is provided
  * - `package_maxDuration`: number - Maximum duration of the package in minutes if no exact duration is provided
- * - returnResult: boolean - Whether to return the services or an ApiResponse
+ * - returnApiResponse: boolean - Whether to return the services or an ApiResponse
  */
 router.get('/', async (req, res) => {
 	console.log('GET /api/service called with query:', req.query)
@@ -51,9 +51,9 @@ router.get('/', async (req, res) => {
 		package_minDuration: req.query.package_minDuration as number | undefined,
 		package_maxDuration: req.query.package_maxDuration as number | undefined,
 	} as Record<string, any>
-	const returnResult = req.query.returnResult as boolean | undefined || true
+	const returnApiResponse = req.query.returnApiResponse as boolean | undefined || true
 
-	const response = await Service.find(filters, returnResult) as ApiResponse
+	const response = await Service.find(filters, returnApiResponse) as ApiResponse
 	res.json(response)
 })
 
@@ -76,7 +76,7 @@ router.get('/', async (req, res) => {
  * > - cost: number - The approximate cost of the package to the provider. 
  * > - price: number - The price charged to the customer for the package.
  * > - duration: number - The duration of the package in minutes.
- * - returnResult: boolean - Whether to return a boolean or an ApiResponse.
+ * - returnApiResponse: boolean - Whether to return a boolean or an ApiResponse.
  * 
  * Response:
  * - ApiResponse indicating success or failure of the creation.
@@ -84,8 +84,8 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
 	console.log('POST /api/service called with body:', req.body)
 
-	const { returnResult = true, ...data } = req.body
-	const response = await Service.insert(data, returnResult) as ApiResponse
+	const { returnApiResponse = true, ...data } = req.body
+	const response = await Service.insert(data, returnApiResponse) as ApiResponse
 	res.json(response)
 })
 
@@ -108,7 +108,7 @@ router.post('/', async (req, res) => {
  * >> - cost: number - The approximate cost of the package to the provider. 
  * >> - price: number - The price charged to the customer for the package.
  * >> - duration: number - The duration of the package in minutes.
- * - returnResult: boolean - Whether to return the updated service or an ApiResponse.
+ * - returnApiResponse: boolean - Whether to return the updated service or an ApiResponse.
  * 
  * Response:
  * - The updated Service instance or an ApiResponse indicating success or failure.
@@ -116,8 +116,8 @@ router.post('/', async (req, res) => {
 router.put('/', async (req, res) => {
 	console.log('PUT /api/service called with body:', req.body)
 
-	const { id, data, returnResult = true } = req.body
-	const updatedResponse = await Service.update(id, data, returnResult) as ApiResponse
+	const { id, data, returnApiResponse = true } = req.body
+	const updatedResponse = await Service.update(id, data, returnApiResponse) as ApiResponse
 	res.json(updatedResponse)
 })
 
@@ -128,7 +128,7 @@ router.put('/', async (req, res) => {
  * 
  * Request Body:
  * - id: string - The unique identifier of the service to delete.
- * - returnResult: boolean - Whether to return a boolean or an ApiResponse.
+ * - returnApiResponse: boolean - Whether to return a boolean or an ApiResponse.
  * 
  * Response:
  * - True if deletion was successful, false otherwise, or an ApiResponse.
@@ -136,8 +136,8 @@ router.put('/', async (req, res) => {
 router.delete('/', async (req, res) => {
 	console.log('DELETE /api/service called with body:', req.body)
 
-	const { id, returnResult = true } = req.body
-	const deleteResponse = await Service.delete(id, Boolean(returnResult)) as ApiResponse
+	const { id, returnApiResponse = true } = req.body
+	const deleteResponse = await Service.delete(id, Boolean(returnApiResponse)) as ApiResponse
 	res.json(deleteResponse)
 })
 
@@ -161,7 +161,7 @@ router.delete('/', async (req, res) => {
  * >> - cost: number - The approximate cost of the package to the provider. 
  * >> - price: number - The price charged to the customer for the package.
  * >> - duration: number - The duration of the package in minutes.
- * - returnResult: boolean - Whether to return the validation result.
+ * - returnApiResponse: boolean - Whether to return the validation result.
  * 
  * Response:
  * - The validation result or an ApiResponse.
@@ -169,7 +169,7 @@ router.delete('/', async (req, res) => {
 router.get('/validate', async (req, res) => {
 	console.log('GET /api/service/validate called with query:', req.query)
 
-	const { returnResult = true, ...data } = req.query as Record<string, any>
+	const { returnApiResponse = true, ...data } = req.query as Record<string, any>
 	const validationResponse = Service.validate(data)
 	res.json(validationResponse)
 })
@@ -194,7 +194,7 @@ router.get('/validate', async (req, res) => {
  * > - `duration`: number - Exact duration of the package in minutes
  * > - `minDuration`: number - Minimum duration of the package in minutes if no exact duration is provided
  * > - `maxDuration`: number - Maximum duration of the package in minutes if no exact duration is provided
- * - `returnResult`: boolean - Whether to return the package or an ApiResponse.
+ * - `returnApiResponse`: boolean - Whether to return the package or an ApiResponse.
  * 
  * Response:
  * - The matched Package or an ApiResponse.
@@ -204,8 +204,8 @@ router.get('/package', async (req, res) => {
 
 	const serviceId = req.query.serviceId as string
 	const packageData = req.query.packageData as Partial<Record<string, any>>
-	const returnResult = req.query.returnResult as boolean | undefined || true
-	const response = await Service.findPackage(serviceId, packageData, returnResult) as ApiResponse
+	const returnApiResponse = req.query.returnApiResponse as boolean | undefined || true
+	const response = await Service.findPackage(serviceId, packageData, returnApiResponse) as ApiResponse
 	res.json(response)
 })
 
@@ -222,7 +222,7 @@ router.get('/package', async (req, res) => {
  * > - `cost`: number - The approximate cost of the package to the provider. 
  * > - `price`: number - The price charged to the customer for the package.
  * > - `duration`: number - The duration of the package in minutes.
- * - `returnResult`: boolean - Whether to return the added package or an ApiResponse.
+ * - `returnApiResponse`: boolean - Whether to return the added package or an ApiResponse.
  * 
  * Response:
  * - The added Package or an ApiResponse.
@@ -230,8 +230,8 @@ router.get('/package', async (req, res) => {
 router.post('/package', async (req, res) => {
 	console.log('POST /api/service/package called with body:', req.body)
 
-	const { serviceId, packageData, returnResult = true } = req.body
-	const response = await Service.addPackage(serviceId, packageData, returnResult) as ApiResponse
+	const { serviceId, packageData, returnApiResponse = true } = req.body
+	const response = await Service.addPackage(serviceId, packageData, returnApiResponse) as ApiResponse
 	res.json(response)
 })
 
@@ -250,7 +250,7 @@ router.post('/package', async (req, res) => {
  * > - `cost`?: number - The approximate cost of the package to the provider.
  * > - `price`?: number - The price charged to the customer for the package.
  * > - `duration`?: number - The duration of the package in minutes.
- * - `returnResult`: boolean - Whether to return the updated package or an ApiResponse.
+ * - `returnApiResponse`: boolean - Whether to return the updated package or an ApiResponse.
  * 
  * Response:
  * - The updated Package or an ApiResponse.
@@ -258,8 +258,8 @@ router.post('/package', async (req, res) => {
 router.put('/package', async (req, res) => {
 	console.log('PUT /api/service/package called with body:', req.body)
 
-	const { packageId, packageData, returnResult = true } = req.body
-	const response = await Service.updatePackage(packageId, packageData, returnResult) as ApiResponse
+	const { packageId, packageData, returnApiResponse = true } = req.body
+	const response = await Service.updatePackage(packageId, packageData, returnApiResponse) as ApiResponse
 	res.json(response)
 })
 
@@ -271,8 +271,8 @@ router.put('/package', async (req, res) => {
 router.delete('/package', async (req, res) => {
 	console.log('DELETE /api/service/package called with body:', req.body)
 
-	const { packageId, returnResult = true } = req.body
-	const response = await Service.removePackage(packageId, returnResult) as ApiResponse
+	const { packageId, returnApiResponse = true } = req.body
+	const response = await Service.removePackage(packageId, returnApiResponse) as ApiResponse
 	res.json(response)
 })
 
