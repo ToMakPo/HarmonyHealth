@@ -35,27 +35,3 @@ export type FlattenChild<T, K extends Partial<Record<keyof T, string>> = object>
 
 /** Helper type to convert a union to an intersection */
 type UnionToIntersection<U> = (U extends unknown ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never;
-
-// TODO: Remove this example code when done testing.
-// interface Address {
-//     street: string;
-//     city: string;
-//     zipCode: number;
-// }
-
-// interface ContactInfo {
-//     email: string;
-//     phone: string;
-// }
-
-// interface Company {
-//     id: number;
-//     name: string;
-//     address: Address;
-//     contacts: ContactInfo[];
-// 	age: number;
-// }
-
-// type FlatCompany = FlattenChild<Company, {'address': 'addr', 'contacts': 'contact'}>
-
-// type Test = Ranged<Company, 'age'>
