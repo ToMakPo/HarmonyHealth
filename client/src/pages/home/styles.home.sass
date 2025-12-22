@@ -45,11 +45,13 @@ $mobile-break: 600px
 				padding: min(50px, 3cqw)
 				border-radius: min(2.5cqw, 2.5cqh)
 
-				$bg-color: #ffffffcc
-				background-color: $bg-color
-				box-shadow: 0 0px 10px 20px $bg-color
+				$bgColor: hsl(0 0 100% / 0.8)
+				$fgColor: hsl(0 0 30%)
+				background-color: $bgColor
+				color: $fgColor
+				box-shadow: 0 0px 10px 10px $bgColor
 
-				#hero-title
+				#hero-titleeee
 					display: flex
 					flex-direction: column
 					gap: 10px
@@ -57,20 +59,30 @@ $mobile-break: 600px
 					text-align: center
 
 				h2
-					color: #282828
+					color: hsl(from $fgColor h s calc(l - 20))
 					font-weight: 300
 					font-size: 1.75em
 
 				h1
-					color: #8d7a24
+					color: var(--gold)
 					font-family: 'Josefin Sans', sans-serif
 					font-weight: 400
 					font-size: 2em
 					text-transform: uppercase
 					line-height: 1em
-					
-				p
-					color: #484848
+
+				#get-started-button
+					font-size: 1em
+					background-color: hsl(from $bgColor h s calc(l - 10))
+					color: hsl(from $fgColor h s calc(l - 20))
+					padding: 1rem 3rem
+					border: none
+					border-radius: 1rem
+					cursor: pointer
+					transition: background-color 0.3s ease
+
+					&:hover
+						background-color: var(--link-hv)
 
 	#about-section
 		max-width: 900px

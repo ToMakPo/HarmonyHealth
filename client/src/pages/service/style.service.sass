@@ -16,8 +16,10 @@
 		flex: 0 0 auto
 
 		.overlay
-			$bgColor: hsl(from var(--main-bg) h 0 l / 0.8)
+			$bgColor: hsl(0 0 100% / 0.8)
+			$fgColor: hsl(0 0 30%)
 			background-color: $bgColor
+			color: $fgColor
 			display: flex
 			flex-direction: column
 			justify-content: center
@@ -26,12 +28,11 @@
 			max-width: calc( 100% - 5rem )
 			padding: 1rem 3rem
 			border-radius: 1rem
-			color: hsl(from var(--main-fg) h 0 l )
 			box-shadow: 0 0 10px 10px $bgColor
 			box-sizing: border-box
 
 			h1
-				color: inherit
+				color: hsl(from $fgColor h s calc(l - 20))
 				text-align: center
 
 			p
