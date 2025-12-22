@@ -1,9 +1,23 @@
+import { useEffect, useState } from "react"
 import ServiceCard from "../../components/service-card/component.service-card"
 import { getImagePath } from "../../lib/utils"
+import ServiceInfo from "../../models/Service"
 
 import "./styles.home.sass"
 
 const HomePage: React.FC = () => {
+
+	useEffect(() => {
+		// Scroll to anchor after page loads
+		const hash = window.location.hash
+		if (hash) {
+			const element = document.querySelector(hash)
+			if (element) {
+				element.scrollIntoView({ behavior: "smooth", block: "start" })
+			}
+		}
+	}, [])
+
 	////////////////////
 	/// HERO SECTION ///
 	////////////////////
@@ -11,8 +25,8 @@ const HomePage: React.FC = () => {
 
 	const heroImageUrl = getImagePath('hero_image.png')
 	const heroSection = (
-		<section id="hero-section" 
-		style={{backgroundImage: `url(${heroImageUrl})`}}
+		<section id="hero-section"
+			style={{ backgroundImage: `url(${heroImageUrl})` }}
 		>
 			<div id="hero-overlay">
 				<div id="hero-text">
@@ -51,28 +65,48 @@ const HomePage: React.FC = () => {
 	/// TOP SERVICE SECTION ///
 	///////////////////////////
 	// #region Top Service Section
+	const [topServices, setTopServices] = useState<ServiceInfo[]>([])
+	const [loadingTopServices, setLoadingTopServices] = useState(false)
 
-	// const topService 
+	useEffect(() => {
+		const fetchTopServices = async () => {
+			try {
+				setLoadingTopServices(true)
+				const services = await ServiceInfo.find({ topService: true }) // Fetch top services
+				setTopServices(services)
+			} catch (error) {
+				console.error('Error fetching top services:', error)
+				setTopServices([])
+			} finally {
+				setLoadingTopServices(false)
+			}
+		}
+
+		fetchTopServices()
+	}, [])
 
 	const topServiceSection = (
 		<section id="top-service-section">
-			<h2>Our Top Services</h2>
+			<div id="top-service-head">
+				<h2>Our Top Services</h2>
+
+				<a id="see-all-services-link" href="/services">See All Services</a>
+			</div>
+
 			<div id="service-cards">
-				<ServiceCard
-					title="Botox"
-					description="Smooth Wrinkles with Botox, Dysport & Daxxify Treatments"
-					imageSrc={getImagePath('service - woman getting botox.png')}
-				/>
-				<ServiceCard
-					title="Dermal Fillers"
-					description="Enhance Facial Contours & Youthful Skin"
-					imageSrc={getImagePath('service - woman getting fillers.png')}
-				/>
-				<ServiceCard
-					title="Microneedling"
-					description="Stimulate collagen production to reduce scars, fine lines, and enlarged pores."
-					imageSrc={getImagePath('service - woman getting microneedling.png')}
-				/>
+				{!loadingTopServices && topServices.length > 0 ? topServices.map((service, index) => (
+					<ServiceCard key={index}
+						title={service.name}
+						description={service.description}
+						imageSrc={service.imageUrl}
+						onClick={() => {
+							// Navigate to service page
+							window.location.href = `/service/${service.key}`
+						}}
+					/>
+				)) : (
+					<p>Loading top services...</p>
+				)}
 			</div>
 		</section>
 	)

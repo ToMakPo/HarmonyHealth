@@ -3,8 +3,6 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import ThemeToggle from './theme-toggle/app.theme-toggle'
 import AppHeader from './header/app.header'
 
-import HomePage from '../pages/home/page.home'
-
 import Customer from '../models/Customer'
 import CustomerLoginModal from "../pages/auth/modal.login"
 import CustomerRegisterModal from "../pages/auth/modal.register"
@@ -15,6 +13,7 @@ import './styles.colors.sass'
 import './styles.icons.sass'
 import './styles.app.sass'
 import type { ModalRef } from '../components/modal/component.modal'
+import AppRouter from './router'
 
 const App: React.FC = () => {
     const [loading, setLoading] = useState(true)
@@ -82,7 +81,7 @@ const App: React.FC = () => {
             <AppHeader />
             
             <main>
-                <HomePage />
+                <AppRouter />
             </main>
 
             <ThemeToggle />

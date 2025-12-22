@@ -25,3 +25,10 @@ export const getImagePath = (fileName: string) => `${getPublicUrl()}/images/${en
 export const joinClassNames = (...args: (string | string[] | undefined)[]) => {
 	return args.flatMap(cls => typeof cls === 'string' ? cls.split(' ').filter(Boolean) : cls).join(' ')
 }
+
+/** Generate a mongoose-like ObjectId string. */
+export const generateId = () => {
+	const timestamp = Math.floor(Date.now() / 1000).toString(16)
+	const randomPart = Array.from({ length: 16 }, () => Math.floor(Math.random() * 16).toString(16)).join('')
+	return timestamp + randomPart
+}

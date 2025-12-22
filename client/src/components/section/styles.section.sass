@@ -1,0 +1,78 @@
+.sections
+	display: flex
+	flex-direction: column
+	gap: 2rem
+
+.section
+	width: min(calc(100% - 2rem), 1000px)
+	align-self: center
+	display: flex
+	gap: 2rem 3rem
+	height: min-content
+	
+	&:nth-child(odd)
+		flex-direction: row
+
+	&:nth-child(even)
+		flex-direction: row-reverse
+
+	.section-label
+		font-size: 1rem
+		font-weight: bold
+		color: var(--primary)
+		text-transform: uppercase
+	
+	h2
+		font-size: clamp(1.5rem, 4vw, 2.5rem)
+		font-weight: bold
+		color: var(--bold-fg)
+
+	p
+		font-size: 1.2rem
+		color: var(--main-fg)
+		line-height: 1.5
+		// text-align: justify
+
+	.section-image-container
+		flex: 0 0 auto
+		display: flex
+		flex-direction: column
+		width: 40%
+		height: 100%
+		gap: 0.5rem
+
+		img
+			height: 100%
+			width: 100%
+			object-fit: cover
+			border-radius: 1rem
+
+	@media (max-width: 1000px)
+		flex-direction: column !important
+		align-items: center
+
+		.section-image-container
+			width: 100%
+			height: auto
+			flex-direction: row
+			justify-content: stretch
+
+			img
+				flex: 1 1 0
+				height: auto
+				max-height: 300px
+				width: 0
+
+	@media (max-width: 500px)
+		flex-direction: column !important
+		align-items: center
+
+		.section-image-container
+			width: 100%
+			height: auto
+			flex-direction: column
+			// justify-content: stretch
+
+			img
+				// flex: 1 1 0
+				width: auto

@@ -5,10 +5,11 @@
 	border: 2px solid hsl(from currentColor h s 50%)
 	border-radius: 1rem
 	padding: 1rem
-	gap: 0.5rem
+	gap: 1.5rem
 	transition: transform 0.25s, box-shadow 0.25s
-	width: 20rem
 	box-shadow: 0 0.25rem 0.5rem hsl(0 0% 50% / 0.5)
+	box-sizing: border-box
+	cursor: pointer
 
 	&:hover
 		transform: translateY(-0.25rem)
@@ -24,7 +25,10 @@
 		font-weight: bold
 		font-family: Quicksand
 		color: var(--text-primary)
+		text-align: center
 
 	.service-card-description
 		font-size: 1.2rem
 		color: var(--text-secondary)
+		padding: 0
+		margin: 0

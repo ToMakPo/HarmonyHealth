@@ -10,6 +10,12 @@ export type Required<T, K extends keyof T> = T & { [P in K]-?: T[P] };
 /** Makes specified keys in the type nullable. */
 export type Nullable<T, K extends keyof T> = Omit<T, K> & { [P in K]: T[P] | null };
 
+/** Adds specified keys to the type. */
+export type Include<T, K> = T & { [P in keyof K]: K[P] };
+
+/** Replaces specified keys in the type with new types. */
+export type Replace<T, K extends keyof T, V> = Omit<T, K> & { [P in K]: V };
+
 /** Makes specified keys in the type queryable as single value or array of values.
  * If orriginaly an array, then it allows single value of the array element type as well. */
 export type Queryable<T, K extends keyof T> = Omit<T, K> & { [P in K]: T[P] | (T[P] extends (infer U)[] ? U : T[P])[] };
