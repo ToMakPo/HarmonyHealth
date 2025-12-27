@@ -3,7 +3,7 @@
 $height: 50px
 $mobile-break: 1080px
 
-.site-header
+.app-header
 	flex: 0 0 auto
 	width: 100vw
 	background: var(--header-bg)
@@ -113,7 +113,7 @@ $mobile-break: 1080px
 
 // === DESKTOP STYLES ===
 @media (min-width: $mobile-break)
-	.site-header
+	.app-header
 		& > #site-navigation
 			flex: 1 1 0
 			
@@ -162,7 +162,7 @@ $mobile-break: 1080px
 
 // === MOBILE STYLES ===
 @media (max-width: $mobile-break - 1)
-	.site-header
+	.app-header
 		justify-content: space-between
 
 		& > :is(#site-navigation, #header-actions)

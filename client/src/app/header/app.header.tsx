@@ -157,7 +157,7 @@ const HomeHeader: React.FC = () => {
 	</div>
 
 	return <>
-		<header className="site-header">
+		<header className="app-header">
 			{navEl}
 			{brandingEl}
 			{actionEl}
