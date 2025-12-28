@@ -1,29 +1,30 @@
-<style>
-	#logo {
-		font-size: 20px;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		gap: 1em;
-		height: 3em;
-		margin-block: 1rem 2rem;
-	}
-	#logo img:last-child {
-		height: 75%;
-	}
-</style>
-
 <div id='logo' alt='Harmony Health Logo'>
 	<img src="client/public/images/harmony-logo.svg"/>
 	<img src="client/public/images/harmony-title.svg"/>
+	<style>
+		#logo {
+			font-size: 20px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			gap: 1em;
+			height: 3em;
+			margin-block: 1rem 2rem;
+		}
+		#logo img:last-child {
+			height: 75%;
+		}
+	</style>
 </div>
 
 # Harmony Health and Beauty App
 
 ## Overview
+
 HarmonyHealth is a comprehensive health management application designed to streamline the process of managing appointments, customer preferences, and employee information. The application is built using modern web technologies, ensuring a responsive and user-friendly experience.
 
 ## Features
+
 - **User Authentication**: Secure login and registration for users.
 - **Appointment Management**: Create, view, and manage appointments efficiently.
 - **Customer Preferences**: Store and manage customer preferences for personalized services.
@@ -31,17 +32,21 @@ HarmonyHealth is a comprehensive health management application designed to strea
 - **Service Provider Integration**: Connect with various service providers for enhanced functionality.
 
 ## Technologies Used
+
 - **Frontend**: React, TypeScript, Vite
 - **Backend**: Node.js, Express
 - **Database**: MongoDB (or any other database you are using)
 - **Styling**: SASS for styling components
 
 ## Installation
+
 ### Prerequisites
+
 - Node.js (version X.X.X)
 - npm or yarn
 
 ### Steps
+
 1. Clone the repository:
    ```bash
    git clone https://github.com/ToMakPo/HarmonyHealth.git
@@ -61,10 +66,12 @@ HarmonyHealth is a comprehensive health management application designed to strea
    ```
 
 ## Usage
+
 - Navigate to `http://localhost:5173` in your browser to access the application.
 - Follow the on-screen instructions to register or log in.
 
 ## License
+
 This project is proprietary and not licensed for public use. If you wish to use, modify, or distribute any part of this project, you must contact the author to obtain explicit written permission.
 
 **Contact for Licensing**: post.makai@gmail.com
@@ -72,6 +79,7 @@ This project is proprietary and not licensed for public use. If you wish to use,
 All rights reserved.
 
 ## Author
+
 **Makai Post** - post.makai@gmail.com
 
 ---
