@@ -14,6 +14,7 @@ import './styles.icons.sass'
 import './styles.app.sass'
 // import type { ModalRef } from '../components/modal/component.modal'
 import AppRouter from './router'
+import AppFooter from './footer/app.footer'
 
 const App: React.FC = () => {
 	// const [loading, setLoading] = useState(true)
@@ -22,13 +23,13 @@ const App: React.FC = () => {
 	/// USER PROFILE ///
 	////////////////////
 	// #region User Profile
-	
-    const [activeUser, setActiveUser] = useState<Customer | null>(null)
-	
-    const globalContextValues = useMemo<IGlobalContext>(() => ({
-        activeUser,
-        setActiveUser
-    }), [activeUser, setActiveUser])
+
+	const [activeUser, setActiveUser] = useState<Customer | null>(null)
+
+	const globalContextValues = useMemo<IGlobalContext>(() => ({
+		activeUser,
+		setActiveUser
+	}), [activeUser, setActiveUser])
 
 	// useEffect(() => {
 	// 	async function setupApp() {
@@ -46,7 +47,7 @@ const App: React.FC = () => {
 	/// CUSTOMER AUTH MODALS ///
 	////////////////////////////
 	// #region Customer Auth
-	
+
 	// const [showLoginModal, setShowLoginModal] = useState(false)
 	// const loginModalRef = useRef<ModalRef>(null)
 
@@ -75,19 +76,21 @@ const App: React.FC = () => {
 	// #endregion
 
 	const appContent = (
-        <GlobalContext.Provider value={globalContextValues}>
-            <AppHeader />
-            
-            <main>
-                <AppRouter />
-            </main>
+				<GlobalContext.Provider value={globalContextValues}>
+			<AppHeader />
 
-            <ThemeToggle />
+			<main>
+				<AppRouter />
+
+				<AppFooter />
+			</main>
+
+			<ThemeToggle />
 
 			{/* {loginModal}
 			{registerModal} */}
-        </GlobalContext.Provider>
-    )
+		</GlobalContext.Provider>
+	)
 
 	return appContent
 

@@ -1,0 +1,74 @@
+#app-footer
+	display: flex
+	flex-direction: column
+	align-items: center
+	gap: 2rem
+	
+	background: var(--footer-bg)
+	color: var(--footer-fg)
+	padding-block: 2rem
+	margin-top: 4rem
+
+	#contact-info
+		display: flex
+		flex-wrap: wrap
+		gap: 1rem 2rem
+
+		h3
+			width: 100%
+
+		p
+			margin: 0
+
+	#contact-form
+		flex: 1 0 auto
+		display: flex
+		flex-direction: column
+		justify-content: stretch
+		align-items: stretch
+		gap: 1rem
+		position: relative
+
+		#sender-info
+			display: flex
+			flex-direction: row
+			flex-wrap: wrap
+			justify-content: stretch
+			align-items: center
+			gap: 1rem
+		
+		.field-group
+			flex: 1 1 0
+			min-width: 200px
+
+		#message-response
+			display: block
+			position: absolute
+			bottom: -3rem
+			left: 0
+			padding: 0.5rem 1rem
+			border-radius: 0.5rem
+
+			&.success
+				color: hsl(from var(--success) h s round(nearest, calc( 100 - l ), 100) / 0.8)
+				background-color: var(--success)
+
+			&.error
+				color: hsl(from var(--error) h s round(nearest, calc( 100 - l ), 100) / 0.8)
+				background-color: var(--error)
+
+	#map-container
+		display: flex
+		flex-direction: column
+		justify-content: stretch
+		align-items: stretch
+		gap: 1rem
+
+		#map
+			height: 300px
+			box-shadow: var(--shadow)
+
+		address
+			text-align: center
+			line-height: 1.4rem
+	
