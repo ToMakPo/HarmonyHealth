@@ -1,9 +1,9 @@
 function getUrl(apiPath: string) : string {
-	if (!apiPath.startsWith('/')) apiPath = '/' + apiPath
-	if (!apiPath.startsWith('/api')) apiPath = '/api' + apiPath
-	if (apiPath.endsWith('/')) apiPath = apiPath.slice(0, -1)
-
 	const serverUrl = new URL(import.meta.env.VITE_SERVER_URL || '', window.location.href).toString()
+
+	if (apiPath.startsWith('/')) apiPath = apiPath.slice(1)
+	if (!apiPath.startsWith('api')) apiPath = 'api/' + apiPath
+	if (apiPath.endsWith('/')) apiPath = apiPath.slice(0, -1)
 
 	return serverUrl + apiPath
 }
