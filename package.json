@@ -14,5 +14,10 @@
 	"license": "ISC",
 	"dependencies": {
 		"concurrently": "^9.2.1"
+	},
+	"devDependencies": {
+		"@types/nodemailer": "^7.0.4",
+		"baseline-browser-mapping": "^2.9.11",
+		"nodemailer": "^7.0.12"
 	}
 }
