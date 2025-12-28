@@ -3,6 +3,7 @@ import Modal, { type ModalRef } from "../../components/modal/component.modal"
 import Customer from "../../models/Customer"
 import { getServerUrl } from "../../lib/utils"
 import { useGlobal } from "../../app/global-context"
+import { api } from "../../lib/api"
 
 export interface CustomerRegisterModalProps {
 	id?: string | undefined
@@ -43,51 +44,54 @@ const CustomerRegisterModal = forwardRef<ModalRef, CustomerRegisterModalProps>((
 			email: emailInputRef.current?.value.trim() || '',
 			phone: phoneInputRef.current?.value.trim() || ''
 		}
+		console.log('Register values:', values)
 
-		const response = await fetch(getServerUrl() + `/api/customer/register`, {
-			method: 'POST',
-			credentials: 'include',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ values })
-		}).then(res => res.json()).catch(() => ({ success: false, message: 'Network error' }))
+		// const response = await fetch(getServerUrl() + `/api/customer/register`, {
+		// 	method: 'POST',
+		// 	credentials: 'include',
+		// 	headers: { 'Content-Type': 'application/json' },
+		// 	body: JSON.stringify({ values })
+		// }).then(res => res.json()).catch(() => ({ success: false, message: 'Network error' }))
+		const response = api.post('/customer/register', values)
+		console.log('Register response:', response)
 
-		if (!response.passed) {
-			switch (response.focus) {
-				case 'username':
-					usernameInputRef.current?.focus()
-					break
-				case 'password':
-					passwordInputRef.current?.focus()
-					break
-				case 'passConf':
-					passConfInputRef.current?.focus()
-					break
-				case 'firstName':
-					firstNameInputRef.current?.focus()
-					break
-				case 'lastName':
-					lastNameInputRef.current?.focus()
-					break
-				case 'title':
-					titleInputRef.current?.focus()
-					break
-				case 'email':
-					emailInputRef.current?.focus()
-					break
-				case 'phone':
-					phoneInputRef.current?.focus()
-					break
-			}
-			setError(response.message)
-			return
-		}
-		setError(null)
+		// if (!response.passed) {
+		// 	switch (response.focus) {
+		// 		case 'username':
+		// 			usernameInputRef.current?.focus()
+		// 			break
+		// 		case 'password':
+		// 			passwordInputRef.current?.focus()
+		// 			break
+		// 		case 'passConf':
+		// 			passConfInputRef.current?.focus()
+		// 			break
+		// 		case 'firstName':
+		// 			firstNameInputRef.current?.focus()
+		// 			break
+		// 		case 'lastName':
+		// 			lastNameInputRef.current?.focus()
+		// 			break
+		// 		case 'title':
+		// 			titleInputRef.current?.focus()
+		// 			break
+		// 		case 'email':
+		// 			emailInputRef.current?.focus()
+		// 			break
+		// 		case 'phone':
+		// 			phoneInputRef.current?.focus()
+		// 			break
+		// 	}
+		// 	setError(response.message)
+		// 	return
+		// }
+		// setError(null)
 
-		const user = new Customer(response.data)
-		global.setActiveUser(user)
+		// const user = new Customer(response.data)
+		// global.setActiveUser(user)
 
-		if (props.onRegister) props.onRegister(user)
-		if (modalRef.current) modalRef.current.close()
+		// if (props.onRegister) props.onRegister(user)
+		// if (modalRef.current) modalRef.current.close()
 	}
 
 	return (
