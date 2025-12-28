@@ -199,7 +199,7 @@ export class SectionList {
 	/** Convert the sections to an array of React components. */
 	toComponents() {
 		return (
-			<div className="sections">
+			<div className="sections clamp-width">
 				{this._items.map((item, idx) => item.toComponent(idx))}
 			</div>
 		)

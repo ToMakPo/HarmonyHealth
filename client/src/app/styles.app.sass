@@ -8,6 +8,8 @@
 	-webkit-font-smoothing: antialiased
 	-moz-osx-font-smoothing: grayscale
 
+	--clamp-width: 1000px
+
 html, body, #root
 	width: 100vw
 	height: 100vh
@@ -26,16 +28,10 @@ body
 	color: var(--main-fg)
 	overflow: hidden
 
-main
-	container-type: size
-	container-name: main
-
-	flex: 1 1 auto
-	display: flex
-	flex-direction: column
-	gap: 10px
-	width: 100vw
+*
 	box-sizing: border-box
+
+main
 	overflow-y: auto
 
 h1, h2, h3, h4, h5, h6
@@ -77,6 +73,13 @@ a
 		color: var(--link-hv)
 		text-decoration-color: currentColor
 
+.clamp-width
+	width: var(--clamp-width)
+	max-width: calc( 100% - 0rem )
+	margin-inline: auto
+	padding-inline: 1.5rem
+	overflow-x: hidden
+
 .card
 	background: var(--card-bg)
 	padding: 1.5rem
@@ -88,23 +91,6 @@ a
 
 	&:hover
 		background: var(--card-hv)
-
-	// display: flex-block
-	// flex-direction: column
-	// background: var(--card-bg)
-	// border: var(--card-bd)
-	// border-top: var(--highlight)
-	
-	// border-radius: 12px
-	// padding: 1rem
-	// box-sizing: border-box
-	// box-shadow: 0 2px 4px hsl(from currentColor h s 10% / 0.1)
-	// transition: 0.25s
-	// width: 100%
-	// max-width: 800px
-
-	// &:hover
-	// 	box-shadow: 0 4px 8px hsl(from currentColor h s 10% / 0.2)
 
 button, input[type="button"], input[type="submit"], input[type="reset"], .button
 	background: var(--button-bg)
@@ -126,23 +112,6 @@ button, input[type="button"], input[type="submit"], input[type="reset"], .button
 	
 	&:has(:focus, :focus-visible)
 		outline: 1px auto -webkit-focus-ring-color
-
-	// border-radius: 8px
-	// border: 1px solid var(--button-bd)
-	// outline: 2px solid transparent
-	// color: var(--button-fg)
-	// background: var(--button-bg)
-	// padding: 0.6em 1.2em
-	// font-size: 1em
-	// font-weight: 500
-	// font-family: inherit
-	// cursor: pointer
-	// transition: 0.25s
-	// box-sizing: border-box
-
-	// &:hover
-	// 	outline: 2px solid var(--button-bd)
-	// 	background: var(--button-hv)
 
 form
 	display: flex
@@ -178,9 +147,10 @@ form
 			padding: 0.5em
 			border: 1px solid hsl(from currentColor h s 50%)
 			border-radius: 0.5rem
-			background: var(--main-bg)
-			color: var(--main-fg)
-			transition: 0.25s
+			background: var(--input-bg)
+			color: var(--input-fg)
+			filter: brightness(1.1)
+			transition: 0.25s, height auto, width auto
 
 			&:hover
 				filter: brightness(1.2)
@@ -188,6 +158,7 @@ form
 			&:focus,
 			&:focus-visible
 				outline: 4px auto -webkit-focus-ring-color
+				outline-offset: -1px
 	
 		textarea
 			resize: vertical
@@ -215,7 +186,7 @@ form
 	// Add asterisk to all labels of required inputs
 	:has(:is(input, textarea, select)[required]) label::after
 		content: ' *'
-		color: firebrick
+		color: var(--error)
 		font-weight: 600
 		font-size: 1.2em
 

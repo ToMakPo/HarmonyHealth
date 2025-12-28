@@ -43,8 +43,28 @@ const ServicePage: React.FC<ServicePageProps> = (props) => {
 		if (serviceKey) fetchService()
 	}, [serviceKey])
 
-	return !loading && service ? (
-		<div className={`service-page page service-${service.key}`}>
+	const bookAppointmentEl = (
+		<section id="book-appointment" className="clamp-width">
+			<div className="appointment-image">
+				<img src={service?.imageUrl} alt={service?.name} />
+			</div>
+
+			<div className="appointment-text">
+				<h2>Schedule Your Appointment</h2>
+
+				<p>
+					Ready to take the next step? Book your appointment with us today
+					and embark on your journey to better health and wellness.
+				</p>
+
+				<button className="book-now-button">Book Now</button>
+			</div>
+		</section>
+	)
+
+	return (
+		<div id="service-page" className={`page ${service ? !loading ? `service-${service.key}` : 'loading' : 'not-found'}`}>
+			{service && !loading ? (<>
 			<div className="page-hero"
 				style={{
 					backgroundImage: `url(${service.imageUrl})`
@@ -58,24 +78,12 @@ const ServicePage: React.FC<ServicePageProps> = (props) => {
 
 			{service.details.toComponents()}
 
-			<section className="book-appointment">
-				<img src={service.imageUrl} alt={service.name} />
-
-				<div className="appointment-text">
-					<h2>Schedule Your Appointment</h2>
-
-					<p>
-						Ready to take the next step? Book your appointment with us today 
-						and embark on your journey to better health and wellness.
-					</p>
-
-					<button className="book-now-button">Book Now</button>
-				</div>
-			</section>
-		</div>
-	) : (
-		<div className="service-page loading">
-			<p>Loading service information...</p>
+			{bookAppointmentEl}
+			</>) : loading ? (
+				<p>Loading service information...</p>
+			) : (
+				<p>Service not found. Please return to the <a href="/services">services page</a>.</p>
+			)}
 		</div>
 	)
 }

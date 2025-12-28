@@ -7,8 +7,8 @@
 
 	--chroma-bg: calc(var(--chroma) * 0.5)
 	--chroma-fg: min(var(--chroma), 0.1)
-	--chroma-action: max(var(--chroma), 0.1)
-	--chroma-alert: max(var(--chroma), 0.05)
+	--chroma-action: max(var(--chroma), 0.3)
+	--chroma-alert: max(var(--chroma), 0.4)
 
 	--lv0-bg: oklch(0.15 var(--chroma-bg) var(--hue))
 	--lv1-bg: oklch(0.20 var(--chroma-bg) var(--hue))
@@ -37,11 +37,15 @@
 	--header-button-bg: oklch(0.35 var(--chroma-bg) var(--hue))
 	--header-close-bg: oklch(0.50 var(--chroma-alert) 30)
 
+	--footer-bg: var(--lv1-bg)
+	--footer-fg: var(--lv1-fg)
+
 	--primary: oklch(0.76 var(--chroma-action) var(--hue))
 	--secondary: oklch(0.76 var(--chroma-action) calc(var(--hue) + 180))
 	--danger: oklch(0.70 var(--chroma-alert) 30)
 	--warning: oklch(0.70 var(--chroma-alert) 100)
 	--success: oklch(0.70 var(--chroma-alert) 160)
+	--error: oklch(0.30 var(--chroma-alert) 30)
 	--info: oklch(0.70 var(--chroma-alert) 260)
 	--close: oklch(0.90 var(--chroma-alert) 30)
 	--gold: oklch(0.58 0.11 96.27)
@@ -50,7 +54,7 @@
 	--card-hv: var(--gradient-bg)
 	--card-bd: var(--border)
 
-	--link-fg: var(--info)
+	--link-fg: oklch(0.85 0.03 260)
 	--link-hv: hsl(from var(--link-fg) h s calc( l + 10 ))
 
 	--button-bg: var(--lv2-bg)
@@ -64,7 +68,7 @@
 	--chroma-bg: calc(var(--chroma) * 0.5)
 	--chroma-fg: min(var(--chroma), 0.1)
 	--chroma-action: max(var(--chroma), 0.1)
-	--chroma-alert: max(var(--chroma), 0.05)
+	--chroma-alert: max(var(--chroma), 0.2)
 
 	--lv0-bg: oklch(0.92 var(--chroma-bg) var(--hue))
 	--lv1-bg: oklch(0.96 var(--chroma-bg) var(--hue))
@@ -93,11 +97,15 @@
 	--header-button-bg: oklch(0.40 var(--chroma-bg) var(--hue))
 	--header-close-bg: oklch(0.50 var(--chroma-alert) 30)
 
+	--footer-bg: var(--lv1-bg)
+	--footer-fg: var(--lv1-fg)
+
 	--primary: oklch(0.40 var(--chroma-action) var(--hue))
 	--secondary: oklch(0.40 var(--chroma-action) calc(var(--hue) + 180))
 	--danger: oklch(0.50 var(--chroma-alert) 30)
 	--warning: oklch(0.50 var(--chroma-alert) 100)
 	--success: oklch(0.50 var(--chroma-alert) 160)
+	--error: oklch(0.70 var(--chroma-alert) 30)
 	--info: oklch(0.50 var(--chroma-alert) 260)
 	--close: oklch(0.90 var(--chroma-alert) 30)
 	--gold: oklch(0.58 0.11 96.27)
@@ -106,8 +114,11 @@
 	--card-hv: var(--gradient-bg)
 	--card-bd: var(--main-bg)
 
-	--link-fg: var(--info)
+	--link-fg: oklch(0.35 0.07 260)
 	--link-hv: hsl(from var(--link-fg) h s calc( l + 10 ))
+
+	--input-bg: var(--lv2-bg)
+	--input-fg: var(--lv0-fg)
 
 	--button-bg: var(--lv2-bg)
 	--button-fg: var(--lv0-fg)
