@@ -1,21 +1,4 @@
-<div id='logo' alt='Harmony Health Logo'>
-	<img src="client/public/images/harmony-logo.svg"/>
-	<img src="client/public/images/harmony-title.svg"/>
-	<style>
-		#logo {
-			font-size: 20px;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			gap: 1em;
-			height: 3em;
-			margin-block: 1rem 2rem;
-		}
-		#logo img:last-child {
-			height: 75%;
-		}
-	</style>
-</div>
+<div align="center"><img src="client/public/images/harmony-logo-full.svg" height="90"/></div><br/>
 
 # Harmony Health and Beauty App
 
