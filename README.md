@@ -4,7 +4,9 @@
 
 ## Overview
 
-HarmonyHealth is a comprehensive health management application designed to streamline the process of managing appointments, customer preferences, and employee information. The application is built using modern web technologies, ensuring a responsive and user-friendly experience.
+Harmony Health is the public-facing website for a health and beauty clinic. It showcases services, highlights providers, and enables clients 
+to browse offerings and book appointments online. The site is built with a modern React + TypeScript frontend and a Node.js/Express backend, 
+providing a fast, responsive, and polished experience tailored to clinic operations and customer needs.
 
 ## Features
 
