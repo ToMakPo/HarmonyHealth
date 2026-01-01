@@ -15,7 +15,10 @@ export const getServerUrl = () => `${import.meta.env.VITE_SERVER_URL || ''}`
  * @param fileName - The name of the image file including the extension.
  * @returns The path to the image file.
  */
-export const getImagePath = (fileName: string) => `${getPublicUrl()}/images/${encodeURIComponent(fileName)}`
+export const getImagePath = (fileName: string) => {
+	const encodedPath = fileName.split('/').map(encodeURIComponent).join('/')
+	return `${getPublicUrl()}/images/${encodedPath}`
+}
 
 /** Join multiple class names into a single string, filtering out any falsy values.
  * 

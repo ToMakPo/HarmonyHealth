@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+
 import ServiceCard from "../../components/service-card/component.service-card"
 import { getImagePath } from "../../lib/utils"
 import ServiceInfo from "../../models/Service"
@@ -23,7 +24,7 @@ const HomePage: React.FC = () => {
 	////////////////////
 	// #region Hero Section
 
-	const heroImageUrl = getImagePath('hero_image.png')
+	const heroImageUrl = '/images/hero_image.png'
 	const heroSection = (
 		<section id="hero-section"
 			style={{ backgroundImage: `url(${heroImageUrl})` }}

@@ -1,4 +1,4 @@
-<div align="center"><img src="client/public/images/harmony-logo-full.svg" height="90"/></div><br/>
+<div align="center"><img src="client/public/images/app/harmony-logo.svg" height="90"/></div><br/>
 
 # Harmony Health and Beauty App
 

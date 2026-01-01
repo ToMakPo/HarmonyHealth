@@ -1,6 +1,6 @@
 import { SectionList, type SectionType } from "../components/section/component.section"
 import type { Flatten, Optional, Queryable, Replace } from "../lib/customUtilityTypes"
-import { generateId, getImagePath } from "../lib/utils"
+import { generateId } from "../lib/utils"
 
 ////////////////////////
 /// MODEL INTERFACES ///
@@ -162,7 +162,7 @@ const serviceExamples: ServiceInfo[] = [
 	new ServiceInfo({
 		name: 'Botox Treatments',
 		description: 'Professional Botox treatments to help you look and feel your best.',
-		imageUrl: getImagePath('service - woman getting botox.png'),
+		imageUrl: '/images/services/woman getting botox.png',
 		topService: true,
 		details: [
 			{
@@ -173,7 +173,7 @@ const serviceExamples: ServiceInfo[] = [
                     Treatment involves precise injections into specific facial muscles, most commonly addressing expression lines in the upper face such as forehead creases, glabellar lines (between the brows), and crow's feet around the eyes. It's worth noting that these dynamic wrinkles aren't exclusively age-related - they can appear in younger individuals due to habitual facial expressions like frowning, squinting, or raising eyebrows.
                     Our experienced practitioners use ultra-fine needles for minimal discomfort during the quick 10-15 minute procedure, which typically requires no numbing agent. Results gradually appear over 2-14 days as the treatment takes effect, with visible improvements lasting approximately 3-4 months for Botox® and Dysport®, while Daxxify™ may provide benefits extending up to 6-9 months.
 				`,
-				imageUrl: getImagePath('service - botox img 1.png')
+				imageUrl: '/images/services/botox img 1.png'
 			},
 			{
 				label: 'Results',
@@ -184,8 +184,8 @@ const serviceExamples: ServiceInfo[] = [
 					Ready to begin your aesthetic journey? Reach out to Harmony Health today to book your personalized consultation and discover how we can help you achieve your beauty goals.
 				`,
 				imageUrl: [
-					getImagePath('service - botox img 2-1.png'),
-					getImagePath('service - botox img 2-2.png')
+					'/images/services/botox img 2-1.png',
+					'/images/services/botox img 2-2.png'
 				]
 			}
 		]
@@ -194,7 +194,7 @@ const serviceExamples: ServiceInfo[] = [
 	new ServiceInfo({
 		name: 'Dermal Fillers',
 		description: 'Enhance your natural beauty with our professional dermal filler treatments.',
-		imageUrl: getImagePath('service - woman getting fillers.png'),
+		imageUrl: '/images/service - woman getting fillers.png',
 		topService: true,
 		details: [
 			{
@@ -215,7 +215,7 @@ const serviceExamples: ServiceInfo[] = [
 	new ServiceInfo({
 		name: 'Microdermabrasion',
 		description: 'Revitalize your skin with our professional microdermabrasion treatments.',
-		imageUrl: getImagePath('service - woman getting microneedling.png'),
+		imageUrl: '/images/services/woman getting microneedling.png',
 		topService: true,
 		details: [
 			{
