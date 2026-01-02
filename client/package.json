@@ -1,7 +1,11 @@
 {
 	"name": "client",
-	"private": true,
+	"description": "Frontend client for Harmony Health website.",
 	"version": "0.0.0",
+	"author": "Makai Post <post.makai@example.com>",
+	"homepage": "https://www.harmonyhealth.com",
+	"license": "UNLICENSED",
+	"private": true,
 	"type": "module",
 	"scripts": {
 		"start": "vite",

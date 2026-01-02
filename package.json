@@ -1,7 +1,25 @@
 {
 	"name": "harmony-health",
-	"version": "1.0.0",
 	"description": "Website for Harmony Health.",
+	"version": "1.0.0",
+	"author": "Makai Post <post.makai@example.com>",
+	"homepage": "https://www.harmonyhealth.com",
+	"license": "UNLICENSED",
+	"private": true,
+	"keywords": [
+		"harmony health",
+		"health",
+		"wellness",
+		"beauty",
+		"medical",
+		"clinic",
+		"spa",
+		"website"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ToMakPo/HarmonyHealth.git"
+	},
 	"scripts": {
 		"start": "concurrently \"npm run start:server\" \"npm run start:client\"",
 		"start:server": "cd server && npm run build && npm start",
@@ -10,8 +28,6 @@
 		"dev:server": "cd server && npm run dev",
 		"dev:client": "cd client && npm run dev"
 	},
-	"author": "Makai Post",
-	"license": "ISC",
 	"dependencies": {
 		"concurrently": "^9.2.1"
 	},

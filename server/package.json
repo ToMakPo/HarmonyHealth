@@ -1,16 +1,17 @@
 {
 	"name": "server",
+	"description": "Backend server for Harmony Health website.",
 	"version": "1.0.0",
-	"main": "server.js",
+	"author": "Makai Post <post.makai@example.com>",
+	"main": "dist/server.js",
+	"license": "UNLICENSED",
+	"private": true,
 	"scripts": {
 		"start": "node dist/server.js",
 		"dev": "nodemon",
 		"build": "tsc",
 		"dev:watch": "tsc --watch"
 	},
-	"author": "Makai Post",
-	"license": "ISC",
-	"description": "Backend server for Harmony Health website.",
 	"devDependencies": {
 		"@tsconfig/node20": "^20.1.4",
 		"@tsconfig/node22": "^22.0.0",
