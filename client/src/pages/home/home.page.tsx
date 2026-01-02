@@ -1,16 +1,18 @@
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 
-import ServiceCard from "../../components/service-card/component.service-card"
-import { getImagePath } from "../../lib/utils"
+import ServiceCard from "../../components/service-card/service-card.component"
 import ServiceInfo from "../../models/Service"
 
-import "./styles.home.sass"
+import "./home.styles.sass"
+
+const HERO_IMAGE_URL = '/images/home/hero_image.png'
 
 const HomePage: React.FC = () => {
-
+	/** Scrolls to anchor if present in URL on initial load. */
 	useEffect(() => {
 		// Scroll to anchor after page loads
 		const hash = window.location.hash
+
 		if (hash) {
 			const element = document.querySelector(hash)
 			if (element) {
@@ -24,10 +26,13 @@ const HomePage: React.FC = () => {
 	////////////////////
 	// #region Hero Section
 
-	const heroImageUrl = '/images/hero_image.png'
-	const heroSection = (
+	/** The hero section of the home page.
+	 * 
+	 * Displays a welcome message and a call to action.
+	 */
+	const heroSection = useMemo(() => (
 		<section id="hero-section"
-			style={{ backgroundImage: `url(${heroImageUrl})` }}
+			style={{ backgroundImage: `url(${HERO_IMAGE_URL})` }}
 		>
 			<div id="hero-overlay">
 				<div id="hero-text">
@@ -35,58 +40,53 @@ const HomePage: React.FC = () => {
 						<h2>Welcome to</h2>
 						<h1>Harmony Health</h1>
 					</span>
+
 					<p>Your partner in achieving optimal health and wellness.</p>
+
 					<button id="get-started-button">Get Started</button>
 				</div>
 			</div>
 		</section>
-	)
-
-	// #endregion
-
-
+	), [])
 
 	/////////////////////
 	/// ABOUT SECTION ///
 	/////////////////////
 	// #region About Section
 
-	const aboutSection = (
+	/** The about section of the home page.
+	 * 
+	 * Provides information about the Harmony Health service.
+	 */
+	const aboutSection = useMemo(() => (
 		<section id="about-section">
 			<h2>About Harmony Health</h2>
 			<p>At Harmony Health, we believe that true well-being comes from a balance of mind, body, and spirit. Our dedicated team of healthcare professionals is committed to providing personalized care tailored to your unique needs.</p>
 			<p>Whether you're seeking preventive care, managing a chronic condition, or simply looking to enhance your overall health, Harmony Health is here to support you every step of the way. Join us on a journey towards a healthier, happier you.</p>
 		</section>
-	)
-
-	// #endregion
-
+	), [])
 
 	///////////////////////////
 	/// TOP SERVICE SECTION ///
 	///////////////////////////
 	// #region Top Service Section
+
+	/** The top services to display on the home page. */
 	const [topServices, setTopServices] = useState<ServiceInfo[]>([])
-	const [loadingTopServices, setLoadingTopServices] = useState(false)
 
+	/** Fetch the top services on initial load. */
 	useEffect(() => {
-		const fetchTopServices = async () => {
-			try {
-				setLoadingTopServices(true)
-				const services = await ServiceInfo.find({ topService: true }) // Fetch top services
-				setTopServices(services)
-			} catch (error) {
-				console.error('Error fetching top services:', error)
-				setTopServices([])
-			} finally {
-				setLoadingTopServices(false)
-			}
-		}
-
-		fetchTopServices()
+		(async () => {
+			const services = await ServiceInfo.find({ topService: true })
+			setTopServices(services)
+		})()
 	}, [])
 
-	const topServiceSection = (
+	/** The top service section of the home page.
+	 * 
+	 * Displays a selection of top services offered by Harmony Health.
+	 */
+	const topServiceSection = useMemo(() => topServices.length > 0 && (
 		<section id="top-service-section">
 			<div id="top-service-head">
 				<h2>Our Top Services</h2>
@@ -95,32 +95,23 @@ const HomePage: React.FC = () => {
 			</div>
 
 			<div id="service-cards">
-				{!loadingTopServices && topServices.length > 0 ? topServices.map((service, index) => (
-					<ServiceCard key={index}
-						title={service.name}
-						description={service.description}
-						imageSrc={service.imageUrl}
-						onClick={() => {
-							// Navigate to service page
-							window.location.href = `/service/${service.key}`
-						}}
-					/>
-				)) : (
-					<p>Loading top services...</p>
-				)}
+				{topServices.map((service) => <ServiceCard key={service.key} service={service} />)}
 			</div>
 		</section>
-	)
+	), [topServices])
 
-	// #endregion
+	/////////////////
+	/// RENDERING ///
+	/////////////////
+	// #region Rendering
 
-	return <>
+	return (
 		<div id='home-page' className='page'>
 			{heroSection}
 			{aboutSection}
 			{topServiceSection}
 		</div>
-	</>
+	)
 }
 
 export default HomePage

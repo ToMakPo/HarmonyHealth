@@ -1,4 +1,4 @@
-import { SectionList, type SectionType } from "../components/section/component.section"
+import { SectionList, type SectionType } from "../components/section/section.component"
 import type { Flatten, Optional, Queryable, Replace } from "../lib/customUtilityTypes"
 import { generateId } from "../lib/utils"
 
@@ -56,14 +56,21 @@ class ServiceInfo implements ServiceType {
 	private _topService: boolean
 	private _details: SectionList
 
-	constructor(data: Optional<Replace<ServiceType, 'details', SectionType[]>, 'id' | 'key'>) {
+	constructor(data: Optional<Replace<ServiceType, 'details', Optional<SectionType, 'imageUrl'>[]>, 'id' | 'key' | 'topService' | 'imageUrl'>) {
 		this._id = data.id || generateId()
 		this._name = data.name
 		this._key = (data.key || this._name).toLowerCase().replace(/\s+/g, '-')
 		this._description = data.description
-		this._imageUrl = data.imageUrl
+		this._imageUrl = data.imageUrl || `/images/services/${this._key}/hero.png`
 		this._topService = data.topService || false
-		this._details = new SectionList(data.details)
+		this._details = new SectionList(data.details.map((section) => {
+			if (section.imageUrl === undefined) {
+				section.imageUrl = `/images/services/${this._key}/${section.label.toLowerCase().replace(/\s+/g, '-')}.png`
+			}
+			return section
+		}) as SectionType[])
+
+		console.log(this)
 	}
 
 	/** The unique identifier of the service. */
@@ -105,29 +112,32 @@ class ServiceInfo implements ServiceType {
 	// #endregion Static Methods
 }
 
+export default ServiceInfo
+
 // #endregion Service Class
 
-export default ServiceInfo
 
 // TODO: Replace with API data
 const serviceExamples: ServiceInfo[] = [
 	new ServiceInfo({
 		name: 'Physical Therapy',
 		description: 'Comprehensive physical therapy services to help you recover and thrive.',
-		imageUrl: '/images/services/physical-therapy.jpg',
+		// imageUrl: '/images/services/physical-therapy/hero.png',
 		topService: false,
 		details: [
 			{
 				label: 'Treatment',
 				title: 'Personalized Treatment Plans',
 				content: 'Our physical therapists create customized treatment plans tailored to your specific needs and goals.\nWe focus on restoring function, reducing pain, and improving mobility.',
-				imageUrl: '/images/services/physical-therapy-1.jpg'
+				imageUrl: null
+				// imageUrl: '/images/services/physical-therapy/treatment.png'
 			},
 			{
 				label: 'Benefits',
 				title: 'Benefits of Physical Therapy',
 				content: 'Physical therapy can help you recover from injuries, manage chronic conditions, and enhance overall well-being.\nExperience improved strength, flexibility, and quality of life.',
-				imageUrl: '/images/services/physical-therapy-2.jpg'
+				imageUrl: null
+				// imageUrl: '/images/services/physical-therapy/benefits.jpg'
 			}
 		]
 	}),
@@ -135,26 +145,29 @@ const serviceExamples: ServiceInfo[] = [
 	new ServiceInfo({
 		name: 'Massage Therapy',
 		description: 'Relaxing and therapeutic massage services to rejuvenate your body and mind.',
-		imageUrl: '/images/services/massage-therapy.jpg',
+		// imageUrl: '/images/services/massage-therapy/hero.jpg',
 		topService: false,
 		details: [
 			{
 				label: 'Techniques',
 				title: 'Variety of Massage Techniques',
 				content: 'We offer a range of massage techniques including Swedish, deep tissue, and sports massage to address your unique needs.\nOur skilled therapists will help you relax and relieve tension.',
-				imageUrl: '/images/services/massage-therapy-1.jpg'
+				imageUrl: null
+				// imageUrl: '/images/services/massage-therapy/techniques.jpg'
 			},
 			{
 				label: 'Wellness',
 				title: 'Enhance Your Wellness',
 				content: 'Massage therapy promotes relaxation, reduces stress, and improves circulation.\nExperience the benefits of regular massage for your overall health and well-being.',
-				imageUrl: '/images/services/massage-therapy-2.jpg'
+				imageUrl: null
+				// imageUrl: '/images/services/massage-therapy/wellness.jpg'
 			},
 			{
 				label: 'Benefits',
 				title: 'Benefits of Massage Therapy',
 				content: 'Massage therapy can alleviate muscle tension, reduce pain, and enhance mental clarity.\nIncorporate massage into your wellness routine for lasting benefits.',
-				imageUrl: '/images/services/massage-therapy-3.jpg'
+				imageUrl: null
+				// imageUrl: '/images/services/massage-therapy/benefits.jpg'
 			}
 		]
 	}),
@@ -162,7 +175,7 @@ const serviceExamples: ServiceInfo[] = [
 	new ServiceInfo({
 		name: 'Botox Treatments',
 		description: 'Professional Botox treatments to help you look and feel your best.',
-		imageUrl: '/images/services/woman getting botox.png',
+		// imageUrl: '/images/services/botox/hero.png',
 		topService: true,
 		details: [
 			{
@@ -173,7 +186,7 @@ const serviceExamples: ServiceInfo[] = [
                     Treatment involves precise injections into specific facial muscles, most commonly addressing expression lines in the upper face such as forehead creases, glabellar lines (between the brows), and crow's feet around the eyes. It's worth noting that these dynamic wrinkles aren't exclusively age-related - they can appear in younger individuals due to habitual facial expressions like frowning, squinting, or raising eyebrows.
                     Our experienced practitioners use ultra-fine needles for minimal discomfort during the quick 10-15 minute procedure, which typically requires no numbing agent. Results gradually appear over 2-14 days as the treatment takes effect, with visible improvements lasting approximately 3-4 months for Botox® and Dysport®, while Daxxify™ may provide benefits extending up to 6-9 months.
 				`,
-				imageUrl: '/images/services/botox img 1.png'
+				// imageUrl: '/images/services/botox-treatments/treatment.png'
 			},
 			{
 				label: 'Results',
@@ -184,8 +197,8 @@ const serviceExamples: ServiceInfo[] = [
 					Ready to begin your aesthetic journey? Reach out to Harmony Health today to book your personalized consultation and discover how we can help you achieve your beauty goals.
 				`,
 				imageUrl: [
-					'/images/services/botox img 2-1.png',
-					'/images/services/botox img 2-2.png'
+					'/images/services/botox-treatments/result - before.png',
+					'/images/services/botox-treatments/result - after.png'
 				]
 			}
 		]
@@ -194,20 +207,28 @@ const serviceExamples: ServiceInfo[] = [
 	new ServiceInfo({
 		name: 'Dermal Fillers',
 		description: 'Enhance your natural beauty with our professional dermal filler treatments.',
-		imageUrl: '/images/service - woman getting fillers.png',
+		// imageUrl: '/images/services/dermal-fillers/hero.png',
 		topService: true,
 		details: [
 			{
 				label: 'Enhancement',
 				title: 'Natural Enhancement',
-				content: 'Our dermal filler treatments are designed to enhance your natural features and restore volume.\nWe use high-quality fillers to achieve subtle, beautiful results.',
-				imageUrl: '/images/services/dermal-fillers-1.jpg'
+				content: `
+					Our dermal filler treatments are designed to enhance your natural features and restore volume.
+					We use high-quality fillers to achieve subtle, beautiful results.
+				`,
+				imageUrl: null
+				// imageUrl: '/images/services/dermal-fillers/enhancement.jpg'
 			},
 			{
 				label: 'Benefits',
 				title: 'Benefits of Dermal Fillers',
-				content: 'Dermal fillers can smooth wrinkles, enhance lips, and contour facial features.\nExperience a refreshed and youthful appearance with our expert treatments.',
-				imageUrl: '/images/services/dermal-fillers-2.jpg'
+				content: `
+					Dermal fillers can smooth wrinkles, plump lips, and contour facial features.
+					Experience a more youthful appearance with our expert care.
+				`,
+				imageUrl: null
+				// imageUrl: '/images/services/dermal-fillers/benefits.jpg'
 			}
 		]
 	}),
@@ -215,20 +236,28 @@ const serviceExamples: ServiceInfo[] = [
 	new ServiceInfo({
 		name: 'Microdermabrasion',
 		description: 'Revitalize your skin with our professional microdermabrasion treatments.',
-		imageUrl: '/images/services/woman getting microneedling.png',
+		// imageUrl: '/images/services/microdermabrasion/hero.png',
 		topService: true,
 		details: [
 			{
 				label: 'Procedure',
 				title: 'Gentle Exfoliation',
-				content: 'Our microdermabrasion treatments gently exfoliate the skin, removing dead skin cells and promoting cell turnover.\nExperience smoother, brighter skin with our expert care.',
-				imageUrl: '/images/services/microdermabrasion-1.jpg'
+				content: `
+					Microdermabrasion is a non-invasive procedure that gently exfoliates the skin, removing dead skin cells and promoting cell turnover.
+					Our treatments leave your skin looking fresh and radiant.
+				`,
+				imageUrl: null
+				// imageUrl: '/images/services/microdermabrasion/procedure.jpg'
 			},
 			{
 				label: 'Benefits',
 				title: 'Benefits of Microdermabrasion',
-				content: 'Microdermabrasion can improve skin texture, reduce fine lines, and minimize pores.\nIncorporate this treatment into your skincare routine for a radiant complexion.',
-				imageUrl: '/images/services/microdermabrasion-2.jpg'
+				content: `
+					Microdermabrasion can improve skin texture, reduce fine lines, and minimize pores.
+					Incorporate this treatment into your skincare routine for a radiant complexion.
+				`,
+				imageUrl: null
+				// imageUrl: '/images/services/microdermabrasion/benefits.jpg'
 			}
 		]
 	}),
@@ -338,8 +367,7 @@ async function findService(filters?: FilterType) {
 // /////////////////////
 // // #region Service Class
 
-// /**
-//  * Service Model class
+// /** Service Model class
 //  *
 //  * Represents a service offered by the business, including its packages.
 //  *
@@ -458,8 +486,7 @@ async function findService(filters?: FilterType) {
 // 	}
 
 
-// 	/**
-// 	 * Update the service with the provided data.
+// 	/** Update the service with the provided data.
 // 	 *
 // 	 * @param data Partial data to update the service.
 // 	 * - name: string (optional) - The name of the service.
@@ -499,8 +526,7 @@ async function findService(filters?: FilterType) {
 // 		return !returnApiResponse ? this : response
 // 	}
 
-// 	/**
-// 	 * Save the current service instance to the database.
+// 	/** Save the current service instance to the database.
 // 	 *
 // 	 * @param returnApiResponse Whether to return the saved service or an ApiResponse.
 // 	 * @returns The saved Service instance or an ApiResponse indicating success or failure.
@@ -509,8 +535,7 @@ async function findService(filters?: FilterType) {
 // 		return this.update(this.toJSON(), returnApiResponse)
 // 	}
 
-// 	/**
-// 	 * Reset the service instance to the latest data from the database.
+// 	/** Reset the service instance to the latest data from the database.
 // 	 *
 // 	 * @param returnApiResponse Whether to return the reset service or an ApiResponse.
 // 	 * @returns The reset Service instance or an ApiResponse indicating success or failure.
@@ -532,8 +557,7 @@ async function findService(filters?: FilterType) {
 // 		return !returnApiResponse ? this : response
 // 	}
 
-// 	/**
-// 	 * Delete the current service instance from the database.
+// 	/** Delete the current service instance from the database.
 // 	 *
 // 	 * @param returnApiResponse Whether to return a boolean or an ApiResponse.
 // 	 * @returns True if deletion was successful, false otherwise, or an ApiResponse.
@@ -580,8 +604,7 @@ async function findService(filters?: FilterType) {
 // 	//////////////////////
 // 	// #region Static Methods
 
-// 	/**
-// 	 * Find services based on provided filters.
+// 	/** Find services based on provided filters.
 // 	 *
 // 	 * @param filters Optional filters to apply to the search. If omitted, all services are returned.
 // 	 * Filter options include:
@@ -634,8 +657,7 @@ async function findService(filters?: FilterType) {
 // 		return response
 // 	}
 
-// 	/**
-// 	 * Insert a new service into the database.
+// 	/** Insert a new service into the database.
 // 	 *
 // 	 * @param data Data for the new service:
 // 	 * - id: string (optional) - Unique identifier for the service. If not provided, it will be auto-generated.
@@ -994,8 +1016,7 @@ async function findService(filters?: FilterType) {
 // 		this._duration = (validationResult.data as { duration: number }).duration
 // 	}
 
-// 	/**
-// 	 * Get the index of this Package within its parent Service's packages array.
+// 	/** Get the index of this Package within its parent Service's packages array.
 // 	 *
 // 	 * @returns The index of the Package instance within the parent Service's packages array.
 // 	 * If not found, returns -1.
@@ -1005,8 +1026,7 @@ async function findService(filters?: FilterType) {
 // 		return index
 // 	}
 
-// 	/**
-// 	 * Move the Package instance to a new index within its parent Service's packages array.
+// 	/** Move the Package instance to a new index within its parent Service's packages array.
 // 	 *
 // 	 * @param newIndex The new index to move the package to.
 // 	 * @param returnApiResponse Whether to return an ApiResponse or the Package instance. (default: `false`)
@@ -1046,8 +1066,7 @@ async function findService(filters?: FilterType) {
 // 			: apiResponse(200, code, true, 'Package moved successfully.', this, 'package_move')
 // 	}
 
-// 	/**
-// 	 * Update the Package instance with new data.
+// 	/** Update the Package instance with new data.
 // 	 *
 // 	 * @param data The new data to update the Package with.
 // 	 * - parentId: string - The id of the new parent Service.
@@ -1107,8 +1126,7 @@ async function findService(filters?: FilterType) {
 // 			: apiResponse(200, code, true, 'Package updated successfully.', this, 'package_update')
 // 	}
 
-// 	/**
-// 	 * Save the current Package instance to the database.
+// 	/** Save the current Package instance to the database.
 // 	 *
 // 	 * @param returnApiResponse Whether to return an ApiResponse or the Package instance. (default: `false`)
 // 	 * @returns The saved Package instance or an ApiResponse indicating the result of the operation.

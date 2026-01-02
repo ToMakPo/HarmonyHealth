@@ -1,5 +1,4 @@
-/**
- * Response interface
+/** Response interface
  *
  * @interface Response
  * @param {number} id The id is a unique identifier for the response within the function that generated it.
@@ -20,8 +19,7 @@ export interface ApiResponse {
 	focus?: string
 }
 
-/**
- * This function generates a response object.
+/** This function generates a response object.
  *
  * @param {number} id The id is a unique identifier for the response within the function that generated it.
  * @param {string} code The code is a unique identifier for the function that generated the response.

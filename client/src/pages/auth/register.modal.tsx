@@ -1,8 +1,6 @@
-import { forwardRef, useRef, useState } from "react"
-import Modal, { type ModalRef } from "../../components/modal/component.modal"
+import { forwardRef, useRef } from "react"
+import Modal, { type ModalRef } from "../../components/modal/modal.component"
 import Customer from "../../models/Customer"
-import { getServerUrl } from "../../lib/utils"
-import { useGlobal } from "../../app/global-context"
 import { api } from "../../lib/api"
 
 export interface CustomerRegisterModalProps {
@@ -18,8 +16,6 @@ export interface CustomerRegisterModalProps {
 const CustomerRegisterModal = forwardRef<ModalRef, CustomerRegisterModalProps>((props, ref) => {
 	const modalRef = ref as React.RefObject<ModalRef | null>
 
-	const global = useGlobal()
-
 	const usernameInputRef = useRef<HTMLInputElement>(null)
 	const passwordInputRef = useRef<HTMLInputElement>(null)
 	const passConfInputRef = useRef<HTMLInputElement>(null)
@@ -29,7 +25,7 @@ const CustomerRegisterModal = forwardRef<ModalRef, CustomerRegisterModalProps>((
 	const emailInputRef = useRef<HTMLInputElement>(null)
 	const phoneInputRef = useRef<HTMLInputElement>(null)
 
-	const [error, setError] = useState<string | null>(null)
+	// const [error, setError] = useState<string | null>(null)
 
 	async function handleRegister(e: React.FormEvent) {
 		e.preventDefault()
@@ -158,7 +154,7 @@ const CustomerRegisterModal = forwardRef<ModalRef, CustomerRegisterModalProps>((
 					<input type="tel" id="phone-input" ref={phoneInputRef} autoComplete="tel" required />
 				</div>
 
-				{error && <div className="error-message" role="alert">{error}</div>}
+				{/* {error && <div className="error-message" role="alert">{error}</div>} */}
 
 				<button type="submit">Register</button>
 

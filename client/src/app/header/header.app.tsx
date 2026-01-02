@@ -1,18 +1,36 @@
-import React, { useState } from 'react'
-import { getImagePath } from '../../lib/utils'
-import './styles.header.sass'
+import React, { useMemo, useState } from 'react'
 
+import './header.styles.sass'
+
+/** Whether to show the user's full name or username in the profile section. 
+ * 
+ * If `true`, shows full name; if `false`, shows username.
+ */
+const USE_NAME = true
+
+/** A navigation route for the header menu. */
 type NavRoute = {
+	/** The name of the navigation route will be used as the link text. */
 	name: string
+	/** The path of the navigation route used for the URL. */
 	path: string
+	/** An optional anchor to scroll to on the page. */
 	anchor?: string
 } | {
+	/** The name of the navigation route will be used as the link text. */
 	name: string
-	path?: string
-	anchor?: string
+	/** An array of sub-routes for nested navigation menus. */
 	subRoutes: NavRoute[]
+	/** An optional navigation path. If provided, the navigation button be clickable. */
+	path?: string
+	/** An optional anchor to scroll to on the page if path is provided. */
+	anchor?: string
 }
 
+/** A list of navigation routes for the header navigation menu. 
+ * 
+ * TODO: Load Services dynamically.
+ */
 const navRoutes: NavRoute[] = [
 	{ name: 'Home', path: '/' },
 	{ name: 'About Us', path: '/', anchor: 'about-section' },
@@ -26,11 +44,15 @@ const navRoutes: NavRoute[] = [
 					{ name: 'Developmental Screenings', path: '/services-pediatrics-developmental' },
 				]
 			},
-			{ name: 'Adult Health', path: 'services-adult' },
+			{ name: 'Adult Health', path: 'services-adult' }
 		]
-	},
+	}
 ]
 
+/** Fake user data for development purposes.
+ * 
+ * TODO: Replace with real user data
+ */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const userData = {
 	id: '1S56DSF6SDF',
@@ -40,7 +62,7 @@ const userData = {
 	title: 'Mr.',
 	email: 'johndoe@example.com',
 	phone: '5551234567',
-	address: '123 Main St, Anytown, USA',
+	address: '123 Fake St, Anytown, USA',
 	gender: 'Male',
 	dob: '1990-01-01',
 	notes: 'No known allergies.',
@@ -48,12 +70,31 @@ const userData = {
 	status: 'Active'
 }
 
+/** Get URL from nav route.
+ * 
+ * This constructs the URL based on the path and anchor of the nav route. You can
+ * pass in the nav route object and it will return the full URL string.
+ * 
+ * @param nav A NavRoute object with name, path, and optional anchor.
+ * @returns The constructed URL string.
+ * 
+ * @example 
+ * ```
+ * getUrl({ name: 'Services', path: '/services', anchor: 'all-service-cards' })
+ * // >>> /services#all-service-cards
+ * ```
+ */
 const getUrl = (nav: NavRoute) => {
     const path = nav.path ? `/${nav.path.replace(/^\/+/g, '').replace(/\/+$/g, '')}` : '/'
     const anchor = nav.anchor ? `#${nav.anchor}` : ''
     return `${path}${anchor}`
 }
 
+/** Handle navigation link click.
+ * 
+ * @param e The click event.
+ * @param nav The NavRoute object.
+ */
 const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, nav: NavRoute) => {
     const currentPath = window.location.pathname
     const targetPath = nav.path ? `/${nav.path.replace(/^\/+/g, '').replace(/\/+$/g, '')}` : '/'
@@ -82,18 +123,26 @@ const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, nav: NavRoute) =
     // Otherwise let the default navigation happen
 }
 
+/** The main header component for the application. */
 const HomeHeader: React.FC = () => {
+	/** Whether the mobile menu is shown.
+	 * 
+	 * Only used for mobile viewports.
+	 */
 	const [showMenu, setShowMenu] = useState(false)
 
-	const [user] = useState<typeof userData | null>(null)
-	const [useName] = useState(true)
+	/** The current logged-in user.
+	 * 
+	 * If no user is logged in, this will be `null`.
+	 */
+	const user = useMemo<typeof userData | null>(() => null, [])
 
-	const brandingEl = (
+
+	const brandingEl = useMemo(() => (
 		<a href={getUrl({ name: 'Home', path: '' })} id="branding">
-			<img id="logo" src={getImagePath('harmony-logo.svg')} alt="Harmony Health Logo" />
-			<img id="title" src={getImagePath('harmony-title.svg')} alt="Harmony Health Title" />
+			<img id="logo" src={'/images/app/harmony-logo.svg'} alt="Harmony Health Logo" />
 		</a>
-	)
+	), [])
 
 	const buildNavRoutes = (navRoutes: NavRoute[]) => {
 		return (
@@ -117,15 +166,12 @@ const HomeHeader: React.FC = () => {
 	const userProfileEl = user && (
 		<div id="user-profile">
 			{user.imagePath ? (
-				<img id="user-image" className='profile-bubble' src={getImagePath(user.imagePath)} alt={`${user.firstName} ${user.lastName}`} />
+				<img id="user-image" className='profile-bubble' src={'/images/' + user.imagePath} alt={`${user.firstName} ${user.lastName}`} />
 			) : (
 				<div id="user-initials" className='profile-bubble'>{user.firstName.charAt(0)}{user.lastName.charAt(0)}</div>
 			)}
-			{useName ? (
-				<span className="profile-name">{user.firstName} {user.lastName}</span>
-			) : (
-				<span className="profile-name">{user.username}</span>
-			)}
+			
+			<span className="profile-name">{USE_NAME ? user.firstName + ' ' + user.lastName : user.username}</span>
 		</div>
 	)
 

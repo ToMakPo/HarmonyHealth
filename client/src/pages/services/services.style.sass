@@ -1,0 +1,18 @@
+#services-page
+	#service-cards
+		display: flex
+		flex-wrap: wrap
+		justify-content: center
+		padding: 0
+
+		--card-width: 300px
+		--gap-size: 1rem
+		--card-count: 3
+
+		gap: var(--gap-size)
+
+		.service-card
+			width: calc((100% - (var(--gap-size) * (var(--card-count) - 1))) / var(--card-count))
+
+// /images/services/botox-treatments/hero.png
+// /images/services/botox-treatments/treatment.png

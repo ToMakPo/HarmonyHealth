@@ -17,7 +17,7 @@ export type Include<T, K> = T & { [P in keyof K]: K[P] };
 export type Replace<T, K extends keyof T, V> = Omit<T, K> & { [P in K]: V };
 
 /** Makes specified keys in the type queryable as single value or array of values.
- * If orriginaly an array, then it allows single value of the array element type as well. */
+ * If originally an array, then it allows single value of the array element type as well. */
 export type Queryable<T, K extends keyof T> = Omit<T, K> & { [P in K]: T[P] | (T[P] extends (infer U)[] ? U : T[P])[] };
 
 /** Adds a min and max range for specified keys in the type. (ex. if K = cost, then there will be cost, but also, minCost and maxCost) */

@@ -4,8 +4,7 @@ import { ApiResponse } from '../lib/apiResponse'
 
 const router = Router()
 
-/**
- * Gets a list of services based on query parameters.
+/** Gets a list of services based on query parameters.
  * 
  * GET /api/service
  * 
@@ -57,8 +56,7 @@ router.get('/', async (req, res) => {
 	res.json(response)
 })
 
-/**
- * Creates a new service with the provided data.
+/** Creates a new service with the provided data.
  * 
  * POST /api/service
  * 
@@ -89,8 +87,7 @@ router.post('/', async (req, res) => {
 	res.json(response)
 })
 
-/**
- * Updates an existing service with the provided data.
+/** Updates an existing service with the provided data.
  * 
  * PUT /api/service
  * 
@@ -121,8 +118,7 @@ router.put('/', async (req, res) => {
 	res.json(updatedResponse)
 })
 
-/**
- * Deletes a service by its unique identifier.
+/** Deletes a service by its unique identifier.
  * 
  * DELETE /api/service
  * 
@@ -141,8 +137,7 @@ router.delete('/', async (req, res) => {
 	res.json(deleteResponse)
 })
 
-/**
- * Validates service data without creating or updating a service.
+/** Validates service data without creating or updating a service.
  * 
  * GET /api/service/validate
  * 
@@ -174,8 +169,7 @@ router.get('/validate', async (req, res) => {
 	res.json(validationResponse)
 })
 
-/**
- * Finds a service package based on service ID and package data.
+/** Finds a service package based on service ID and package data.
  *
  * GET /api/service/package
  * 
@@ -209,8 +203,7 @@ router.get('/package', async (req, res) => {
 	res.json(response)
 })
 
-/**
- * Adds a new package to an existing service.
+/** Adds a new package to an existing service.
  * 
  * POST /api/service/package
  * 
@@ -235,8 +228,7 @@ router.post('/package', async (req, res) => {
 	res.json(response)
 })
 
-/**
- * Updates an existing package of a service.
+/** Updates an existing package of a service.
  *
  * PUT /api/service/package
  * 
@@ -263,8 +255,7 @@ router.put('/package', async (req, res) => {
 	res.json(response)
 })
 
-/**
- * Removes a package from a service.
+/** Removes a package from a service.
  *
  * DELETE /api/service/package
  */

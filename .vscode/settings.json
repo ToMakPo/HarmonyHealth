@@ -9,5 +9,8 @@
 		"microneedling",
 		"neuromodulators",
 		"Orindex"
-	]
+	],
+	"files.associations": {
+		"*.tsx": "typescriptreact"
+	}
 }

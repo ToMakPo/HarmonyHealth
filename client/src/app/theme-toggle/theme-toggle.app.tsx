@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import './style.theme-toggle.sass'
 
-/**
- * Theme Toggle Element
+import './theme-toggle.style.sass'
+
+/** Theme Toggle Element
  * 
  * Toggles between light and dark themes, saving preference to localStorage.
  * 
@@ -14,14 +14,14 @@ const ThemeToggle: React.FC = () => {
 	const [theme, setTheme] = useState<'light' | 'dark'>()
 
 	useEffect(() => {
-		// Set theme on initial load
+		// Load saved theme from localStorage or system preference.
 		const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null
 
 		setTheme(savedTheme ?? ((window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light'))
 	}, [])
 
 	useEffect(() => {
-		// Update theme class on <html> element
+		// Apply the theme to the document and save to localStorage.
 		if (theme) {
 			document.documentElement.setAttribute('data-theme', theme)
 			localStorage.setItem('theme', theme)

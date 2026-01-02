@@ -88,8 +88,7 @@ type UpdateType = Partial<Omit<ServiceType, 'id'>>
 /////////////////////
 // #region Service Class
 
-/**
- * Service Model class
+/** Service Model class
  * 
  * Represents a service offered by the business, including its packages.
  * 
@@ -173,8 +172,7 @@ class Service implements ServiceType {
 		if (!validationResult.passed) throw new Error(validationResult.message)
 		this._sortOrder = (validationResult.data as { sortOrder: number }).sortOrder
 	}
-	/**
-	 * Set the sort order of the service, adjusting other services accordingly.
+	/** Set the sort order of the service, adjusting other services accordingly.
 	 * 
 	 * @param value The new sort order value.
 	 * @param returnApiResponse Whether to return an ApiResponse or the Service instance.
@@ -254,8 +252,7 @@ class Service implements ServiceType {
 	}
 	
 
-	/**
-	 * Update the service with the provided data.
+	/** Update the service with the provided data.
 	 * 
 	 * @param data Partial data to update the service.
 	 * - name: string (optional) - The name of the service.
@@ -377,8 +374,7 @@ class Service implements ServiceType {
 	//////////////////////
 	// #region Static Methods
 
-	/**
-	 * Find services based on provided filters.
+	/** Find services based on provided filters.
 	 * 
 	 * @param filters Optional filters to apply to the search. If omitted, all services are returned.
 	 * Filter options include:
@@ -465,8 +461,7 @@ class Service implements ServiceType {
 			: apiResponse(201, code, true, 'Services retrieved successfully.', services, 'service_find')
 	}
 
-	/**
-	 * Insert a new service into the database.
+	/** Insert a new service into the database.
 	 * 
 	 * @param data Data for the new service:
 	 * - id: string (optional) - Unique identifier for the service. If not provided, it will be auto-generated.
@@ -545,8 +540,7 @@ class Service implements ServiceType {
 			: apiResponse(200, code, true, 'Service inserted successfully.', newService, 'service_insert')
 	}
 
-	/**
-	 * Update an existing service by id.
+	/** Update an existing service by id.
 	 * 
 	 * @param id The id of the service to update.
 	 * @param data The data to update:
@@ -584,8 +578,7 @@ class Service implements ServiceType {
 		return service.update(data, returnApiResponse)
 	}
 
-	/**
-	 * Delete a service by id.
+	/** Delete a service by id.
 	 *
 	 * @param id The id of the service to delete.
 	 * @param returnApiResponse Whether to return a boolean or an ApiResponse.
@@ -615,8 +608,7 @@ class Service implements ServiceType {
 			: apiResponse(200, code, true, 'Service deleted successfully.', { id }, 'service_delete')
 	}
 
-	/**
-	 * Find a package within a service by package data.
+	/** Find a package within a service by package data.
 	 * 
 	 * @param serviceId The id of the service to search within.
 	 * @param packageData The package data to search for:
@@ -657,8 +649,7 @@ class Service implements ServiceType {
 			: apiResponse(200, code, true, 'Package found successfully.', found, 'service_find_package')
 	}
 
-	/**
-	 * Add a new package to a service.
+	/** Add a new package to a service.
 	 *
 	 * @param serviceId The id of the service to add the package to.
 	 * @param packageData The data for the new package:
@@ -706,8 +697,7 @@ class Service implements ServiceType {
 			: apiResponse(200, code, true, 'Package added successfully.', added, 'service_add_package')
 	}
 
-	/**
-	 * Update an existing package within a service.
+	/** Update an existing package within a service.
 	 * 
 	 * @param packageId The id of the package to update.
 	 * @param packageData The data to update the package:
@@ -755,8 +745,7 @@ class Service implements ServiceType {
 			: apiResponse(200, code, true, 'Package updated successfully.', updated, 'service_update_package')
 	}
 
-	/**
-	 * Remove a package from a service by package id.
+	/** Remove a package from a service by package id.
 	 *
 	 * @param packageId The id of the package to remove.
 	 * @param returnApiResponse Whether to return a boolean or an ApiResponse.
@@ -1152,8 +1141,7 @@ class Package implements PackageType {
 		this._duration = (validationResult.data as { duration: number }).duration
 	}
 
-	/**
-	 * Get the index of this Package within its parent Service's packages array.
+	/** Get the index of this Package within its parent Service's packages array.
 	 * 
 	 * @returns The index of the Package instance within the parent Service's packages array.
 	 * If not found, returns -1.
@@ -1163,8 +1151,7 @@ class Package implements PackageType {
 		return index
 	}
 
-	/**
-	 * Move the Package instance to a new index within its parent Service's packages array.
+	/** Move the Package instance to a new index within its parent Service's packages array.
 	 * 
 	 * @param newIndex The new index to move the package to.
 	 * @param returnApiResponse Whether to return an ApiResponse or the Package instance. (default: `false`)
@@ -1204,8 +1191,7 @@ class Package implements PackageType {
 			: apiResponse(200, code, true, 'Package moved successfully.', this, 'package_move')
 	}
 
-	/**
-	 * Update the Package instance with new data.
+	/** Update the Package instance with new data.
 	 * 
 	 * @param data The new data to update the Package with.
 	 * - parentId: string - The id of the new parent Service.
@@ -1265,8 +1251,7 @@ class Package implements PackageType {
 			: apiResponse(200, code, true, 'Package updated successfully.', this, 'package_update')
 	}
 
-	/**
-	 * Save the current Package instance to the database.
+	/** Save the current Package instance to the database.
 	 * 
 	 * @param returnApiResponse Whether to return an ApiResponse or the Package instance. (default: `false`)
 	 * @returns The saved Package instance or an ApiResponse indicating the result of the operation.

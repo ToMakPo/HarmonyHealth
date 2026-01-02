@@ -1,8 +1,9 @@
-import './styles.section.sass'
+import { useMemo } from 'react'
+
+import './section.styles.sass'
 
 export interface SectionType {
-	/** This will be displayed above the title in smaller text to let the user know
-	 * what the section is about. */
+	/** This will be displayed above the title in smaller text to let the user know what the section is about. */
 	label: string
 
 	/** This will be the main heading of the section displayed prominently. */
@@ -12,70 +13,78 @@ export interface SectionType {
 	content: string
 
 	/** This image will be shown to the side of the text content. */
-	imageUrl?: string | string[]
+	imageUrl: string | string[] | null
 }
 
-const Section: React.FC<SectionType> = (props) => {
+const ContentSection: React.FC<SectionType> = (props) => {
 	const { label, title, content, imageUrl } = props
+
+	/** The image element(s) to be displayed alongside the text content. */
+	const imageEl = useMemo(() => imageUrl && imageUrl.length > 0 && (
+		<div className="section-image-container">
+			{Array.isArray(imageUrl)
+				? imageUrl.map((url, idx) => <img key={idx} src={url} alt={title} />)
+				: <img src={imageUrl} alt={title} />
+			}
+		</div>
+	), [imageUrl, title])
+
+	/** The label element of the section. */
+	const labelEl = useMemo(() => <span className="section-label">{label}</span>, [label])
+
+	/** The title element of the section. */
+	const titleEl = useMemo(() => <h2 className="section-title">{title}</h2>, [title])
+
+	/** The main text for the section, split into paragraphs. */
+	const textEl = useMemo(() => content.split('\n').map((para, idx) => {
+		para = para.trim()
+		return para ? <p key={idx}>{para}</p> : null
+	}).filter(Boolean), [content])
 
 	return (
 		<section className={`section section-${label.replace(/[A-Z]/g, m => '-' + m.toLowerCase())}`}>
-			{!imageUrl || imageUrl.length === 0 ? null 
-			: (
-				<div className="section-image-container">
-					{Array.isArray(imageUrl) 
-						? imageUrl.map((url, idx) => <img key={idx} src={url} alt={title} />) 
-						: <img src={imageUrl} alt={title} />
-					}
-				</div>
-			)}
+			{imageEl}
 
-			<div className="section-text">
-				<span className="section-label">{label}</span>
-
-				<h2>{title}</h2>
-
-				{content.split('\n').map((para, idx) => {
-					para = para.trim()
-					return para ? <p key={idx}>{para}</p> : null
-				}).filter(Boolean)}
+			<div className="section-text-container">
+				{labelEl}
+				{titleEl}
+				{textEl}
 			</div>
 		</section>
 	)
 }
 
-export default Section
+export default ContentSection
 
 /** Represents a section of content with a label, title, content, and image. */
-export class SectionInfo implements SectionType {
+export class Section implements SectionType {
 	private _label: string
 	private _title: string
 	private _content: string
-	private _imageUrl: string | string[]
+	private _imageUrl: string | string[] | null
 
 	constructor(data: SectionType) {
 		this._label = data.label
 		this._title = data.title
-		this._content = data.content
-		this._imageUrl = data.imageUrl || []
+		this._content = data.content.trim()
+		this._imageUrl = data.imageUrl
 	}
 
-	/** This will be displayed above the title in smaller text to let the user know
-	 * what the section is about. */
-	get label() { return this._label; }
-	set label(value: string) { this._label = value; }
+	/** This will be displayed above the title in smaller text to let the user know what the section is about. */
+	get label() { return this._label }
+	set label(value: string) { this._label = value }
 
 	/** This will be the main heading of the section displayed prominently. */
-	get title() { return this._title; }
-	set title(value: string) { this._title = value; }
+	get title() { return this._title }
+	set title(value: string) { this._title = value }
 
 	/** These will be displayed as paragraphs within the section. */
-	get content() { return this._content; }
-	set content(value: string) { this._content = value; }
+	get content() { return this._content }
+	set content(value: string) { this._content = value }
 
 	/** This image will be shown to the side of the text content. */
-	get imageUrl() { return this._imageUrl; }
-	set imageUrl(value: string | string[]) { this._imageUrl = value; }
+	get imageUrl() { return this._imageUrl }
+	set imageUrl(value: string | string[] | null) { this._imageUrl = value }
 
 	/** Convert the section to a JSON object. */
 	toJSON() {
@@ -89,7 +98,7 @@ export class SectionInfo implements SectionType {
 
 	/** Convert the section to a React component. */
 	toComponent(key?: React.Key) {
-		return <Section
+		return <ContentSection
 			key={key}
 			label={this._label}
 			title={this._title}
@@ -101,19 +110,22 @@ export class SectionInfo implements SectionType {
 
 /** Manages a collection of Section instances. */
 export class SectionList {
-	private _items: SectionInfo[]
+	private _items: Section[]
 
+	/** Creates a list of sections.
+	 * 
+	 * @param sections An array of section data to initialize the list with.
+	 */
 	constructor(sections: SectionType[]) {
-		this._items = sections.map(info => new SectionInfo(info))
+		this._items = sections.map(info => new Section(info))
 	}
 
-	/**
-	 * Get all sections that match the provided parameters.
+	/** Get all sections that match the provided parameters.
 	 * 
 	 * @param params - The parameters to match against.
 	 * @returns An array of matching sections.
 	 */
-	find(params: Partial<SectionType>): SectionInfo | null {
+	find(params: Partial<SectionType>): Section | null {
 		const found = this._items.filter(item => {
 			for (const key in params) {
 				const typedKey = key as keyof SectionType
@@ -127,8 +139,7 @@ export class SectionList {
 		return found.length > 0 ? found[0] : null
 	}
 
-	/**
-	 * Add a new section.
+	/** Add a new section.
 	 * 
 	 * @param label - This will be displayed above the title in smaller text to let the user know
 	 * what the section is about.
@@ -139,9 +150,9 @@ export class SectionList {
 	 * to the end.
 	 * @returns The newly added section instance.
 	 */
-	add(label: string, title: string, content: string, imageUrl: string, index?: number): SectionInfo {
+	add(label: string, title: string, content: string, imageUrl: string, index?: number): Section {
 		// Create the new section instance.
-		const newSection = new SectionInfo({ label, title, content, imageUrl })
+		const newSection = new Section({ label, title, content, imageUrl })
 
 		// Insert the new section at the specified index or at the end if no index is provided.
 		if (index === undefined || index >= this._items.length) {
@@ -159,8 +170,7 @@ export class SectionList {
 		return newSection
 	}
 
-	/**
-	 * Move a section from one index to another.
+	/** Move a section from one index to another.
 	 * 
 	 * @param fromIndex - The current index of the section to move.
 	 * @param toIndex - The index to move the section to.
@@ -179,8 +189,7 @@ export class SectionList {
 		return { passed: true, message: 'Section moved successfully.' }
 	}
 
-	/**
-	 * Remove a section at the specified index.
+	/** Remove a section at the specified index.
 	 * 
 	 * @param index - The index of the section to remove.
 	 * @returns An object indicating whether the removal was successful and a message.

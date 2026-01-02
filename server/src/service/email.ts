@@ -118,8 +118,7 @@ const infoEmail = (() => {
 })()
 const infoAddress = getAddress(infoName, infoEmail)
 
-/**
- * Send an email either to the info address or to the client.
+/** Send an email either to the info address or to the client.
  * 
  * @param clientName The name of the client.
  * @param clientEmail The email address of the client.
