@@ -6,8 +6,6 @@ Backend server for the Harmony Health application built with Node.js and TypeScr
 
 Create a `.env` file in the server root directory with the following variables:
 
-### Environment Variables
-
 | Variable | Description | Example Value | Required |
 |----------|-------------|---------------|----------|
 | `PORT` | Port number for the server | `5500` | ✅ |
@@ -17,16 +15,36 @@ Create a `.env` file in the server root directory with the following variables:
 | `JWT_REMEMBER_ME` | JWT expiration for "remember me" | `30d` | ✅ |
 | `CORS_ORIGINS` | JSON array of allowed CORS origins | `["http://localhost:3000"]` | ❌ |
 | `APP_DEBUG` | Enable debug mode | `false` | ❌ |
+| `SMTP_HOST` | SMTP server hostname | `smtp.gmail.com` | ✅ |
+| `SMTP_PORT` | SMTP server port | `587` | ✅ |
+| `SMTP_SECURE` | Use SSL/TLS for SMTP | `false` | ❌ |
+| `SMTP_USER` | SMTP authentication username | `your-email@gmail.com` | ✅ |
+| `SMTP_PASS` | SMTP authentication password | `your-app-password` | ✅ |
+| `SENDER_EMAIL` | Email address for sending emails | `noreply@harmonyhealthbeauty.com` | ❌ |
+| `INFO_NAME` | Display name for info contact | `Harmony Health & Beauty` | ❌ |
+| `INFO_EMAIL` | Email address for receiving contact form submissions | `info@harmonyhealthbeauty.com` | ✅ |
+| `SERVER_URL` | Base URL of the server | `http://localhost:` | ❌ |
 
 ### Environment Setup
-
-1. **Copy the example environment file:**
-	```bash
-	cp .env.example .env
-	```
-
-2. **Update the values in `.env`:**
-	```env
+SERVER_URL=http://localhost:
+	CORS_ORIGINS=["http://localhost:3000", "https://your-frontend-domain.com"]
+	
+	MONGODB_URI=mongodb://localhost:27017/harmony
+	
+	# JWT Configuration
+	JWT_EXPIRATION=2h
+	JWT_REMEMBER_ME=30d
+	JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
+	
+	# Email Configuration
+	SMTP_HOST=smtp.gmail.com
+	SMTP_PORT=587
+	SMTP_SECURE=false
+	SMTP_USER=your-email@gmail.com
+	SMTP_PASS=your-app-password
+	SENDER_EMAIL=noreply@harmonyhealthbeauty.com
+	INFO_NAME=Harmony Health & Beauty
+	INFO_EMAIL=info@harmonyhealthbeauty.com
 	PORT=5500
 	CORS_ORIGINS=["http://localhost:3000", "https://your-frontend-domain.com"]
 	
@@ -68,7 +86,50 @@ Create a `.env` file in the server root directory with the following variables:
 - **Type:** String (time format)
 - **Description:** How long JWT tokens are valid for regular login.
 - **Format:** Uses [ms](https://github.com/vercel/ms) format (e.g., `2h`, `30m`, `7d`)
+## `SMTP_HOST`
+- **Type:** String
+- **Description:** Hostname of your SMTP server for sending emails.
+- **Examples:** `smtp.gmail.com`, `smtp.office365.com`, `smtp.sendgrid.net`
 
+#### `SMTP_PORT`
+- **Type:** Number
+- **Default:** 587
+- **Description:** Port for SMTP connection (587 for TLS, 465 for SSL).
+
+#### `SMTP_SECURE`
+- **Type:** Boolean
+- **Default:** `false`
+- **Description:** Use SSL/TLS for SMTP connection. Set to `true` for port 465, `false` for 587.
+
+#### `SMTP_USER`
+- **Type:** String
+- **Description:** Username for SMTP authentication (usually your email address).
+
+#### Secure your SMTP credentials** - never expose `SMTP_PASS` or commit it to version control
+6. **Use App Passwords** for Gmail instead of your actual password
+7. **`SMTP_PASS`
+- **Type:** String
+- **Description:** Password for SMTP authentication. For Gmail, use an [App Password](https://support.google.com/accounts/answer/185833).
+
+#### `SENDER_EMAIL`
+- **Type:** String
+- **Description:** The "from" email address for outgoing emails. Falls back to `SMTP_USER` if not provided.
+
+#### `INFO_NAME`
+- **Type:** String
+- **Default:** `Info`
+- **Description:** Display name for the business contact email.
+
+#### `INFO_EMAIL`
+- **Type:** String
+- **Description:** Email address where contact form submissions are sent. Falls back to `SENDER_EMAIL` if not provided.
+
+#### `SERVER_URL`
+- **Type:** String
+- **Default:** `http://localhost:`
+- **Description:** Base URL of the server (without port). Port is appended automatically.
+
+##
 #### `JWT_REMEMBER_ME`
 - **Type:** String (time format)
 - **Description:** How long JWT tokens are valid when "remember me" is checked.
