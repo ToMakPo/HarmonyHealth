@@ -1,21 +1,13 @@
 import { useEffect, useMemo, useState } from "react"
 
+import { scrollToAnchor } from "../../lib/utils"
 import ServiceInfo from "../../models/Service"
 
 import './service.style.sass'
 
 const ServicePage: React.FC = () => {
 	/** Scrolls to anchor if present in URL on initial load. */
-	useEffect(() => {
-		// Scroll to anchor after page loads
-		const hash = window.location.hash
-		if (hash) {
-			const element = document.querySelector(hash)
-			if (element) {
-				element.scrollIntoView({ behavior: "smooth", block: "start" })
-			}
-		}
-	}, [])
+	useEffect(scrollToAnchor, [])
 
 
 

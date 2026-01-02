@@ -35,3 +35,19 @@ export const generateId = () => {
 	const randomPart = Array.from({ length: 16 }, () => Math.floor(Math.random() * 16).toString(16)).join('')
 	return timestamp + randomPart
 }
+
+/** Scroll to a specific anchor on the page.
+ * 
+ * @param anchor The anchor to scroll to (e.g., '#about').
+ */
+export const scrollToAnchor = (anchor?: string) => {
+	// Scroll to anchor after page loads
+	anchor ||= window.location.hash
+
+	if (anchor) {
+		const element = document.querySelector(anchor)
+		if (element) {
+			element.scrollIntoView({ behavior: "smooth", block: "start" })
+		}
+	}
+}

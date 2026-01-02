@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react"
 
+import { scrollToAnchor } from "../../lib/utils"
 import ServiceCard from "../../components/service-card/service-card.component"
 import ServiceInfo from "../../models/Service"
 
@@ -9,17 +10,9 @@ const HERO_IMAGE_URL = '/images/home/hero_image.png'
 
 const HomePage: React.FC = () => {
 	/** Scrolls to anchor if present in URL on initial load. */
-	useEffect(() => {
-		// Scroll to anchor after page loads
-		const hash = window.location.hash
+	useEffect(scrollToAnchor, [])
 
-		if (hash) {
-			const element = document.querySelector(hash)
-			if (element) {
-				element.scrollIntoView({ behavior: "smooth", block: "start" })
-			}
-		}
-	}, [])
+
 
 	////////////////////
 	/// HERO SECTION ///
@@ -49,6 +42,8 @@ const HomePage: React.FC = () => {
 		</section>
 	), [])
 
+
+
 	/////////////////////
 	/// ABOUT SECTION ///
 	/////////////////////
@@ -65,6 +60,8 @@ const HomePage: React.FC = () => {
 			<p>Whether you're seeking preventive care, managing a chronic condition, or simply looking to enhance your overall health, Harmony Health is here to support you every step of the way. Join us on a journey towards a healthier, happier you.</p>
 		</section>
 	), [])
+
+
 
 	///////////////////////////
 	/// TOP SERVICE SECTION ///
@@ -99,6 +96,8 @@ const HomePage: React.FC = () => {
 			</div>
 		</section>
 	), [topServices])
+
+
 
 	/////////////////
 	/// RENDERING ///
