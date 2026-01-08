@@ -184,11 +184,6 @@ export class ModelError extends Error {
 		this._data = data || null
 	}
 
-	/// ID ///
-	private set id (value: string) {
-		this._id = value
-	}
-
 	/** The error code associated with this error. */
 	get code(): number { return this._code }
 
