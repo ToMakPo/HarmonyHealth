@@ -216,10 +216,19 @@ export class ModelError extends Error {
 
 export type UUID = string
 
+/** Generates a pseudo-random UUID string.
+ * 
+ * @returns A UUID string composed of two concatenated random segments.
+ */
 export function generateId(): UUID {
 	return Math.random().toString(36).substring(2, 10) + Math.random().toString(36).substring(2, 10)
 }
 
+/** Validates whether a given string is a valid UUID.
+ * 
+ * @param id The string to validate as a UUID.
+ * @returns True if the string is a valid UUID, false otherwise.
+ */
 export function validateId(id: string): boolean {
 	const uuidRegex = /^[a-zA-Z0-9]{16}$/
 	return uuidRegex.test(id)
