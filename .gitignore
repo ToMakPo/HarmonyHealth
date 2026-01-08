@@ -9,6 +9,6 @@ build/
 .env
 
 # Backup files
-*.OLD.*
-*.BACKUP.*
+*.OLD*
+*.BACKUP*
 *IGNORE*
