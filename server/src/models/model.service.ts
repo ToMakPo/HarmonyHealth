@@ -143,7 +143,6 @@ class Service<T extends ServiceInfo = ServiceInfo> extends Model<T, ServiceInit,
 	 * 
 	 * @param params - The initialization data for the Service.
 	 * @param params.id - The unique identifier of the service. If not provided, a new one will be generated.
-	 * @param params.key - The unique key of the service. If not provided, it will be generated from the name.
 	 * @param params.name - The name of the service.
 	 * @param params.description - A brief description of the service.
 	 * @param params.imageUrl - The URL of the image representing the service. If not provided, a default URL will be used.
