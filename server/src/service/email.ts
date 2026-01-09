@@ -20,7 +20,7 @@ export const validateName = (value: string) => {
 	const maxLength = 100
 
 	if (value == null) {
-		return apiResponse(400, code, false, 'Name is required', {}, 'senderName')
+		return apiResponse(false, code, 400, 'Name is required', {}, 'senderName')
 	}
 
 	// Format the value by trimming whitespace.
@@ -28,19 +28,19 @@ export const validateName = (value: string) => {
 
 	// Check length constraints.
 	if (name.length === 0) {
-		return apiResponse(401, code, false, 'Name is required', {}, 'senderName')
+		return apiResponse(false, code, 401, 'Name is required', {}, 'senderName')
 	}
 
 	if (name.length < minLength) {
-		return apiResponse(402, code, false, 'Name is too short', { name, minLength }, 'senderName')
+		return apiResponse(false, code, 402, 'Name is too short', { name, minLength }, 'senderName')
 	}
 
 	if (name.length > maxLength) {
-		return apiResponse(403, code, false, 'Name is too long', { name, maxLength }, 'senderName')
+		return apiResponse(false, code, 403, 'Name is too long', { name, maxLength }, 'senderName')
 	}
 
 	// Name is valid.
-	return apiResponse(200, code, true, 'Name is valid', { name }, 'senderName')
+	return apiResponse(false, code, 200, 'Name is valid', { name }, 'senderName')
 }
 
 export const validateEmail = (value: string) => {
@@ -48,7 +48,7 @@ export const validateEmail = (value: string) => {
 	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 	if (value == null) {
-		return apiResponse(400, code, false, 'Email is required', {}, 'senderEmail')
+		return apiResponse(false, code, 400, 'Email is required', {}, 'senderEmail')
 	}
 
 	// Format the value by trimming whitespace.
@@ -56,15 +56,15 @@ export const validateEmail = (value: string) => {
 
 	// Check for presence and format.
 	if (email.length === 0) {
-		return apiResponse(401, code, false, 'Email is required', {}, 'senderEmail')
+		return apiResponse(false, code, 401, 'Email is required', {}, 'senderEmail')
 	}
 
 	if (!emailRegex.test(email)) {
-		return apiResponse(402, code, false, 'Invalid email format', { email }, 'senderEmail')
+		return apiResponse(false, code, 402, 'Invalid email format', { email }, 'senderEmail')
 	}
 
 	// Email is valid.
-	return apiResponse(200, code, true, 'Email is valid', { email }, 'senderEmail')
+	return apiResponse(false, code, 200, 'Email is valid', { email }, 'senderEmail')
 }
 
 export const validateMessage = (value: string) => {
@@ -73,7 +73,7 @@ export const validateMessage = (value: string) => {
 	const maxLength = 5000
 
 	if (value == null) {
-		return apiResponse(400, code, false, 'Message body is required', {}, 'messageBody')
+		return apiResponse(false, code, 400, 'Message body is required', {}, 'messageBody')
 	}
 
 	// Format the value by trimming whitespace.
@@ -81,19 +81,19 @@ export const validateMessage = (value: string) => {
 
 	// Check length constraints.
 	if (message.length === 0) {
-		return apiResponse(401, code, false, 'Message body is required', {}, 'messageBody')
+		return apiResponse(false, code, 401, 'Message body is required', {}, 'messageBody')
 	}
 
 	if (message.length < minLength) {
-		return apiResponse(402, code, false, 'Message body is too short', { message, minLength }, 'messageBody')
+		return apiResponse(false, code, 402, 'Message body is too short', { message, minLength }, 'messageBody')
 	}
 
 	if (message.length > maxLength) {
-		return apiResponse(403, code, false, 'Message body is too long', { message, maxLength }, 'messageBody')
+		return apiResponse(false, code, 403, 'Message body is too long', { message, maxLength }, 'messageBody')
 	}
 
 	// Message body is valid.
-	return apiResponse(200, code, true, 'Message body is valid', { message }, 'messageBody')
+	return apiResponse(false, code, 200, 'Message body is valid', { message }, 'messageBody')
 }
 
 const senderEmail = (() => {
@@ -146,10 +146,7 @@ export const sendEmail = async (
 		text: body,
 	})
 
-	console.log('Email send result:', result)
-
-	if (result.rejected.length > 0) {
-		return apiResponse(400, code, false, 'Failed to send email', { result, clientName, clientEmail, subject, body, sendTo })
-	}
-	return apiResponse(200, code, true, 'Email sent successfully', { result, clientName, clientEmail, subject, body, sendTo })
+	return result.rejected.length > 0 
+		? apiResponse(false, code, 400, 'Failed to send email', { result, clientName, clientEmail, subject, body, sendTo })
+		: apiResponse(false, code, 200, 'Email sent successfully', { result, clientName, clientEmail, subject, body, sendTo })
 }
