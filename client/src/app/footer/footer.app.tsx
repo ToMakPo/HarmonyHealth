@@ -76,7 +76,7 @@ const AppFooter: React.FC = () => {
 					updateSendMessageResult({ passed: false, message: res.message })
 					console.error([
 						'Failed to send message:',
-						'Code: ' + res.code + '--' + res.id,
+						'Code: ' + res.code + '--' + res.sender,
 						'Message: ' + res.message,
 						'Data: ' + JSON.stringify(res.data),
 						'Field: ' + res.focus

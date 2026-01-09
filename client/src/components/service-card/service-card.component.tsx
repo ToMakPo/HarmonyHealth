@@ -1,5 +1,5 @@
 import { joinClassNames } from "../../lib/utils"
-import type ServiceInfo from "../../models/Service"
+import type ServiceInfo from "../../models/model.service"
 
 import './service-card.styles.sass'
 

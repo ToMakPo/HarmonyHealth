@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react"
 
 import { scrollToAnchor } from "../../lib/utils"
 import ServiceCard from "../../components/service-card/service-card.component"
-import ServiceInfo from "../../models/Service"
+import ServiceInfo from "../../models/model.service"
 
 import "./home.styles.sass"
 

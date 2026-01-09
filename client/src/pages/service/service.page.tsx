@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from "react"
 
 import { scrollToAnchor } from "../../lib/utils"
-import ServiceInfo from "../../models/Service"
+import ServiceInfo, { type ServiceDetailInfo } from "../../models/model.service"
 
 import './service.style.sass'
+import ContentSection from "../../components/section/section.component"
 
 const ServicePage: React.FC = () => {
 	/** Scrolls to anchor if present in URL on initial load. */
@@ -31,7 +32,7 @@ const ServicePage: React.FC = () => {
 					return
 				}
 			}
-			
+
 			setService(null)
 		})()
 	}, [])
@@ -64,7 +65,19 @@ const ServicePage: React.FC = () => {
 	 * 
 	 * Displays detailed information about the service.
 	 */
-	const detailsSection = useMemo(() => service?.details.toComponents(), [service])
+	const detailsSection = useMemo(() => service && (
+		<div className="sections clamp-width">
+			{service.details.map((item: ServiceDetailInfo) => (
+				<ContentSection
+					key={item.label}
+					label={item.label}
+					title={item.title}
+					content={item.content}
+					imageUrl={item.imageUrl}
+				/>
+			))}
+		</div>
+	), [service])
 
 	/** The book appointment section of the service page.
 	 * 

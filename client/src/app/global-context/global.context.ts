@@ -1,12 +1,10 @@
 import React, { useContext } from 'react'
 
-import Customer from '../../models/Customer'
-
 interface IGlobalContext {
 	/** The currently active user in the application. */
-	activeUser: Customer | null
+	activeUser: null
 	/** Function to update the active user. */
-	setActiveUser: React.Dispatch<React.SetStateAction<Customer | null>>
+	setActiveUser: React.Dispatch<React.SetStateAction<null>>
 }
 
 export const GlobalContext = React.createContext<IGlobalContext | null>(null)

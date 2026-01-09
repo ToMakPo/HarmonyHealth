@@ -240,7 +240,7 @@ export abstract class Model<Info extends object, Init extends object, Update ext
 	 * 
 	 * @throws `ModelError` If the find operation fails.
 	 */
-	protected static async find(filters: Record<string, any>): Promise<any[]> {
+	protected static async find(filters?: Record<string, any>): Promise<any[]> {
 		ModelError.throw(`${this.name} - find`, 500, 'Method not implemented.', { filters })
 	}
 

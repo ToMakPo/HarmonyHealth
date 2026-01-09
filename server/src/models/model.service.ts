@@ -610,7 +610,7 @@ class Service<T extends ServiceInfo = ServiceInfo> extends Model<T, ServiceInit,
 
 	static parse(string: string): Service { return super.parse(string) }
 
-	static async find(filters: ServiceFilter): Promise<Service[]> { return await super.find(filters) }
+	static async find(filters?: ServiceFilter): Promise<Service[]> { return await super.find(filters) }
 
 	static async insert(init: ServiceInit): Promise<Service> { return await super.insert(init) }
 

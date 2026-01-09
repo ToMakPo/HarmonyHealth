@@ -1,22 +1,28 @@
 /** Response interface for API functions. */
 export interface ApiResponse {
+	/** Indicates whether the action was successful. */
 	passed: boolean
+	/** Identifies the source or component that generated the response. */
 	sender: string
+	/** Numeric status code representing the result of the operation. */
 	code: number
+	/** Human-readable message describing the response. */
 	message: string
-	data?: Record<string, any> | null
+	/** Optional data returned by the function that generated the response. */
+	data?: Record<string, unknown> | null
+	/** Optional field name to focus on in case of an error. */
 	focus?: string
 }
 
 /** This function generates a response object.
  *
- * @param passed The passed flag indicates whether the function that generated the response was successful.
- * @param sender The sender is a string that identifies the source or component that generated the response.
- * @param code The code is a numeric status code representing the result of the operation.
- * @param message The message is a human-readable string that describes the response.
- * @param data The data is an optional field that can contain any data that the function that generated the response wants to return.
- * @param focus The focus is an optional field that can contain the name of a field that the function that generated the response wants to focus on.
- *
+ * @param passed Indicates whether the action was successful.
+ * @param sender Identifies the source or component that generated the response.
+ * @param code Numeric status code representing the result of the operation.
+ * @param message Human-readable message describing the response.
+ * @param data Optional data returned by the function that generated the response.
+ * @param focus Optional field name to focus on in case of an error.
+ * 
  * @returns {ApiResponse} The response object.
  */
 export const apiResponse = (
