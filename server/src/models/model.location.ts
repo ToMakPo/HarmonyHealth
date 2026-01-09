@@ -1,5 +1,5 @@
-import { ApiResponse, apiResponse } from "../lib/apiResponse"
-import { Main, Model, ModelError, generateId, UUID, validateId } from "./index.model"
+import { type ApiResponse, apiResponse } from "../lib/apiResponse"
+import { Main, Model, ModelError, generateId, type UUID, validateId } from "./index.model"
 
 
 
@@ -158,7 +158,7 @@ class Location<T extends LocationInfo = LocationInfo> extends Model<T, LocationI
 
 		Location.validateId(value).then(response => {
 			if (response.passed)
-				this._id = response.data!.valid
+				this._id = response.data!.valid as LocationInfo['id']
 			else
 				ModelError.throw(sender, response.code + 100, response.message, response.data)
 		})
@@ -202,7 +202,7 @@ class Location<T extends LocationInfo = LocationInfo> extends Model<T, LocationI
 
 		Location.validateName(value, this._id).then(response => {
 			if (response.passed)
-				this._name = response.data!.valid
+				this._name = response.data!.valid as LocationInfo['name']
 			else
 				ModelError.throw(sender, response.code + 100, response.message, response.data)
 		})
@@ -258,7 +258,7 @@ class Location<T extends LocationInfo = LocationInfo> extends Model<T, LocationI
 
 		Location.validateAddress(value).then(response => {
 			if (response.passed)
-				this._address = response.data!.address
+				this._address = response.data!.address as LocationInfo['address']
 			else
 				ModelError.throw(sender, response.code + 100, response.message, response.data)
 		})
@@ -303,7 +303,7 @@ class Location<T extends LocationInfo = LocationInfo> extends Model<T, LocationI
 	
 		Location.validatePhone(value).then(response => {
 			if (response.passed)
-				this._phone = response.data!.phone
+				this._phone = response.data!.phone as LocationInfo['phone']
 			else
 				ModelError.throw(sender, response.code + 100, response.message, response.data)
 		})
@@ -359,7 +359,7 @@ class Location<T extends LocationInfo = LocationInfo> extends Model<T, LocationI
 
 		Location.validateEmail(value).then(response => {
 			if (response.passed)
-				this._email = response.data!.email
+				this._email = response.data!.email as LocationInfo['email']
 			else
 				ModelError.throw(sender, response.code + 100, response.message, response.data)
 		})
@@ -409,7 +409,7 @@ class Location<T extends LocationInfo = LocationInfo> extends Model<T, LocationI
 
 		Location.validateImageUrls(value).then(response => {
 			if (response.passed)
-				this._imageUrls = response.data!.imageUrls
+				this._imageUrls = response.data!.imageUrls as LocationInfo['imageUrls']
 			else
 				ModelError.throw(sender, response.code + 100, response.message, response.data)
 		})

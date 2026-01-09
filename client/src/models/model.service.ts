@@ -554,8 +554,6 @@ class Service<T extends ServiceInfo = ServiceInfo> extends Model<T, ServiceInit,
 	 * @return The index of the detail, or `-1` if not found.
 	 */
 	getDetailIndex(identifier: ServiceDetail | ServiceDetailInfo | string | number): number {
-		const sender = 'Service - getDetailIndex' as const
-
 		if (typeof identifier === 'number') {
 			if (identifier < 0 || identifier >= this._details.length) return -1
 

@@ -1,4 +1,5 @@
 import { Router } from 'express'
+
 import { apiResponse } from '../lib/apiResponse'
 import { ModelError } from '../models/index.model'
 import Location, { LocationFilter } from '../models/model.location'
@@ -10,10 +11,10 @@ router.get('/', async (req, res) => {
 
 	const filters = {} as LocationFilter
 
-	try {	
+	try {
 		const response = await Location.find(filters)
 
-		res.json(apiResponse(true, sender, 200, 'Locations retrieved successfully.', response))
+		res.json(apiResponse(true, sender, 200, 'Locations retrieved successfully.', { response }))
 	} catch (error) {
 		error instanceof ModelError
 			? res.json(apiResponse(false, sender, error.code + 100, error.message, error.data))
@@ -26,10 +27,10 @@ router.post('/', async (req, res) => {
 
 	const data = req.body
 
-	try {	
+	try {
 		const response = await Location.insert(data)
 
-		res.json(apiResponse(true, sender, 200, 'Location created successfully.', response))
+		res.json(apiResponse(true, sender, 200, 'Location created successfully.', { response }))
 	} catch (error) {
 		error instanceof ModelError
 			? res.json(apiResponse(false, sender, error.code + 100, error.message, error.data))
@@ -42,10 +43,10 @@ router.put('/', async (req, res) => {
 
 	const { id, ...data } = req.body
 
-	try {	
+	try {
 		const response = await Location.update({ id }, data)
 
-		res.json(apiResponse(true, sender, 200, 'Location updated successfully.', response))
+		res.json(apiResponse(true, sender, 200, 'Location updated successfully.', { response }))
 	} catch (error) {
 		error instanceof ModelError
 			? res.json(apiResponse(false, sender, error.code + 100, error.message, error.data))
@@ -58,10 +59,10 @@ router.delete('/', async (req, res) => {
 
 	const { id } = req.body
 
-	try {	
+	try {
 		const response = await Location.delete({ id } as LocationFilter)
 
-		res.json(apiResponse(true, sender, 200, 'Location deleted successfully.', response))
+		res.json(apiResponse(true, sender, 200, 'Location deleted successfully.', { response }))
 	} catch (error) {
 		error instanceof ModelError
 			? res.json(apiResponse(false, sender, error.code + 100, error.message, error.data))
@@ -74,10 +75,10 @@ router.get('/validate', async (req, res) => {
 
 	const data = req.query as Record<string, any>
 
-	try {	
+	try {
 		const response = await Location.validate(data)
 
-		res.json(apiResponse(response.passed, sender, response.code + 100, response.message, response.data))
+		res.json(apiResponse(response.passed, sender, response.code + 100, response.message, { response: response.data }))
 	} catch (error) {
 		error instanceof ModelError
 			? res.json(apiResponse(false, sender, error.code + 100, error.message, error.data))
