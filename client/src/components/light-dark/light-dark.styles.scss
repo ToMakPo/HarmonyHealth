@@ -1,0 +1,53 @@
+.light-dark-toggle {
+	position: absolute;
+	--offset: 0.5rem;
+	bottom: var(--offset);
+	right: var(--offset);
+	z-index: var(--zidx-light-dark-toggle);
+
+	--size: 1.5rem;
+	width: var(--size);
+	height: var(--size);
+	border-radius: 50%;
+
+	--clr-lt: #f6d984;
+	--clr-dk: #9a8135;
+	color: light-dark(var(--clr-dk), var(--clr-lt));
+	background-color: var(--color-content-bg);
+
+	opacity: 0.6;
+	transition:
+		opacity,
+		background-color 0.15s ease-in-out;
+
+	cursor: pointer;
+
+	&::before {
+		content: 'light_mode';
+
+		font-family: 'Material Symbols Outlined';
+
+		font-size: var(--size);
+		line-height: 1;
+	}
+
+	&:hover {
+		opacity: 1;
+		background-color: var(--color-content-bg-h3);
+		&::before {
+			content: 'dark_mode';
+		}
+	}
+}
+
+:root[style*='color-scheme: dark'] {
+	.light-dark-toggle {
+		&::before {
+			content: 'dark_mode';
+		}
+
+		&:hover::before {
+			content: 'light_mode';
+		}
+	}
+}
