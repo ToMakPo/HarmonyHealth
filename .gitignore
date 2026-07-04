@@ -1,0 +1,9 @@
+### NODE MODULES ###
+node_modules/
+
+### BACKUP FILES ###
+*.OLD*
+*.NEW*
+*.BACKUP*
+*.PARTS*
+*.TMP*

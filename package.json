@@ -1,0 +1,29 @@
+{
+	"name": "harmony-health",
+	"version": "1.0.0",
+	"description": "",
+	"repository": {
+		"type": "git",
+		"url": "''"
+	},
+	"keywords": [
+		"spa",
+		"health",
+		"medical"
+	],
+	"author": "Makai Post (post.makai@gmail.com)",
+	"license": "ISC",
+	"scripts": {
+		"build": "tsc -p . -w",
+		"server": ":: cd server && npm start",
+		"server:dev": ":: cd server && npm run dev",
+		"client": "cd react_client && npm start",
+		"client:dev": "cd react_client && npm run dev",
+		"start": "concurrently \"npm run build\" \"npm run server\" \"npm run client\"",
+		"dev": "concurrently \"npm run build\" \"npm run server:dev\" \"npm run client:dev\""
+	},
+	"devDependencies": {
+		"concurrently": "^9.2.1",
+		"sass-embedded": "^1.100.0"
+	}
+}
