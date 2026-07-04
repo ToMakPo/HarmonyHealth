@@ -6,7 +6,7 @@ function LightDarkToggle() {
 	const setTheme = useTheme(state => state.setTheme)
 
 	return (
-		<div
+		<span
 			className='light-dark-toggle'
 			onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
 			title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}

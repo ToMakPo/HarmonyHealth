@@ -1,0 +1,13 @@
+#home-page {
+	flex: 1;
+	overflow: auto;
+	height: auto;
+	scroll-behavior: smooth;
+	container-type: size;
+
+	> section {
+		width: 100%;
+		// min-height: 100cqh;
+		padding: 1rem;
+	}
+}

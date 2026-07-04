@@ -11,9 +11,9 @@ function PageHeader() {
 			</Link>
 
 			<nav>
-				<Link to='/about'>About</Link>
-				<Link to='/services'>Services</Link>
-				<Link to='/contact'>Contact</Link>
+				<Link to='/#about-page'>About</Link>
+				<Link to='/#services-page'>Services</Link>
+				<Link to='/#contact-page'>Contact</Link>
 			</nav>
 		</header>
 	)
