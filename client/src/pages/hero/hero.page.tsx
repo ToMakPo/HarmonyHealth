@@ -55,9 +55,17 @@ function HeroPage() {
 					Your Harmony | Your <span className='typewriter-text'>{displayedTagline}</span>
 				</div>
 
-				<Link id='services-button' to='/#services-page'>
+				<button
+					id='services-button'
+					onClick={() => {
+						const servicesSection = document.getElementById('services-page')
+						if (servicesSection) {
+							servicesSection.scrollIntoView({ behavior: 'smooth' })
+						}
+					}}
+				>
 					Explore Services
-				</Link>
+				</button>
 			</div>
 		</section>
 	)

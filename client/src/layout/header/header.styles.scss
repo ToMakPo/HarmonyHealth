@@ -9,16 +9,26 @@
 		max-height: 50px;
 		margin: -0.5rem;
 		padding: 0.25rem 0.5rem;
+		cursor: pointer;
 	}
 
 	nav {
 		display: flex;
-		gap: 1rem;
+		gap: 0.5rem;
 		font-size: 1.25rem;
 
-		a {
-			text-decoration: none;
-			color: inherit;
+		button {
+			padding: 0.5rem 0.75rem;
+			background: none;
+			border: none;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+			font-size: 1.1rem;
+			border-radius: 4px;
+
+			&:hover {
+				background-color: var(--color-content-bg-l1);
+			}
 		}
 	}
 }
