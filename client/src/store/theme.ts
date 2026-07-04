@@ -56,8 +56,9 @@ function getSystemPreference(): Theme {
  *
  * @param resolvedTheme The resolved theme, either 'light' or 'dark'.
  */
-function updateDOMColorScheme(resolvedTheme: Theme) {
+function updateDOMColorScheme(resolvedTheme: Theme | undefined) {
 	if (typeof window === 'undefined') return
+	if (!resolvedTheme) resolvedTheme = getSystemPreference()
 	// This forces light-dark() and hsl(from...) to re-evaluate perfectly
 	window.document.documentElement.style.colorScheme = resolvedTheme
 }
@@ -85,6 +86,6 @@ export const useTheme = create<ThemeState>()(
 
 			return { theme, setTheme }
 		},
-		{ name: 'theme' }
+		{ name: 'theme', onRehydrateStorage: () => state => updateDOMColorScheme(state?.theme) }
 	)
 )
