@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import heroImage from '../../assets/images/hero_image.jpg'
 import logo from '../../assets/images/logo/harmony_logo_gold.png'
 import './hero.styles.scss'
-import { Link } from 'react-router-dom'
 
 function HeroPage() {
 	const taglineText = ['Health', 'Life', 'Wellness', 'Happiness', 'Mind', 'Body', 'Spirit']
@@ -30,12 +29,7 @@ function HeroPage() {
 		}
 
 		// 3. Increment or decrement subIndex to build the string character-by-character
-		const timeout = setTimeout(
-			() => {
-				setSubIndex(prev => prev + (isDeleting ? -1 : 1))
-			},
-			isDeleting ? deletingSpeed : typingSpeed
-		)
+		const timeout = setTimeout(() => setSubIndex(prev => prev + (isDeleting ? -1 : 1)), isDeleting ? deletingSpeed : typingSpeed)
 
 		return () => clearTimeout(timeout)
 	}, [subIndex, isDeleting, taglineIndex])
