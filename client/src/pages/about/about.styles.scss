@@ -50,7 +50,7 @@
 		flex: 1;
 		width: 0;
 		min-width: min(400px, 100%);
-		min-height: 400px;
+		min-height: 600px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -66,5 +66,19 @@
 			height: 100cqh;
 			object-fit: cover;
 		}
+	}
+}
+
+[data-breakpoint='mobile'] {
+	#about-page {
+		flex-direction: column;
+		padding: min(2rem, 6vw) !important;
+	}
+	#about-content-wrapper {
+		flex-direction: column;
+		gap: 2rem 0;
+	}
+	#about-page-text {
+		text-align: center;
 	}
 }
