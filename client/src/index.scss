@@ -18,6 +18,8 @@
 	--color-header-bg: var(--color-content-bg-h1);
 
 	--zidx-light-dark-toggle: 1000;
+
+	--color-shadow: #00000080;
 }
 
 html,
@@ -35,6 +37,10 @@ body,
 
 	width: 100%;
 	height: 100vh;
+}
+
+.root {
+	scrollbar-gutter: stable;
 }
 
 * {

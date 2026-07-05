@@ -1,4 +1,65 @@
 #services-page {
-	min-height: 100cqh;
-	background-color: blue;
+	display: flex;
+	flex-direction: column;
+	gap: 2rem 5rem;
+	padding: min(5rem, 6vw) !important;
+	width: 100%;
+	background-color: var(--color-content-bg-l2);
+	flex-wrap: wrap;
+
+	h1 {
+		font-family: 'Josefin Slab', serif;
+		font-optical-sizing: auto;
+		font-weight: 600;
+		font-style: normal;
+		text-wrap: balance;
+		text-align: center;
+		font-size: 2.5rem;
+	}
+
+	#services-page-cards {
+		display: flex;
+		flex-direction: row;
+		gap: 2rem 1rem;
+		flex-wrap: wrap;
+		justify-content: center;
+		flex-wrap: wrap;
+
+		.service-card {
+			display: flex;
+			flex-direction: column;
+			gap: 1rem;
+			width: 300px;
+			background-color: var(--color-content-bg);
+			padding: 1rem;
+			border-radius: 8px;
+			box-shadow: 3px 3px 10px var(--color-shadow);
+
+			transition: 0.3s ease;
+
+			img {
+				border-radius: 4px;
+				height: 200px;
+				width: 100%;
+				object-fit: cover;
+			}
+
+			h2 {
+				font-family: 'Josefin Slab', serif;
+				margin: 0;
+				font-size: 1.25rem;
+				align-self: center;
+			}
+
+			p {
+				margin: 0;
+				font-size: 1rem;
+			}
+
+			&:hover {
+				transform: scale(1.025);
+				box-shadow: 3px 3px 15px var(--color-shadow);
+			}
+		}
+	}
 }

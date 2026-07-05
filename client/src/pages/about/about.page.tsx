@@ -1,6 +1,6 @@
 import './about.styles.scss'
 
-import aboutUsImage from '../../assets/images/about_us_image.jpg'
+import aboutUsImage from '../../assets/images/blue_flowers.jpg'
 
 function AboutPage() {
 	return (
