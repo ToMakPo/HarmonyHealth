@@ -16,21 +16,6 @@
 		display: flex;
 		gap: 0.5rem;
 		font-size: 1.25rem;
-
-		button {
-			padding: 0.5rem 0.75rem;
-			background: none;
-			border: none;
-			transition: background-color 0.3s ease;
-			font-size: 1.1rem;
-			border-radius: 4px;
-			user-select: none;
-			cursor: pointer;
-
-			&:hover {
-				background-color: var(--color-content-bg-l1);
-			}
-		}
 	}
 
 	#mobile-nav-button {
@@ -68,20 +53,6 @@
 			top: anchor(bottom);
 			right: anchor(right);
 			bottom: 0;
-		}
-
-		button {
-			padding: 0.5rem 0.75rem;
-			background: none;
-			border: none;
-			transition: background-color 0.3s ease;
-			font-size: 1.1rem;
-			border-radius: 4px;
-			cursor: pointer;
-
-			&:hover {
-				background-color: var(--color-content-bg-l1);
-			}
 		}
 	}
 }
