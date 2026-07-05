@@ -46,7 +46,8 @@ function HeroPage() {
 
 				{/* The CSS class adds a blinking text cursor to complete the effect */}
 				<div id='hero-tagline'>
-					Your Harmony | Your <span className='typewriter-text'>{displayedTagline}</span>
+					<span>Your Harmony</span>
+					<span className='typewriter-text'>{'Your ' + displayedTagline}</span>
 				</div>
 
 				<button

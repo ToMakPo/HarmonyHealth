@@ -41,10 +41,21 @@
 	}
 
 	#hero-tagline {
+		display: flex;
 		font-size: 2.5rem;
 		color: #fff;
 		text-align: center;
 		user-select: none;
+
+		span {
+			display: inline-block;
+			padding: 0 0.5rem;
+			white-space: nowrap;
+		}
+
+		* + * {
+			border-left: 3px solid hsl(from currentColor h s l / 0.25);
+		}
 	}
 
 	#services-button {
@@ -67,10 +78,21 @@
 	}
 }
 
-// Mobile fallback because iOS/Android often disable fixed backgrounds
-@media (max-width: 768px) {
+[data-breakpoint='mobile'] {
 	#hero-page {
-		background-attachment: scroll;
-		height: 80vh; /* Slightly shorter on mobile devices */
+		#hero-tagline {
+			flex-direction: column;
+			font-size: 2rem;
+
+			span {
+				padding: 0.5rem 0;
+			}
+
+			* + * {
+				border-top: 3px solid hsl(from currentColor h s l / 0.25);
+				border-left: none;
+				font-size: 1.5rem;
+			}
+		}
 	}
 }
