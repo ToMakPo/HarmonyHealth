@@ -21,10 +21,63 @@
 			padding: 0.5rem 0.75rem;
 			background: none;
 			border: none;
-			cursor: pointer;
 			transition: background-color 0.3s ease;
 			font-size: 1.1rem;
 			border-radius: 4px;
+			user-select: none;
+			cursor: pointer;
+
+			&:hover {
+				background-color: var(--color-content-bg-l1);
+			}
+		}
+	}
+
+	#mobile-nav-button {
+		background: transparent;
+		margin-right: -0.5rem;
+		padding: 0;
+		width: 32px;
+		height: 32px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 4px;
+		border: none;
+		cursor: pointer;
+	}
+
+	#mobile-nav-popover {
+		flex-direction: column;
+		gap: 0.25rem;
+		background-color: var(--color-content-bg);
+		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		border-radius: 4px;
+		padding: 1rem;
+		border: none;
+
+		&:popover-open {
+			display: flex;
+		}
+
+		@supports (anchor-name: --mobileNav) {
+			margin-top: 0.25rem;
+			margin-right: -0.25rem;
+			inset: auto;
+			position: absolute;
+			top: anchor(bottom);
+			right: anchor(right);
+			bottom: 0;
+		}
+
+		button {
+			padding: 0.5rem 0.75rem;
+			background: none;
+			border: none;
+			transition: background-color 0.3s ease;
+			font-size: 1.1rem;
+			border-radius: 4px;
+			cursor: pointer;
 
 			&:hover {
 				background-color: var(--color-content-bg-l1);
