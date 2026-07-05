@@ -1,11 +1,19 @@
 #about-page {
 	display: flex;
 	flex-direction: row;
-	gap: 2rem 5rem;
+	justify-content: center;
 	padding: min(5rem, 6vw) !important;
 	width: 100%;
 	background-color: var(--color-content-bg-h5);
-	flex-wrap: wrap;
+
+	#about-content-wrapper {
+		display: flex;
+		flex-direction: row;
+		gap: 2rem 5rem;
+		width: 100%;
+		max-width: 2000px;
+		flex-wrap: wrap;
+	}
 
 	#about-page-text {
 		flex: 1;
