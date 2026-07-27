@@ -22,32 +22,8 @@
 
 	cursor: pointer;
 
-	&::before {
-		content: 'light_mode';
-
-		font-family: 'Material Symbols Outlined';
-
-		font-size: var(--size);
-		line-height: 1;
-	}
-
 	&:hover {
 		opacity: 1;
 		background-color: var(--color-content-bg-h3);
-		&::before {
-			content: 'dark_mode';
-		}
-	}
-}
-
-:root[style*='color-scheme: dark'] {
-	.light-dark-toggle {
-		&::before {
-			content: 'dark_mode';
-		}
-
-		&:hover::before {
-			content: 'light_mode';
-		}
 	}
 }

@@ -10,7 +10,7 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
-		"@fontsource/material-symbols-outlined": "^5.2.45",
+		"material-symbols": "^0.45.9",
 		"react": "^19.2.7",
 		"react-dom": "^19.2.7",
 		"react-parallax": "^3.5.2",

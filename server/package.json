@@ -1,0 +1,31 @@
+{
+	"name": "server",
+	"description": "Backend server for Harmony Health application",
+	"version": "1.0.0",
+	"type": "module",
+	"main": "dist/server.js",
+	"private": true,
+	"scripts": {
+		"start": "node dist/server.js",
+		"dev": "nodemon",
+		"build": "tsc"
+	},
+	"author": "Makai Post (post.makai@gmail.com)",
+	"license": "ISC",
+	"dependencies": {
+		"@tsconfig/node22": "^22.0.5",
+		"cors": "^2.8.6",
+		"dotenv": "^17.4.2",
+		"express": "^5.2.1",
+		"nodemailer": "^9.0.3"
+	},
+	"devDependencies": {
+		"@types/cors": "^2.8.19",
+		"@types/express": "^5.0.6",
+		"@types/node": "^26.1.0",
+		"@types/nodemailer": "^8.0.1",
+		"nodemon": "^3.1.9",
+		"tsx": "^4.23.0",
+		"typescript": "^6.0.3"
+	}
+}

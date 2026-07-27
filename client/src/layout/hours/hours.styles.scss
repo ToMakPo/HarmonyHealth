@@ -1,0 +1,18 @@
+#hours-display {
+	display: flex;
+	align-items: center;
+	align-self: center;
+	white-space: wrap;
+	width: fit-content;
+	gap: 0.5rem;
+	justify-content: center;
+	// font-family: 'Josefin Slab', serif;
+	font-optical-sizing: auto;
+	font-weight: 400;
+	font-style: normal;
+	text-wrap: balance;
+	text-align: center;
+	font-size: 1.25rem;
+	line-height: 1.2;
+	color: var(--color-text);
+}

@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import { scrollToHashElement } from '../../app'
 import logo from '../../assets/images/logo/harmony_logo_full.svg'
 import useBreakpoint from '../../store/breakpoint'
@@ -5,18 +6,34 @@ import useBreakpoint from '../../store/breakpoint'
 import './header.styles.scss'
 
 function PageHeader() {
+	const navigate = useNavigate() // 1. Hook into React Router's internal navigator
+	const currentBreakpoint = useBreakpoint(state => state.currentBreakpoint)
+
 	const navLinks = [
-		{ to: 'about-page', label: 'About' },
-		{ to: 'services-page', label: 'Services' },
-		{ to: 'contact-page', label: 'Contact' }
+		{ ref: '/', to: 'about-page', label: 'About' },
+		{ ref: '/', to: 'services-page', label: 'Services' },
+		{ ref: '/', to: 'contact-page', label: 'Contact' },
+		{ ref: '/', to: 'map-page', label: 'Map' }
 	]
 
-	const currentBreakpoint = useBreakpoint(state => state.currentBreakpoint)
+	// 2. Clear mobile popovers manually when a routing action fires
+	const handleMobileNavClick = (ref: string, to: string) => {
+		scrollToHashElement(ref, to, navigate)
+
+		const popover = document.getElementById('mobile-nav-popover')
+		if (popover && popover.hidePopover) {
+			popover.hidePopover()
+		}
+	}
 
 	const desktopNav = (
 		<nav>
 			{navLinks.map(link => (
-				<button key={link.to} onClick={() => scrollToHashElement({ id: link.to })}>
+				<button
+					key={link.to}
+					type='button' // Explicit type stops form/refresh bugs
+					onClick={() => scrollToHashElement(link.ref, link.to, navigate)} // 3. Pass navigate down
+				>
 					{link.label}
 				</button>
 			))}
@@ -25,27 +42,43 @@ function PageHeader() {
 
 	const mobileNav = (
 		<>
-			<button id='mobile-nav-button' popoverTarget='mobile-nav-popover'>
+			<button
+				id='mobile-nav-button'
+				type='button'
+				popoverTarget='mobile-nav-popover' // Changed from popovertarget to popoverTarget
+				aria-label='Toggle navigation menu'
+			>
 				<svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
-					<path d='M 3  6 H 21' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' />
+					<path d='M 3 6 H 21' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' />
 					<path d='M 3 12 H 21' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' />
 					<path d='M 3 18 H 21' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' />
 				</svg>
 			</button>
 
 			<div id='mobile-nav-popover' popover='auto'>
-				{navLinks.map(link => (
-					<button key={link.to} onClick={() => scrollToHashElement({ id: link.to })}>
-						{link.label}
-					</button>
-				))}
+				<nav>
+					{navLinks.map(link => (
+						<button
+							key={link.to}
+							type='button'
+							onClick={() => handleMobileNavClick(link.ref, link.to)} // Uses popover dismiss handler
+						>
+							{link.label}
+						</button>
+					))}
+				</nav>
 			</div>
 		</>
 	)
 
 	return (
 		<header id='page-header'>
-			<img src={logo} alt='Harmony Health page header logo' onClick={() => scrollToHashElement({ id: 'hero-page' })} />
+			<img
+				src={logo}
+				alt='Harmony Health page header logo'
+				onClick={() => scrollToHashElement('/', 'hero-page', navigate)} // Pass navigate here too
+				style={{ cursor: 'pointer' }}
+			/>
 
 			{currentBreakpoint === 'desktop' ? desktopNav : mobileNav}
 		</header>

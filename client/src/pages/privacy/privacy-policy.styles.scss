@@ -1,0 +1,14 @@
+#privacy-policy-page {
+	flex: 1;
+	overflow: auto;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	#privacy-policy-content {
+		padding: 16px;
+
+		max-width: 920px;
+	}
+}

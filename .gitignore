@@ -1,6 +1,13 @@
 ### NODE MODULES ###
 node_modules/
 
+# Build output
+dist/
+build/
+
+### ENV FILES ###
+.env
+
 ### BACKUP FILES ###
 *.OLD*
 *.NEW*

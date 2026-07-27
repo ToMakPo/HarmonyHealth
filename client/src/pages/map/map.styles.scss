@@ -1,0 +1,50 @@
+#map-page {
+	display: flex;
+	flex-direction: column;
+	gap: 2rem 5rem;
+	padding: min(5rem, 6vw) !important;
+	width: 100%;
+	background-color: var(--color-content-bg-l2);
+	flex-wrap: wrap;
+
+	h1 {
+		font-family: 'Josefin Slab', serif;
+		font-optical-sizing: auto;
+		font-weight: 600;
+		font-style: normal;
+		text-wrap: balance;
+		text-align: center;
+		font-size: 2.5rem;
+	}
+
+	#map-address-link {
+		display: flex;
+		flex-direction: column;
+
+		font-family: 'Josefin Slab', serif;
+		font-optical-sizing: auto;
+		font-weight: 400;
+		font-style: normal;
+		text-wrap: balance;
+		text-align: center;
+		font-size: 1.25rem;
+		line-height: 1.2;
+		color: var(--color-link);
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	iframe {
+		border-radius: 0.5rem;
+		border: 0;
+		width: 100%;
+		max-width: 1900px;
+		min-height: 400px;
+		max-height: 80vh;
+		height: 50vw;
+		border: 1px solid #ccc;
+	}
+}

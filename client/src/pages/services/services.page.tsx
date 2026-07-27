@@ -26,9 +26,9 @@ function ServicesPage() {
 		}
 	]
 
-	function createServiceCard(title: string, description: string, imageUrl: string) {
+	function createServiceCard(key: number, title: string, description: string, imageUrl: string) {
 		return (
-			<div className='service-card'>
+			<div className='service-card' key={key}>
 				<img src={imageUrl} alt={title} />
 				<h2>{title}</h2>
 				<p>{description}</p>
@@ -41,7 +41,7 @@ function ServicesPage() {
 			<h1>Our Services</h1>
 
 			<div id='services-page-cards'>
-				{services.map(service => createServiceCard(service.title, service.description, service.imageUrl))}
+				{services.map((service, i) => createServiceCard(i, service.title, service.description, service.imageUrl))}
 			</div>
 		</section>
 	)
