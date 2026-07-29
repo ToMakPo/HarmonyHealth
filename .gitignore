@@ -13,4 +13,4 @@ build/
 *.NEW*
 *.BACKUP*
 *.PARTS*
-*.TMP*
+*.TEMP*
