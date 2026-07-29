@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import './footer.styles.scss'
 
 function Footer() {
-	const navigate = useNavigate() // Initialize the router navigator
+	const navigate = useNavigate()
 
 	const handlePrivacyClick = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault() // Prevents unexpected layout refreshes

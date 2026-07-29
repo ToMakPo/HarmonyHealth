@@ -42,9 +42,11 @@
 
 			img {
 				border-radius: 4px;
-				height: 200px;
+				// height: 200px;
+				height: auto;
 				width: 100%;
 				object-fit: cover;
+				aspect-ratio: 16/9;
 			}
 
 			h2 {

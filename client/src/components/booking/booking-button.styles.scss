@@ -1,0 +1,14 @@
+.booking-button {
+	background-color: var(--color-harmony-gold);
+	color: #222222;
+	font-weight: bold;
+	padding: 0.5rem 1.5rem;
+	border: none;
+	border-radius: 100vw;
+	transition: filter 0.5s ease;
+}
+
+.booking-button:hover {
+	background-color: var(--color-harmony-gold);
+	filter: brightness(95%);
+}

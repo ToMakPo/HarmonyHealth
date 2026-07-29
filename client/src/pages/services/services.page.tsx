@@ -1,28 +1,28 @@
 import injectionImage from '../../assets/images/girl_getting_injection.jpg'
-import lazerTreatmentImage from '../../assets/images/girl_getting_lazer.jpg'
-import bodyContouringImage from '../../assets/images/slim_body.jpg'
+import ivTherapyImage from '../../assets/images/iv_therapy.png'
+import glp1Image from '../../assets/images/semaglutide_and_tirzepatide.png'
 
 import './services.styles.scss'
 
 function ServicesPage() {
 	const services = [
 		{
-			title: 'Injectables & Facial Enhancements',
+			title: 'Injectable Treatments',
 			description:
-				'Botox and dermal fillers designed to smooth, restore, and enhance natural facial features with subtle, balanced results that enhance your natural beauty.',
+				'Non-surgical aesthetic procedures aimed at softening expression lines, restoring facial volume, and refining contours. Including neuromodulators such as Botox®, Dysport®, and Daxxify®, along with dermal fillers, Sculptra®, and Platelet-Rich Plasma (PRP) options for facial rejuvenation, under-eye revitalization, and hair restoration.',
 			imageUrl: injectionImage
 		},
 		{
-			title: 'Advanced Skin Treatments',
+			title: 'IV & Wellness Therapy',
 			description:
-				'Microneedling, facials, and laser treatments for skin rejuvenation, improved texture, and a radiant, healthy glow that reveals your skin’s true potential.',
-			imageUrl: lazerTreatmentImage
+				'Targeted nutrient and vitamin infusions created to nourish the body, support cellular function, and boost overall vitality. Available treatments feature NAD+ therapy, customized wellness blends like the Youth & Vitality and Immune Support IV infusions, and direct B-complex vitamin injections.',
+			imageUrl: ivTherapyImage
 		},
 		{
-			title: 'Body Contouring & Wellness',
+			title: 'Medical Weight Loss',
 			description:
-				'Non-invasive body contouring and rejuvenation services that support overall wellness, confidence, and long-term results for a more sculpted, youthful appearance.',
-			imageUrl: bodyContouringImage
+				"An individualized medical management program centered around sustainable lifestyle changes, expert nutritional guidance, and continuous clinical support. Plans are tailored to each patient's goals and include targeted medication options, such as semaglutide (GLP-1) and tirzepatide (GLP-1 + GIP) therapies, when appropriate.",
+			imageUrl: glp1Image
 		}
 	]
 

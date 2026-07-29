@@ -38,13 +38,17 @@
 	}
 
 	#mobile-nav-popover {
-		flex-direction: column;
-		gap: 0.25rem;
 		background-color: var(--color-content-bg);
 		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 		border-radius: 4px;
-		padding: 1rem;
+		padding: 0.5rem;
 		border: none;
+
+		nav {
+			display: flex;
+			flex-direction: column;
+			gap: 0.25rem;
+		}
 
 		&:popover-open {
 			display: flex;

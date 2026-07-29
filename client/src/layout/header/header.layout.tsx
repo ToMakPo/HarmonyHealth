@@ -4,6 +4,7 @@ import logo from '../../assets/images/logo/harmony_logo_full.svg'
 import useBreakpoint from '../../store/breakpoint'
 
 import './header.styles.scss'
+import BookingButton from '../../components/booking/booking-button.component'
 
 function PageHeader() {
 	const navigate = useNavigate() // Hook into React Router's internal navigator
@@ -46,6 +47,7 @@ function PageHeader() {
 					{link.label}
 				</button>
 			))}
+			<BookingButton />
 		</nav>
 	)
 
@@ -75,6 +77,7 @@ function PageHeader() {
 							{link.label}
 						</button>
 					))}
+					<BookingButton />
 				</nav>
 			</div>
 		</>
