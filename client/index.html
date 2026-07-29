@@ -6,6 +6,23 @@
 	<link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>client</title>
+
+	<!-- Boulevard Self-Booking overlay -->
+	<script>
+		(function (a) {
+			const b = { businessId: '33e2ab0b-a4dc-4e8e-b373-ecb059d2f448' }
+
+			var c = a.createElement('script')
+			var d = a.querySelector('script')
+
+			c.src = 'https://static.joinboulevard.com/injector.min.js'
+			c.async = true
+			c.onload = function () { blvd.init(b) }
+
+			d.parentNode.insertBefore(c, d)
+		})(document)
+	</script>
+	<!-- End Boulevard Self-Booking overlay -->
 </head>
 
 <body>

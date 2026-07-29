@@ -6,7 +6,7 @@ import useBreakpoint from '../../store/breakpoint'
 import './header.styles.scss'
 
 function PageHeader() {
-	const navigate = useNavigate() // 1. Hook into React Router's internal navigator
+	const navigate = useNavigate() // Hook into React Router's internal navigator
 	const currentBreakpoint = useBreakpoint(state => state.currentBreakpoint)
 
 	const navLinks = [
@@ -16,7 +16,7 @@ function PageHeader() {
 		{ ref: '/', to: 'map-page', label: 'Map' }
 	]
 
-	// 2. Clear mobile popovers manually when a routing action fires
+	// Clear mobile popovers manually when a routing action fires
 	const handleMobileNavClick = (ref: string, to: string) => {
 		scrollToHashElement(ref, to, navigate)
 
@@ -26,13 +26,22 @@ function PageHeader() {
 		}
 	}
 
+	const logoElement = (
+		<img
+			src={logo}
+			id='page-header-logo'
+			alt='Harmony Health page header logo'
+			onClick={() => scrollToHashElement('/', 'hero-page', navigate)} // Pass navigate here too
+		/>
+	)
+
 	const desktopNav = (
 		<nav>
 			{navLinks.map(link => (
 				<button
 					key={link.to}
 					type='button' // Explicit type stops form/refresh bugs
-					onClick={() => scrollToHashElement(link.ref, link.to, navigate)} // 3. Pass navigate down
+					onClick={() => scrollToHashElement(link.ref, link.to, navigate)} // Pass navigate down
 				>
 					{link.label}
 				</button>
@@ -73,13 +82,7 @@ function PageHeader() {
 
 	return (
 		<header id='page-header'>
-			<img
-				src={logo}
-				alt='Harmony Health page header logo'
-				onClick={() => scrollToHashElement('/', 'hero-page', navigate)} // Pass navigate here too
-				style={{ cursor: 'pointer' }}
-			/>
-
+			{logoElement}
 			{currentBreakpoint === 'desktop' ? desktopNav : mobileNav}
 		</header>
 	)

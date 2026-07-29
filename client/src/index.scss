@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Josefin+Slab:ital,wght@0,100..700;1,100..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Quicksand:wght@300..700&family=Rokkitt:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Slab:ital,wght@0,100..700;1,100..700&family=Jost:ital,wght@0,100..900;1,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Quicksand:wght@300..700&display=swap');
 
 :root {
 	color-scheme: light dark;
@@ -19,6 +19,13 @@
 	--zidx-light-dark-toggle: 1000;
 
 	--color-shadow: #00000080;
+
+	--color-harmony-gold: #c8a838;
+
+	--font-harmony: 'Jost', sans-serif;
+	--font-fancy: 'Josefin Slab', serif;
+	--font-base: 'Quicksand', sans-serif;
+	--font-heading: 'Josefin Slab', serif;
 }
 
 html,

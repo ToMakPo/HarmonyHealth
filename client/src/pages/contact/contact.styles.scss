@@ -19,10 +19,12 @@
 
 	#contact-container {
 		max-width: 100%;
+		width: 1800px;
 		display: flex;
 		flex-direction: row;
 		gap: 2rem;
 		flex-wrap: wrap;
+		margin: 0 auto;
 
 		#contact-form {
 			flex: 3 0 auto;

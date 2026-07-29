@@ -5,6 +5,11 @@
 	padding: 0.55rem 1rem;
 	background-color: var(--color-header-bg);
 
+	#page-header-logo {
+		font-family: var(--font-harmony);
+		cursor: pointer;
+	}
+
 	img {
 		max-height: 50px;
 		margin: -0.5rem;

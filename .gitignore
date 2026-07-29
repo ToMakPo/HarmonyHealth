@@ -6,7 +6,7 @@ dist/
 build/
 
 ### ENV FILES ###
-.env
+.env*
 
 ### BACKUP FILES ###
 *.OLD*

@@ -1,11 +1,11 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import './contact.styles.scss'
 import { companyInfo } from '../../store/info'
 import HoursDisplay from '../../layout/hours/hours.display'
 
 function ContactPage() {
-	const [emailResponse, setEmailResponse] = useState<string | null>(null)
+	const [emailResponse, _setEmailResponse] = useState<string | null>(null)
 
 	useEffect(() => {
 		const form = document.getElementById('contact-form') as HTMLFormElement
