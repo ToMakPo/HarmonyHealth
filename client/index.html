@@ -9,18 +9,18 @@
 
 	<!-- Boulevard Self-Booking overlay -->
 	<script>
-		(function (a) {
-			const b = { businessId: '33e2ab0b-a4dc-4e8e-b373-ecb059d2f448' }
+		(function () {
+			const id = { businessId: '%VITE_BOULEVARD_BUSINESS_ID%' }
 
-			var c = a.createElement('script')
-			var d = a.querySelector('script')
+			const c = document.createElement('script')
+			const d = document.querySelector('script')
 
 			c.src = 'https://static.joinboulevard.com/injector.min.js'
 			c.async = true
-			c.onload = function () { blvd.init(b) }
+			c.onload = function () { blvd.init(id) }
 
 			d.parentNode.insertBefore(c, d)
-		})(document)
+		})()
 	</script>
 	<!-- End Boulevard Self-Booking overlay -->
 </head>
