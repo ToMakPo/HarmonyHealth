@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 
-import './contact.styles.scss'
+import HoursDisplay from '../../components/hours/hours.component'
 import { companyInfo } from '../../store/info'
-import HoursDisplay from '../../layout/hours/hours.display'
+
+import './contact.styles.scss'
 
 function ContactPage() {
 	const [emailResponse, _setEmailResponse] = useState<string | null>(null)

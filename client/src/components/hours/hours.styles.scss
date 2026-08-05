@@ -35,13 +35,17 @@
 			opacity: 0;
 		}
 	}
+	.closed-icon {
+		rotate: 0.05turn;
+	}
 
 	&:hover {
 		.opened-icon {
 			animation: --wiggle 0.5s ease-in-out;
 		}
 		.closed-icon {
-			rotate: -0.05turn;
+			rotate: 0turn;
+
 			.normal {
 				opacity: 0;
 			}

@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-ro
 import PageHeader from './layout/header/header.layout'
 import HomePage from './pages/home/home.page'
 import PrivacyPolicyPage from './pages/privacy/privacy-policy.page'
-import LightDarkToggle from './components/light-dark/light-dark.component'
+// import LightDarkToggle from './components/light-dark/light-dark.component'
 import useBreakpoint from './store/breakpoint'
 import { useEffect } from 'react'
 
@@ -71,7 +71,7 @@ function App() {
 				<Route path='/' element={<HomePage />} />
 				<Route path='/privacy-policy' element={<PrivacyPolicyPage />} />
 			</Routes>
-			<LightDarkToggle />
+			{/* <LightDarkToggle /> */}
 		</BrowserRouter>
 	)
 }

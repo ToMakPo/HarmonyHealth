@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import Icon from '../../components/icon/icon.component'
+import Icon from '../icon/icon.component'
 import { formatRelativeDate, isOpened } from '../../store/info'
 
 import './hours.styles.scss'
