@@ -4,7 +4,7 @@ import './booking-button.styles.scss'
 
 function BookingButton() {
 	function handleBooking() {
-		console.log('Booking button clicked')
+		console.info('Booking button clicked')
 		scrollToHashElement('/', 'book-now')
 	}
 

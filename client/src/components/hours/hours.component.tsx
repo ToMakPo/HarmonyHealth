@@ -14,7 +14,6 @@ function HoursDisplay() {
 		const { opened, until } = isOpened(now)
 		setOpened(opened)
 		setUntil(until ? new Date(until).toISOString() : null)
-		console.log({ now, opened, until })
 
 		if (!until) return
 
@@ -30,11 +29,6 @@ function HoursDisplay() {
 	}, [])
 
 	const formattedUntil = useMemo(() => (until ? formatRelativeDate(new Date(until)) : null), [opened, until])
-
-	useEffect(() => {
-		console.log({ opened })
-		console.log({ until })
-	}, [opened, until])
 
 	return (
 		<div id='hours-display'>

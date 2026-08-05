@@ -18,17 +18,17 @@ function ContactPage() {
 		e.preventDefault()
 		// setEmailResponse('Sending...')
 
-		const formData = new FormData(e.currentTarget)
+		// const formData = new FormData(e.currentTarget)
 
-		const serverUrl = import.meta.env.VITE_SERVER_URL
+		// const serverUrl = import.meta.env.VITE_SERVER_URL
 
-		const data = await fetch(`${serverUrl}/api/messaging/send-email`, {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(Object.fromEntries(formData.entries()))
-		}).then(res => res.json())
+		// const data = await fetch(`${serverUrl}/api/messaging/send-email`, {
+		// 	method: 'POST',
+		// 	headers: { 'Content-Type': 'application/json' },
+		// 	body: JSON.stringify(Object.fromEntries(formData.entries()))
+		// }).then(res => res.json())
 
-		console.log(data)
+		// console.log(data)
 
 		// const response = await fetch('https://web3forms.com', { method: 'POST', body: formData }).then(res => res.json())
 

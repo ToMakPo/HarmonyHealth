@@ -141,7 +141,7 @@ export const sendEmail = async (clientName: string, clientEmail: string, subject
 		text: body
 	})
 
-	console.log('Email send result:', result)
+	console.info('Email send result:', result)
 
 	if (result.rejected.length > 0) {
 		return apiResponse(false, sender, 400, 'Failed to send email', { result, clientName, clientEmail, subject, body, sendTo })

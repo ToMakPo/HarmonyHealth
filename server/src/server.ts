@@ -43,8 +43,8 @@ app.get('/*any', (req, res) => {
 
 // Start server
 app.listen(PORT, () => {
-	console.log(`🚀 Server running: ${serverUrl}`)
+	console.info(`🚀 Server running: ${serverUrl}`)
 	if (process.env.APP_DEBUG === 'true') {
-		console.log('⚠️ Debug mode is enabled')
+		console.info('⚠️ Debug mode is enabled')
 	}
 })
