@@ -40,11 +40,18 @@ function HoursDisplay() {
 		<div id='hours-display'>
 			{opened ? (
 				<>
-					<Icon name='storefront' variant='rounded' /> We are currently opened until {formattedUntil}
+					<span className='status-icon opened-icon'>
+						<Icon name='storefront' className='normal' size='28px' />
+					</span>
+					We are currently opened until {formattedUntil}
 				</>
 			) : (
 				<>
-					<Icon name='moon_stars' variant='outlined' /> We are currently closed until {formattedUntil}
+					<span className='status-icon closed-icon'>
+						<Icon name='bedtime' className='normal' size='28px' />
+						<Icon name='moon_stars' className='hovered' size='28px' />
+					</span>
+					We are currently closed until {formattedUntil}
 				</>
 			)}
 		</div>

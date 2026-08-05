@@ -1,5 +1,5 @@
 .icon-component {
-	--size: 124px;
+	--size: 24px;
 	--fill: none;
 
 	display: inline-flex;
@@ -19,7 +19,7 @@
 			'wght' 400,
 			'GRAD' 0,
 			'opsz' 48;
-		font-size: calc(var(--size) * 0.75);
+		font-size: var(--size);
 	}
 
 	&.clickable {

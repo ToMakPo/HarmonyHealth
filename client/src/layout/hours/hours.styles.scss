@@ -13,5 +13,59 @@
 	text-align: center;
 	font-size: 1.25rem;
 	line-height: 1.2;
-	color: var(--color-text);
+	cursor: default;
+
+	.status-icon {
+		position: relative;
+		transition: 0.3s;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		.normal {
+			transition: 0.3s;
+			opacity: 1;
+		}
+
+		.hovered {
+			position: absolute;
+			top: 0;
+			left: 0;
+			transition: 0.3s;
+			opacity: 0;
+		}
+	}
+
+	&:hover {
+		.opened-icon {
+			animation: --wiggle 0.5s ease-in-out;
+		}
+		.closed-icon {
+			rotate: -0.05turn;
+			.normal {
+				opacity: 0;
+			}
+			.hovered {
+				opacity: 1;
+			}
+		}
+	}
+
+	@keyframes --wiggle {
+		0% {
+			transform: rotate(0deg);
+		}
+		25% {
+			transform: rotate(-10deg);
+		}
+		50% {
+			transform: rotate(10deg);
+		}
+		75% {
+			transform: rotate(-10deg);
+		}
+		100% {
+			transform: rotate(0deg);
+		}
+	}
 }

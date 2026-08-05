@@ -5,7 +5,7 @@ import aboutUsImage from '../../assets/images/blue_flowers.jpg'
 function AboutPage() {
 	return (
 		<section id='about-page'>
-			<div id='about-content-wrapper'>
+			<div id='about-container'>
 				<div id='about-page-image'>
 					<img src={aboutUsImage} alt='About Us' />
 				</div>

@@ -84,7 +84,20 @@ function ContactPage() {
 		<div className='contact-hours'>
 			<h2>Hours</h2>
 
-			<ul>
+			<table>
+				<tbody>
+					{Object.entries(companyInfo.hours).map(([day, periods]) =>
+						periods.length > 0 ? (
+							<tr key={day}>
+								<td style={{ paddingRight: '1rem' }}>{day}</td>
+								<td>{periods.map(period => `${period.open} - ${period.closed}`).join(', ')}</td>
+							</tr>
+						) : null
+					)}
+				</tbody>
+			</table>
+
+			{/* <ul>
 				{Object.entries(companyInfo.hours).map(
 					([day, periods]) =>
 						periods.length > 0 && (
@@ -93,7 +106,7 @@ function ContactPage() {
 							</li>
 						)
 				)}
-			</ul>
+			</ul> */}
 		</div>
 	)
 

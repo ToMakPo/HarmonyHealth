@@ -38,10 +38,12 @@ function ServicesPage() {
 
 	return (
 		<section id='services-page'>
-			<h1>Our Services</h1>
+			<div id='services-container'>
+				<h1>Our Services</h1>
 
-			<div id='services-page-cards'>
-				{services.map((service, i) => createServiceCard(i, service.title, service.description, service.imageUrl))}
+				<div id='services-page-cards'>
+					{services.map((service, i) => createServiceCard(i, service.title, service.description, service.imageUrl))}
+				</div>
 			</div>
 		</section>
 	)

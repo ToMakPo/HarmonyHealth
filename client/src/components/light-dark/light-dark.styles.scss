@@ -12,8 +12,8 @@
 
 	--clr-lt: #f6d984;
 	--clr-dk: #9a8135;
+	background-color: var(--color-bg-l1);
 	color: light-dark(var(--clr-dk), var(--clr-lt));
-	background-color: var(--color-content-bg);
 
 	opacity: 0.6;
 	transition:
@@ -24,6 +24,5 @@
 
 	&:hover {
 		opacity: 1;
-		background-color: var(--color-content-bg-h3);
 	}
 }

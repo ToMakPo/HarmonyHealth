@@ -16,7 +16,7 @@ export const companyInfo = {
 	name: 'Harmony Health Wellness Center',
 	address: ['2707 Bickford Ave, Suite B', 'Snohomish, WA 98290'],
 	phone: '(360) 217-6020',
-	email: 'info@harmonyhealthwellness.or`		g/',
+	email: 'info@harmonyhealthwellness.org',
 	website: 'https://harmonyhealthwellness.org',
 	hours: {
 		Sunday: [],
