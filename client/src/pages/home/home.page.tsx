@@ -1,11 +1,11 @@
-import HeroPage from '../hero/hero.page'
-import AboutPage from '../about/about.page'
-import ServicesPage from '../services/services.page'
-import ContactPage from '../contact/contact.page'
+import HeroPage from '../sections/hero/hero.page'
+import AboutPage from '../sections/about/about.page'
+import ServicesPage from '../sections/services/services.page'
+import ContactPage from '../sections/contact/contact.page'
+import MapPage from '../sections/map/map.page'
 import Footer from '../../layout/footer/footer.layout'
 
 import './home.styles.scss'
-import MapPage from '../map/map.page'
 
 function HomePage() {
 	return (
