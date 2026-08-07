@@ -1,11 +1,18 @@
-import { scrollToHashElement } from '../../app'
-
 import './booking-button.styles.scss'
+
+declare global {
+	interface Window {
+		blvd?: { openBookingWidget: (options: Record<string, unknown>) => void }
+	}
+}
 
 function BookingButton() {
 	function handleBooking() {
-		console.info('Booking button clicked')
-		scrollToHashElement('/', 'book-now')
+		if (window.blvd && typeof window.blvd.openBookingWidget === 'function') {
+			window.blvd.openBookingWidget({})
+		} else {
+			console.error('Booking widget is not available.')
+		}
 	}
 
 	return (
