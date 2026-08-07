@@ -4,7 +4,7 @@ import glp1Image from '../../assets/images/semaglutide_and_tirzepatide.png'
 
 import './services.styles.scss'
 
-function ServicesPage() {
+function ServicesSection() {
 	const services = [
 		{
 			title: 'Injectable Treatments',
@@ -37,11 +37,11 @@ function ServicesPage() {
 	}
 
 	return (
-		<section id='services-page'>
+		<section id='services-section'>
 			<div id='services-container'>
 				<h1>Our Services</h1>
 
-				<div id='services-page-cards'>
+				<div id='services-section-cards'>
 					{services.map((service, i) => createServiceCard(i, service.title, service.description, service.imageUrl))}
 				</div>
 			</div>
@@ -49,4 +49,4 @@ function ServicesPage() {
 	)
 }
 
-export default ServicesPage
+export default ServicesSection

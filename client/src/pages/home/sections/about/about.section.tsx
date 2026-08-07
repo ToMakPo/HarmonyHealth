@@ -2,15 +2,15 @@ import './about.styles.scss'
 
 import aboutUsImage from '../../assets/images/blue_flowers.jpg'
 
-function AboutPage() {
+function AboutSection() {
 	return (
-		<section id='about-page'>
+		<section id='about-section'>
 			<div id='about-container'>
-				<div id='about-page-image'>
+				<div id='about-section-image'>
 					<img src={aboutUsImage} alt='About Us' />
 				</div>
 
-				<div id='about-page-text'>
+				<div id='about-section-text'>
 					<h1>
 						About <span>Harmony Health</span>
 						<span>Wellness Center</span>
@@ -33,4 +33,4 @@ function AboutPage() {
 	)
 }
 
-export default AboutPage
+export default AboutSection

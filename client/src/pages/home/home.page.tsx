@@ -1,8 +1,8 @@
-import HeroPage from '../sections/hero/hero.page'
-import AboutPage from '../sections/about/about.page'
-import ServicesPage from '../sections/services/services.page'
-import ContactPage from '../sections/contact/contact.page'
-import MapPage from '../sections/map/map.page'
+import HeroSection from './sections/hero/hero.section'
+import AboutSection from './sections/about/about.section'
+import ServicesSection from './sections/services/services.section'
+import ContactSection from './sections/contact/contact.section'
+import MapSection from './sections/map/map.section'
 import Footer from '../../layout/footer/footer.layout'
 
 import './home.styles.scss'
@@ -10,11 +10,11 @@ import './home.styles.scss'
 function HomePage() {
 	return (
 		<main id='home-page'>
-			<HeroPage />
-			<AboutPage />
-			<ServicesPage />
-			<ContactPage />
-			<MapPage />
+			<HeroSection />
+			<AboutSection />
+			<ServicesSection />
+			<ContactSection />
+			<MapSection />
 			<Footer />
 		</main>
 	)

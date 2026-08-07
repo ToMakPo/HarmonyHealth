@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
+
 import heroImage from '../../assets/images/monstera_deliciosa.jpg'
 import logo from '../../assets/images/logo/harmony_logo_gold.png'
+
 import './hero.styles.scss'
 
-function HeroPage() {
+function HeroSection() {
 	const taglineText = ['Health', 'Life', 'Wellness', 'Happiness', 'Mind', 'Body', 'Spirit']
 	const [taglineIndex, setTaglineIndex] = useState(0)
 	const [subIndex, setSubIndex] = useState(0)
@@ -38,7 +40,7 @@ function HeroPage() {
 	const displayedTagline = taglineText[taglineIndex].substring(0, subIndex)
 
 	return (
-		<section id='hero-page' style={{ backgroundImage: `url(${heroImage})` }}>
+		<section id='hero-section' style={{ backgroundImage: `url(${heroImage})` }}>
 			<div className='hero-overlay'></div>
 
 			<div id='hero-content'>
@@ -53,7 +55,7 @@ function HeroPage() {
 				<button
 					id='services-button'
 					onClick={() => {
-						const servicesSection = document.getElementById('services-page')
+						const servicesSection = document.getElementById('services-section')
 						if (servicesSection) {
 							servicesSection.scrollIntoView({ behavior: 'smooth' })
 						}
@@ -66,4 +68,4 @@ function HeroPage() {
 	)
 }
 
-export default HeroPage
+export default HeroSection

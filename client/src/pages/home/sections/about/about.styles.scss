@@ -1,4 +1,4 @@
-#about-page {
+#about-section {
 	max-width: 100%;
 	display: flex;
 	flex-direction: row;
@@ -16,7 +16,7 @@
 		margin: 0 auto;
 	}
 
-	#about-page-text {
+	#about-section-text {
 		flex: 1;
 		width: 0;
 		min-width: min(400px, 100%);
@@ -47,7 +47,7 @@
 		}
 	}
 
-	#about-page-image {
+	#about-section-image {
 		flex: 1;
 		width: 0;
 		min-width: min(400px, 100%);
@@ -71,7 +71,7 @@
 }
 
 [data-breakpoint='mobile'] {
-	#about-page {
+	#about-section {
 		flex-direction: column;
 		padding: min(2rem, 6vw) !important;
 	}
@@ -79,7 +79,7 @@
 		flex-direction: column;
 		gap: 2rem 0;
 	}
-	#about-page-text {
+	#about-section-text {
 		text-align: center;
 	}
 }

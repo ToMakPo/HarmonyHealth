@@ -11,10 +11,10 @@ function PageHeader() {
 	const currentBreakpoint = useBreakpoint(state => state.currentBreakpoint)
 
 	const navLinks = [
-		{ ref: '/', to: 'about-page', label: 'About' },
-		{ ref: '/', to: 'services-page', label: 'Services' },
-		{ ref: '/', to: 'contact-page', label: 'Contact' },
-		{ ref: '/', to: 'map-page', label: 'Map' }
+		{ ref: '/', to: 'about-section', label: 'About' },
+		{ ref: '/', to: 'services-section', label: 'Services' },
+		{ ref: '/', to: 'contact-section', label: 'Contact' },
+		{ ref: '/', to: 'map-section', label: 'Map' }
 	]
 
 	// Clear mobile popovers manually when a routing action fires
@@ -32,7 +32,7 @@ function PageHeader() {
 			src={logo}
 			id='page-header-logo'
 			alt='Harmony Health page header logo'
-			onClick={() => scrollToHashElement('/', 'hero-page', navigate)} // Pass navigate here too
+			onClick={() => scrollToHashElement('/', 'hero-section', navigate)} // Pass navigate here too
 		/>
 	)
 

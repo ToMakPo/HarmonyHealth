@@ -1,4 +1,4 @@
-#services-page {
+#services-section {
 	display: flex;
 	flex-direction: column;
 	gap: 2rem 5rem;
@@ -28,7 +28,7 @@
 		width: 100%;
 	}
 
-	#services-page-cards {
+	#services-section-cards {
 		display: flex;
 		flex-direction: row;
 		gap: 2rem 1rem;

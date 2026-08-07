@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 
-import HoursDisplay from '../../components/hours/hours.component'
-import { companyInfo } from '../../store/info'
+import { companyInfo } from '../../../../store/info'
+import HoursDisplay from '../../../../components/hours/hours.component'
 
 import './contact.styles.scss'
 
-function ContactPage() {
+function ContactSection() {
 	const [emailResponse, _setEmailResponse] = useState<string | null>(null)
 
 	useEffect(() => {
@@ -112,7 +112,7 @@ function ContactPage() {
 	)
 
 	return (
-		<section id='contact-page'>
+		<section id='contact-section'>
 			<h1>Contact Us</h1>
 			<div id='contact-container'>
 				{contactForm}
@@ -126,4 +126,4 @@ function ContactPage() {
 	)
 }
 
-export default ContactPage
+export default ContactSection
