@@ -1,6 +1,6 @@
 import './about.styles.scss'
 
-import aboutUsImage from '../../assets/images/blue_flowers.jpg'
+import aboutUsImage from '../../../../assets/images/blue_flowers.jpg'
 
 function AboutSection() {
 	return (

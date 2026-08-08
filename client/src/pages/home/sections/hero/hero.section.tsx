@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
-import heroImage from '../../assets/images/monstera_deliciosa.jpg'
-import logo from '../../assets/images/logo/harmony_logo_gold.png'
+import heroImage from '../../../../assets/images/monstera_deliciosa.jpg'
+import logo from '../../../../assets/images/logo/harmony_logo_gold.png'
 
 import './hero.styles.scss'
 

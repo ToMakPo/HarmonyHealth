@@ -22,6 +22,12 @@ export function scrollToHashElement(ref: string, id?: string, navigate?: any) {
 	}
 }
 
+declare global {
+	interface Window {
+		blvd?: { openBookingWidget: (options: Record<string, unknown>) => void }
+	}
+}
+
 function CrossPageScrollHandler() {
 	const location = useLocation()
 	const navigate = useNavigate()
