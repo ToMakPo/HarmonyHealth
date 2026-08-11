@@ -4,6 +4,7 @@ import { companyInfo } from '../../../../store/info'
 import HoursDisplay from '../../../../components/hours/hours.component'
 
 import './contact.styles.scss'
+import type { ApiResponse } from '../../../../lib/apiResponse'
 
 type SendStatus = 'sending' | 'success' | 'failure' | null
 
@@ -24,27 +25,28 @@ function ContactSection() {
 
 		const serverUrl = import.meta.env.VITE_SERVER_URL
 
-		const data = await fetch(`${serverUrl}/api/messaging/send-email`, {
+		const data = (await fetch(`${serverUrl}/api/messaging/send-email`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(Object.fromEntries(formData.entries()))
-		}).then(res => res.json())
+		}).then(res => res.json())) as ApiResponse
 
-		// console.log(data)
-
-		// const response = await fetch('https://web3forms.com', { method: 'POST', body: formData }).then(res => res.json())
-
-		if (data.success) {
+		if (data.passed) {
 			setSendStatus('success')
-			// 	e.currentTarget.reset()
 			console.info('Email sent successfully!')
+			e.currentTarget.reset()
 		} else {
 			setSendStatus('failure')
 			console.error('Failed to send email.')
 		}
-
-		// setEmailResponse(null)
 	}
+
+	useEffect(() => {
+		if (sendStatus === 'success' || sendStatus === 'failure') {
+			const timer = setTimeout(() => setSendStatus(null), 5000)
+			return () => clearTimeout(timer)
+		}
+	}, [sendStatus])
 
 	const contactForm = (
 		<form id='contact-form' onSubmit={submitEmail}>
@@ -69,15 +71,13 @@ function ContactSection() {
 
 			<input type='submit' disabled={sendStatus === 'sending'} value={sendStatus === 'sending' ? 'Sending...' : 'Send'} />
 
-			{sendStatus && (
-				<span className={'send-response ' + sendStatus}>
-					{sendStatus === 'success'
-						? 'Message sent successfully!'
-						: sendStatus === 'failure'
-							? 'Failed to send message. Please try again later.'
-							: ''}
-				</span>
-			)}
+			<span className={'send-response ' + sendStatus}>
+				{sendStatus === 'success'
+					? 'Message sent successfully!'
+					: sendStatus === 'failure'
+						? 'Failed to send message. Please try again later.'
+						: ''}
+			</span>
 		</form>
 	)
 
