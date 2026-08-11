@@ -25,11 +25,21 @@ function ContactSection() {
 		const formElement = e.currentTarget as HTMLFormElement
 		const serverUrl = import.meta.env.VITE_SERVER_URL
 
-		const data = (await fetch(`${serverUrl}/api/messaging/send-email`, {
+		const response = await fetch(`${serverUrl}/api/messaging/send-email`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(Object.fromEntries(formData.entries()))
-		}).then(res => res.json())) as ApiResponse
+		})
+
+		const contentType = response.headers.get('Content-Type') ?? ''
+
+		if (!contentType.includes('application/json')) {
+			const text = await response.text()
+
+			throw new Error(`Server returned ${response.status}: ${text}`)
+		}
+
+		const data: ApiResponse = await response.json()
 
 		if (data.passed) {
 			setSendStatus('success')

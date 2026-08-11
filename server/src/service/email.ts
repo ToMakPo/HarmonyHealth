@@ -9,8 +9,25 @@ if (!process.env.SMTP_HOST) {
 const mailer = nodemailer.createTransport({
 	host: process.env.SMTP_HOST,
 	port: Number(process.env.SMTP_PORT),
-	secure: process.env.SMTP_SECURE === 'true', // true for 465, false for other ports
+	secure: true,
 	auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS }
+})
+
+mailer.verify((error, success) => {
+	if (error) {
+		console.error('SMTP CONNECTION FAILED:', error)
+	} else {
+		console.log('SMTP CONNECTION SUCCESSFUL')
+	}
+})
+
+console.log('SMTP configuration:', {
+	host: process.env.SMTP_HOST,
+	port: process.env.SMTP_PORT,
+	secure: process.env.SMTP_SECURE,
+	user: process.env.SMTP_USER,
+	passwordSet: Boolean(process.env.SMTP_PASS),
+	infoEmail: process.env.INFO_EMAIL
 })
 
 const getAddress = (name: string, email: string) => `"${name}" <${email}>`
@@ -162,18 +179,26 @@ export const sendEmail = async (clientName: string, clientEmail: string, subject
 	const clientAddress = getAddress(clientName, clientEmail)
 	const sendToAddress = sendTo === 'self' ? infoAddress : clientAddress
 
-	const result = await mailer.sendMail({
-		from: senderEmail,
-		to: sendToAddress,
-		replyTo: sendTo === 'self' ? clientAddress : infoAddress,
-		subject,
-		text: body
-	})
+	try {
+		const result = await mailer.sendMail({
+			from: senderEmail,
+			to: sendToAddress,
+			replyTo: sendTo === 'self' ? clientAddress : infoAddress,
+			subject,
+			text: body
+		})
 
-	console.info('Email send result:', result)
+		console.info('Email send result:', result)
 
-	if (result.rejected.length > 0) {
-		return apiResponse(false, sender, 400, 'Failed to send email', { result, clientName, clientEmail, subject, body, sendTo })
+		if (result.rejected.length > 0) {
+			return apiResponse(false, sender, 400, 'Failed to send email', { result, clientName, clientEmail, subject, body, sendTo })
+		}
+		return apiResponse(true, sender, 200, 'Email sent successfully', { result, clientName, clientEmail, subject, body, sendTo })
+	} catch (error) {
+		console.error('Error sending email:', error)
+
+		return apiResponse(false, sender, 500, 'An error occurred while sending email', {
+			error: error instanceof Error ? error.message : String(error)
+		})
 	}
-	return apiResponse(true, sender, 200, 'Email sent successfully', { result, clientName, clientEmail, subject, body, sendTo })
 }
