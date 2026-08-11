@@ -6,7 +6,7 @@ import HoursDisplay from '../../../../components/hours/hours.component'
 import './contact.styles.scss'
 
 function ContactSection() {
-	const [emailResponse, _setEmailResponse] = useState<string | null>(null)
+	const [emailResponse, setEmailResponse] = useState<string | null>(null)
 
 	useEffect(() => {
 		const form = document.getElementById('contact-form') as HTMLFormElement
@@ -16,31 +16,31 @@ function ContactSection() {
 
 	async function submitEmail(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault()
-		// setEmailResponse('Sending...')
+		setEmailResponse('Sending...')
 
-		// const formData = new FormData(e.currentTarget)
+		const formData = new FormData(e.currentTarget)
 
-		// const serverUrl = import.meta.env.VITE_SERVER_URL
+		const serverUrl = import.meta.env.VITE_SERVER_URL
 
-		// const data = await fetch(`${serverUrl}/api/messaging/send-email`, {
-		// 	method: 'POST',
-		// 	headers: { 'Content-Type': 'application/json' },
-		// 	body: JSON.stringify(Object.fromEntries(formData.entries()))
-		// }).then(res => res.json())
+		const data = await fetch(`${serverUrl}/api/messaging/send-email`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(Object.fromEntries(formData.entries()))
+		}).then(res => res.json())
 
-		// console.log(data)
+		console.log(data)
 
-		// const response = await fetch('https://web3forms.com', { method: 'POST', body: formData }).then(res => res.json())
+		const response = await fetch('https://web3forms.com', { method: 'POST', body: formData }).then(res => res.json())
 
-		// if (response.success) {
-		// 	setEmailResponse('Email sent successfully!')
-		// 	e.currentTarget.reset()
-		// 	console.info('Email sent successfully!')
-		// } else {
-		// 	setEmailResponse('Failed to send email.')
-		// 	console.error('Failed to send email.', response)
-		// }
-		// setEmailResponse(null)
+		if (response.success) {
+			setEmailResponse('Email sent successfully!')
+			e.currentTarget.reset()
+			console.info('Email sent successfully!')
+		} else {
+			setEmailResponse('Failed to send email.')
+			console.error('Failed to send email.', response)
+		}
+		setEmailResponse(null)
 	}
 
 	const contactForm = (
@@ -98,7 +98,7 @@ function ContactSection() {
 				</tbody>
 			</table>
 
-			{/* <ul>
+			<ul>
 				{Object.entries(companyInfo.hours).map(
 					([day, periods]) =>
 						periods.length > 0 && (
@@ -107,7 +107,7 @@ function ContactSection() {
 							</li>
 						)
 				)}
-			</ul> */}
+			</ul>
 		</div>
 	)
 
