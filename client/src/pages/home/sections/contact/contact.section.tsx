@@ -5,18 +5,20 @@ import HoursDisplay from '../../../../components/hours/hours.component'
 
 import './contact.styles.scss'
 
+type SendStatus = 'sending' | 'success' | 'failure' | null
+
 function ContactSection() {
-	const [emailResponse, setEmailResponse] = useState<string | null>(null)
+	const [sendStatus, setSendStatus] = useState<SendStatus>(null)
 
 	useEffect(() => {
 		const form = document.getElementById('contact-form') as HTMLFormElement
 		const submitButton = form.querySelector('[type="submit"]') as HTMLButtonElement
-		submitButton.disabled = emailResponse === 'Sending...'
-	}, [emailResponse])
+		submitButton.disabled = sendStatus === 'sending'
+	}, [sendStatus])
 
 	async function submitEmail(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault()
-		setEmailResponse('Sending...')
+		setSendStatus('sending')
 
 		const formData = new FormData(e.currentTarget)
 
@@ -28,19 +30,20 @@ function ContactSection() {
 			body: JSON.stringify(Object.fromEntries(formData.entries()))
 		}).then(res => res.json())
 
-		console.log(data)
+		// console.log(data)
 
-		const response = await fetch('https://web3forms.com', { method: 'POST', body: formData }).then(res => res.json())
+		// const response = await fetch('https://web3forms.com', { method: 'POST', body: formData }).then(res => res.json())
 
-		if (response.success) {
-			setEmailResponse('Email sent successfully!')
-			e.currentTarget.reset()
+		if (data.success) {
+			setSendStatus('success')
+			// 	e.currentTarget.reset()
 			console.info('Email sent successfully!')
 		} else {
-			setEmailResponse('Failed to send email.')
-			console.error('Failed to send email.', response)
+			setSendStatus('failure')
+			console.error('Failed to send email.')
 		}
-		setEmailResponse(null)
+
+		// setEmailResponse(null)
 	}
 
 	const contactForm = (
@@ -64,9 +67,17 @@ function ContactSection() {
 				<textarea id='message' name='message' autoComplete='off' required></textarea>
 			</div>
 
-			<input type='submit' disabled={emailResponse === 'Sending...'} value={emailResponse === 'Sending...' ? 'Sending...' : 'Send'} />
+			<input type='submit' disabled={sendStatus === 'sending'} value={sendStatus === 'sending' ? 'Sending...' : 'Send'} />
 
-			{emailResponse && <p>{emailResponse}</p>}
+			{sendStatus && (
+				<span className={'send-response ' + sendStatus}>
+					{sendStatus === 'success'
+						? 'Message sent successfully!'
+						: sendStatus === 'failure'
+							? 'Failed to send message. Please try again later.'
+							: ''}
+				</span>
+			)}
 		</form>
 	)
 
