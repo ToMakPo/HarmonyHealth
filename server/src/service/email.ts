@@ -68,6 +68,35 @@ export const validateEmail = (value: string) => {
 	return apiResponse(true, sender, 200, 'Email is valid', { email }, 'senderEmail')
 }
 
+export const validateSubject = (value: string) => {
+	const sender = 'SEND_EMAIL_SUBJECT_VALIDATION'
+	const minLength = 0
+	const maxLength = 200
+
+	if (value == null) {
+		return apiResponse(false, sender, 400, 'Subject is required', {}, 'subject')
+	}
+
+	// Format the value by trimming whitespace.
+	const subject = value.trim()
+
+	// Check length constraints.
+	if (subject.length === 0) {
+		return apiResponse(false, sender, 401, 'Subject is required', {}, 'subject')
+	}
+
+	if (subject.length < minLength) {
+		return apiResponse(false, sender, 402, 'Subject is too short', { subject, minLength }, 'subject')
+	}
+
+	if (subject.length > maxLength) {
+		return apiResponse(false, sender, 403, 'Subject is too long', { subject, maxLength }, 'subject')
+	}
+
+	// Subject is valid.
+	return apiResponse(true, sender, 200, 'Subject is valid', { subject }, 'subject')
+}
+
 export const validateMessage = (value: string) => {
 	const sender = 'SEND_EMAIL_BODY_VALIDATION'
 	const minLength = 2

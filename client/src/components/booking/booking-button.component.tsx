@@ -4,13 +4,7 @@ import './booking-button.styles.scss'
 
 function BookingButton() {
 	return (
-		<button
-			className='booking-button'
-			onClick={() => {
-				console.log('Booking button clicked')
-				handleBooking()
-			}}
-		>
+		<button className='booking-button' onClick={() => handleBooking()}>
 			Book Now
 		</button>
 	)

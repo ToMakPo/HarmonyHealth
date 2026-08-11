@@ -22,7 +22,7 @@ function ContactSection() {
 		setSendStatus('sending')
 
 		const formData = new FormData(e.currentTarget)
-
+		const formElement = e.currentTarget as HTMLFormElement
 		const serverUrl = import.meta.env.VITE_SERVER_URL
 
 		const data = (await fetch(`${serverUrl}/api/messaging/send-email`, {
@@ -34,7 +34,7 @@ function ContactSection() {
 		if (data.passed) {
 			setSendStatus('success')
 			console.info('Email sent successfully!')
-			e.currentTarget.reset()
+			formElement.reset()
 		} else {
 			setSendStatus('failure')
 			console.error('Failed to send email.')
