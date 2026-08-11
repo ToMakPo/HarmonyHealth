@@ -108,17 +108,6 @@ function ContactSection() {
 					)}
 				</tbody>
 			</table>
-
-			<ul>
-				{Object.entries(companyInfo.hours).map(
-					([day, periods]) =>
-						periods.length > 0 && (
-							<li key={day}>
-								{day}: {periods.map(period => `${period.open} - ${period.closed}`).join(', ')}
-							</li>
-						)
-				)}
-			</ul>
 		</div>
 	)
 
