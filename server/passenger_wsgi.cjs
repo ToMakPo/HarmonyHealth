@@ -28,7 +28,19 @@ const dataUrl = 'data:text/javascript;base64,' + Buffer.from(code).toString('bas
 register(dataUrl, pathToFileURL(__filename))
 
 async function loadApp() {
-	await import('./dist/server.js')
+    console.log('========================================')
+    console.log('HARMONY HEALTH PASSENGER APP STARTING')
+    console.log('Loading:', './dist/server.js')
+    console.log('========================================')
+
+    await import('./dist/server.js')
 }
+
+loadApp().catch(error => {
+    console.error('========================================')
+    console.error('HARMONY HEALTH PASSENGER FAILED TO START')
+    console.error(error)
+    console.error('========================================')
+})
 
 loadApp()

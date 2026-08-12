@@ -36,6 +36,10 @@ app.disable('x-powered-by')
 
 app.use('/api', apiRoutes)
 
+app.get('/api/test', (req, res) => {
+	res.json({ passed: true, message: 'API is running' })
+})
+
 // Serves the index.html out of that same nested directory
 app.get('/*any', (req, res) => {
 	res.sendFile(path.join(__dirname, 'dist', 'index.html'))

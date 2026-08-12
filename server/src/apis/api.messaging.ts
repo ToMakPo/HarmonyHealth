@@ -38,7 +38,10 @@ router.post('/send-email', async (req, res) => {
 		const subject = `New message from ${clientName} - ${clientSubject}`
 		const message = `You have received a new message from ${clientName} (${clientEmail}):\n\n${'-'.repeat(40)}\n\n${bodyMessage}`
 
+		console.log('ABOUT TO SEND EMAIL')
 		const result = await sendEmail(clientName, clientEmail, subject, message, 'self')
+		console.log('SEND EMAIL RESULT:', result)
+
 		if (!result.passed) return res.json(result)
 
 		// Respond to the client.
