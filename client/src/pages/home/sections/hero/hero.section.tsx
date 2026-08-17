@@ -1,11 +1,37 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
-import heroImage from '../../../../assets/images/monstera_deliciosa.jpg'
+import heroImage_lg from '../../../../assets/images/monstera_deliciosa.jpg'
+import heroImage_md from '../../../../assets/images/monstera_deliciosa_md.jpg'
+import heroImage_sm from '../../../../assets/images/monstera_deliciosa_sm.jpg'
+import heroImage_xs from '../../../../assets/images/monstera_deliciosa_xs.jpg'
 import logo from '../../../../assets/images/logo/harmony_logo_gold.png'
 
 import './hero.styles.scss'
 
 function HeroSection() {
+	const [backgroundImage, setBackgroundImage] = useState(heroImage_xs)
+
+	const highestLoaded = useRef(0)
+
+	useEffect(() => {
+		const loadImage = (src: string, rank: number) => {
+			const img = new Image()
+
+			img.src = src
+
+			img.onload = () => {
+				if (rank > highestLoaded.current) {
+					highestLoaded.current = rank
+					setBackgroundImage(src)
+				}
+			}
+		}
+
+		loadImage(heroImage_sm, 1)
+		loadImage(heroImage_md, 2)
+		loadImage(heroImage_lg, 3)
+	}, [])
+
 	const taglineText = ['Health', 'Life', 'Wellness', 'Happiness', 'Mind', 'Body', 'Spirit']
 	const [taglineIndex, setTaglineIndex] = useState(0)
 	const [subIndex, setSubIndex] = useState(0)
@@ -40,7 +66,7 @@ function HeroSection() {
 	const displayedTagline = taglineText[taglineIndex].substring(0, subIndex)
 
 	return (
-		<section id='hero-section' style={{ backgroundImage: `url(${heroImage})` }}>
+		<section id='hero-section' style={{ backgroundImage: `url(${backgroundImage})` }}>
 			<div className='hero-overlay'></div>
 
 			<div id='hero-content'>
