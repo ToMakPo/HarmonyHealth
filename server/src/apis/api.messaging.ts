@@ -45,26 +45,20 @@ router.post('/send-email', async (req, res) => {
 		if (!result.passed) return res.json(result)
 
 		// Respond to the client.
-		const confSubject = 'Thank you for contacting Harmony Health & Beauty'
+		const confSubject = 'Thank you for contacting Harmony Health Wellness Center'
 		const confBody = [
 			'Dear ' + clientName + ',',
 			'',
-
-			'Thank you for reaching out to us at Harmony Health & Beauty. We have received your message and will get back to you as soon as possible.',
+			'Thank you for reaching out to us at Harmony Health Wellness Center. We have received your message and we will get back to you as soon as possible.',
 			'',
 			'Best regards,',
-			'Harmony Health & Beauty Team',
-			'',
+			'Harmony Health Wellness Center Team',
 			'',
 			'----------------------------------------',
-			'',
 			'Subject: ' + clientSubject,
-			'',
 			'----------------------------------------',
-			'',
 			'Message Summary:',
 			bodyMessage,
-			'',
 			'----------------------------------------',
 			'',
 			'This is an automated confirmation that we have received your message.'

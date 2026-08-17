@@ -6,6 +6,15 @@ if (!process.env.SMTP_HOST) {
 	throw new Error('CRITICAL: SMTP_HOST environment variable is missing or dotenv is not initialized early enough.')
 }
 
+console.log('SMTP configuration:', {
+	host: process.env.SMTP_HOST,
+	port: process.env.SMTP_PORT,
+	secure: process.env.SMTP_SECURE,
+	user: process.env.SMTP_USER,
+	passwordSet: Boolean(process.env.SMTP_PASS),
+	infoEmail: process.env.INFO_EMAIL
+})
+
 const mailer = nodemailer.createTransport({
 	host: process.env.SMTP_HOST,
 	port: Number(process.env.SMTP_PORT),
@@ -19,15 +28,6 @@ mailer.verify((error, success) => {
 	} else {
 		console.log('SMTP CONNECTION SUCCESSFUL')
 	}
-})
-
-console.log('SMTP configuration:', {
-	host: process.env.SMTP_HOST,
-	port: process.env.SMTP_PORT,
-	secure: process.env.SMTP_SECURE,
-	user: process.env.SMTP_USER,
-	passwordSet: Boolean(process.env.SMTP_PASS),
-	infoEmail: process.env.INFO_EMAIL
 })
 
 const getAddress = (name: string, email: string) => `"${name}" <${email}>`
