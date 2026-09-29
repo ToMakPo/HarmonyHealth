@@ -9,9 +9,12 @@ function HoursDisplay() {
 	const [opened, setOpened] = useState(false)
 	const [until, setUntil] = useState<string | null>(null)
 
-	const updateOpenedState = (date?: string | null) => {
-		const now = date ? new Date(date) : new Date()
+	const updateOpenedState = () => {
+		const now = new Date()
 		const { opened, until } = isOpened(now)
+
+		console.log('HoursDisplay:', { now, opened, until, formattedUntil: until ? new Date(until).toString() : null })
+
 		setOpened(opened)
 		setUntil(until ? new Date(until).toISOString() : null)
 
@@ -20,12 +23,18 @@ function HoursDisplay() {
 		// Schedule a timeout to update the opened state when the next opening time arrives.
 		const untilDate = new Date(until)
 		const duration = untilDate.getTime() - now.getTime()
-		const timeout = setTimeout(() => updateOpenedState(until ? untilDate.toISOString() : null), duration)
-		return () => clearTimeout(timeout)
+
+		const MAX_TIMEOUT = 2_147_483_647
+		const timeoutDuration = Math.min(duration, MAX_TIMEOUT)
+		return setTimeout(() => updateOpenedState(), timeoutDuration)
 	}
 
 	useEffect(() => {
-		updateOpenedState()
+		const timeout = updateOpenedState()
+
+		return () => {
+			if (timeout) clearTimeout(timeout)
+		}
 	}, [])
 
 	const formattedUntil = useMemo(() => (until ? formatRelativeDate(new Date(until)) : null), [opened, until])
