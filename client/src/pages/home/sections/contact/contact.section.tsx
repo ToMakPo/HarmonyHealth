@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react'
 
 import { companyInfo } from '../../../../store/info'
 import HoursDisplay from '../../../../components/hours/hours.component'
+import type { ApiResponse } from '../../../../lib/apiResponse'
 
 import './contact.styles.scss'
-import type { ApiResponse } from '../../../../lib/apiResponse'
 
 type SendStatus = 'sending' | 'success' | 'failure' | null
 
@@ -124,7 +124,7 @@ function ContactSection() {
 	return (
 		<section id='contact-section'>
 			<h1>Contact Us</h1>
-			<div id='contact-container'>
+			<div id='contact-container' className='container'>
 				{contactForm}
 				<div>
 					{contactInfo}

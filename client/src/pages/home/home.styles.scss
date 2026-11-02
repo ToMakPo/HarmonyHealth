@@ -4,4 +4,21 @@
 	height: auto;
 	scroll-behavior: smooth;
 	container-type: size;
+
+	section {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem 5rem;
+		padding: min(5rem, 6vw);
+		width: 100%;
+		flex-wrap: wrap;
+	}
+
+	section:nth-child(odd) {
+		background-color: var(--color-bg-l1);
+	}
+
+	section:nth-child(even) {
+		background-color: var(--color-bg-l2);
+	}
 }

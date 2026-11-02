@@ -13,8 +13,6 @@ function HoursDisplay() {
 		const now = new Date()
 		const { opened, until } = isOpened(now)
 
-		console.log('HoursDisplay:', { now, opened, until, formattedUntil: until ? new Date(until).toString() : null })
-
 		setOpened(opened)
 		setUntil(until ? new Date(until).toISOString() : null)
 

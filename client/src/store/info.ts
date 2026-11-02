@@ -27,7 +27,11 @@ export const companyInfo = {
 		Friday: [{ open: '09:00', closed: '17:00' }],
 		Saturday: []
 	} as Record<DayOfWeek, TimePeriod[]>,
-	datesClosed: [{ event: 'Construction', from: '2026-07-01', to: '2026-11-15' }] as Event[]
+	datesClosed: [
+		{ event: 'Construction', from: '2026-07-01', to: '2026-10-31' },
+		{ event: 'Thanksgiving', from: '2026-12-26', to: '2026-12-26' },
+		{ event: 'Christmas', from: '2026-12-24', to: '2026-12-25' }
+	] as Event[]
 }
 
 type NextOpening = {

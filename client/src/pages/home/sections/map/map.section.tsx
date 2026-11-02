@@ -6,10 +6,10 @@ function MapSection() {
 	// Join the address array into a single string
 	const address = companyInfo.address
 	const link =
-		'https://www.google.com/maps/place/Harmony+Health+Wellness+Center/data=!4m2!3m1!1s0x549aa9ad9db92069:0xbde75f5c38bdee31?hl=en&trk=https%3A%2F%2Fc.gle%2FAKMee0d_VorV_gO7WTIdVrhXPWflJclgzs8AIASjV3O2vO7G-i2EmUuMkNtiRtudTMBQpjy8QwBOmz7srLO_aIwGcz4TSEgKpx_rMUugjyuspmmmrvKuut_98vulGt85'
+		'https://www.google.com/maps/place/Harmony+Health+Wellness+Center/@47.9433702,-122.1113035,1022m/data=!3m2!1e3!4b1!4m6!3m5!1s0x549aa9ad9db92069:0xbde75f5c38bdee31!8m2!3d47.9433666!4d-122.1087286!16s%2Fg%2F11ntgtpys_?entry=ttu&g_ep=EgoyMDI2MTAyOC4wIKXMDSoASAFQAw%3D%3D'
 
 	const mapSrc =
-		'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d668.159734039164!2d-122.10937233028244!3d47.943367496560334!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x549aa9816ba4c7c1%3A0xb689a7687e8809fc!2s2707%20Bickford%20Ave%20Unit%20B%2C%20Snohomish%2C%20WA%2098290!5e0!3m2!1sen!2sus!4v1785105890305!5m2!1sen!2sus'
+		'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4450.9179985772935!2d-122.11130352255674!3d47.94337016466013!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x549aa9ad9db92069%3A0xbde75f5c38bdee31!2sHarmony%20Health%20Wellness%20Center!5e1!3m2!1sen!2sus!4v1793601570826!5m2!1sen!2sus'
 
 	return (
 		<section id='map-section'>

@@ -3,7 +3,9 @@ import './staff.styles.scss'
 function StaffSection() {
 	return (
 		<section id='staff-section'>
-			<h1>Our Staff</h1>
+			<div id='staff-container' className='container'>
+				<h1>Our Staff</h1>
+			</div>
 		</section>
 	)
 }
