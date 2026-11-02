@@ -10,17 +10,20 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
+		"marked": "^18.1.2",
 		"material-symbols": "^0.45.9",
 		"react": "^19.2.7",
 		"react-dom": "^19.2.7",
 		"react-parallax": "^3.5.2",
 		"react-router-dom": "^7.18.1",
+		"strip-indent": "^4.1.1",
 		"zustand": "^5.0.14"
 	},
 	"devDependencies": {
 		"@types/node": "^24.13.2",
 		"@types/react": "^19.2.17",
 		"@types/react-dom": "^19.2.3",
+		"@types/strip-indent": "^2.0.0",
 		"@vitejs/plugin-react": "^6.0.3",
 		"oxlint": "^1.71.0",
 		"sass-embedded": "^1.100.0",
