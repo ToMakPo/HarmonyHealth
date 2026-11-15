@@ -35,10 +35,14 @@ router.post('/send-email', async (req, res) => {
 		const bodyMessage = (messageValidation.data as { message: string }).message || ''
 
 		const isSpam = spamDetection(req.body)
+		console.log('AA01 isSpam:', isSpam)
 
 		// Send an email to the info address.
 		const subject = isSpam ? `Potential Spam from ${clientName} - ${clientSubject}` : `New message from ${clientName} - ${clientSubject}`
 		const message = `You have received a new message from ${clientName} (${clientEmail}):\n\n${'-'.repeat(40)}\n\n${bodyMessage}`
+
+		console.log('AA02 subject:', subject)
+		console.log('AA03 message:', message)
 
 		const result = await sendEmail(clientName, clientEmail, subject, message, 'self')
 
@@ -68,6 +72,8 @@ router.post('/send-email', async (req, res) => {
 		if (!confResult.passed) return res.json(confResult)
 
 		// Return success response.
+		if (isSpam) return res.json(apiResponse(true, code, 201, 'Potential spam detected', { result, confResult }))
+
 		res.json(apiResponse(true, code, 200, 'Email sent successfully', { result, confResult }))
 	} catch (error) {
 		console.error('Error in /send-email route:', error)

@@ -33,6 +33,8 @@ function ContactSection() {
 			body: JSON.stringify(Object.fromEntries(formData.entries()))
 		})
 
+		console.log('Server response:', response)
+
 		const contentType = response.headers.get('Content-Type') ?? ''
 
 		if (!contentType.includes('application/json')) {

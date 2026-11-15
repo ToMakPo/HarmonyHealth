@@ -166,20 +166,30 @@ const infoEmail = (() => {
 const infoAddress = getAddress(infoName, infoEmail)
 
 export function spamDetection(body: any): boolean {
+	console.log('xx01 spamDetection called with body:', body)
 	// Check if the website honeypot field is filled (bot detection).
 	const websiteField = body.website as string
+	console.log('xx02 websiteField:', websiteField)
 	if (websiteField && websiteField.trim() !== '') return true
 
 	// Check for gibberish or suspicious patterns in the message body.
 	const trimmed = body.message?.trim() || ''
-
+	console.log('xx03 trimmed message:', trimmed)
 	// Block single long unbroken strings with no spaces.
-	if (!trimmed.includes(' ')) return true
+	if (!trimmed.includes(' ')) {
+		console.log('xx04 spamDetection triggered: single long unbroken string')
+		return true
+	}
 
 	// Block unnatural mixed-case transitions (e.g., 4+ uppercase letters inside a single word)
 	const internalCaps = (trimmed.match(/[a-z][A-Z]/g) || []).length
-	if (internalCaps >= 4) return true
+	console.log('xx05 internalCaps:', internalCaps)
+	if (internalCaps >= 4) {
+		console.log('xx06 spamDetection triggered: unnatural mixed-case transitions')
+		return true
+	}
 
+	console.log('xx07 spamDetection completed without triggering any rules')
 	return false
 }
 
