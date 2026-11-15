@@ -93,12 +93,29 @@ function ContactSection() {
 
 	const contactInfo = (
 		<div className='contact-info'>
-			<p>
+			<div className='contact-info-item'>
 				Email: <a href={`mailto:${companyInfo.email}`}>{companyInfo.email}</a>
-			</p>
-			<p>
+			</div>
+
+			<div className='contact-info-item'>
 				Phone: <a href={`tel:1${companyInfo.phone.replace(/\D/g, '')}`}>{companyInfo.phone}</a>
-			</p>
+			</div>
+
+			<div className='contact-info-item'>
+				Social Media:
+				<br />
+				<div id='social-icons'>
+					{companyInfo.socialMedia.map(social => (
+						<img
+							className='social-icon'
+							src={social.icon}
+							alt={social.platform}
+							key={social.platform}
+							onClick={() => window.open(social.url, '_blank')}
+						/>
+					))}
+				</div>
+			</div>
 		</div>
 	)
 

@@ -18,6 +18,28 @@ export const companyInfo = {
 	phone: '(360) 217-6020',
 	email: 'info@harmonyhealthwellness.org',
 	website: 'https://harmonyhealthwellness.org',
+	socialMedia: [
+		{
+			platform: 'Facebook',
+			url: 'https://www.facebook.com/profile.php?id=61592914510256',
+			icon: (await import('../assets/images/socials/facebook.svg')).default
+		},
+		{
+			platform: 'Instagram',
+			url: 'https://www.instagram.com/harmonyhealthsnohomish/',
+			icon: (await import('../assets/images/socials/instagram.svg')).default
+		},
+		{
+			platform: 'TikTok',
+			url: 'https://www.tiktok.com/@harmony.health.sno',
+			icon: (await import('../assets/images/socials/tiktok.svg')).default
+		},
+		{
+			platform: 'YouTube',
+			url: 'https://www.youtube.com/@HarmonyHealthWellnessCenter',
+			icon: (await import('../assets/images/socials/youtube.svg')).default
+		}
+	],
 	hours: {
 		Sunday: [],
 		Monday: [{ open: '09:00', closed: '17:00' }],

@@ -117,4 +117,24 @@
 			opacity: 1;
 		}
 	}
+
+	.contact-info-item {
+		margin-bottom: 1rem;
+	}
+
+	#social-icons {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin: 0.75rem 0.75rem 0;
+
+		.social-icon {
+			display: block;
+			background-color: white;
+			padding: 0.125rem;
+			width: 2rem;
+			border-radius: 50%;
+			cursor: pointer;
+		}
+	}
 }
