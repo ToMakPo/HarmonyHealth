@@ -165,6 +165,24 @@ const infoEmail = (() => {
 })()
 const infoAddress = getAddress(infoName, infoEmail)
 
+export function spamDetection(body: any): boolean {
+	// Check if the website honeypot field is filled (bot detection).
+	const websiteField = body.website as string
+	if (websiteField && websiteField.trim() !== '') return true
+
+	// Check for gibberish or suspicious patterns in the message body.
+	const trimmed = body.message?.trim() || ''
+
+	// Block single long unbroken strings with no spaces.
+	if (!trimmed.includes(' ')) return true
+
+	// Block unnatural mixed-case transitions (e.g., 4+ uppercase letters inside a single word)
+	const internalCaps = (trimmed.match(/[a-z][A-Z]/g) || []).length
+	if (internalCaps >= 4) return true
+
+	return false
+}
+
 /** Send an email either to the info address or to the client.
  *
  * @param clientName The name of the client.

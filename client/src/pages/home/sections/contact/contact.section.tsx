@@ -20,11 +20,13 @@ function ContactSection() {
 	async function submitEmail(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault()
 		setSendStatus('sending')
+		setLastSubmitTime(Date.now())
 
 		const formData = new FormData(e.currentTarget)
 		const formElement = e.currentTarget as HTMLFormElement
 		const serverUrl = import.meta.env.VITE_SERVER_URL
 
+		// Send the email via the server API.
 		const response = await fetch(`${serverUrl}/api/messaging/send-email`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
@@ -58,6 +60,15 @@ function ContactSection() {
 		}
 	}, [sendStatus])
 
+	// Submition timer used to prevent bot spam.
+	const [lastSubmitTime, setLastSubmitTime] = useState<number | null>(null)
+	useEffect(() => {
+		if (lastSubmitTime !== null) {
+			const timer = setTimeout(() => setLastSubmitTime(null), 5000)
+			return () => clearTimeout(timer)
+		}
+	}, [lastSubmitTime])
+
 	const contactForm = (
 		<form id='contact-form' onSubmit={submitEmail}>
 			<div className='input-row'>
@@ -77,6 +88,12 @@ function ContactSection() {
 			<div className='input-group'>
 				<label htmlFor='message'>Message</label>
 				<textarea id='message' name='message' autoComplete='off' required></textarea>
+			</div>
+
+			{/* Honeypot field for spam prevention */}
+			<div className='input-group' style={{ position: 'absolute', left: '-9999px' }} aria-hidden='true'>
+				<label htmlFor='website'>Website</label>
+				<input id='website' name='website' type='text' tabIndex={-1} autoComplete='off' />
 			</div>
 
 			<input type='submit' disabled={sendStatus === 'sending'} value={sendStatus === 'sending' ? 'Sending...' : 'Send'} />
