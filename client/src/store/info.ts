@@ -51,8 +51,14 @@ export const companyInfo = {
 	} as Record<DayOfWeek, TimePeriod[]>,
 	datesClosed: [
 		{ event: 'Construction', from: '2026-07-01', to: '2026-10-31' },
-		{ event: 'Thanksgiving', from: '2026-12-26', to: '2026-12-26' },
-		{ event: 'Christmas', from: '2026-12-24', to: '2026-12-25' }
+		{
+			event: 'Thanksgiving',
+			from: '2026-11-26',
+			to: '2026-11-27',
+			message: 'Happy Thanksgiving!\nWe are thankful for your support.\nWe hope you have a wonderful Thanksgiving.'
+		},
+		{ event: 'Christmas', from: '2026-12-24', to: '2026-12-25', message: 'Merry Christmas!\nMay your holidays be filled with joy.' },
+		{ event: 'New Years', from: '2026-12-31', to: '2027-01-01', message: 'Happy New Year!\nWishing you a prosperous year ahead.' }
 	] as Event[]
 }
 
